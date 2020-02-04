@@ -1,0 +1,62 @@
+{
+  "name": "binance-test-react",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vincentbollaert/binance-test-react.git"
+  },
+  "author": "Vincent Bollaert",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vincentbollaert/binance-test-react/issues"
+  },
+  "homepage": "https://github.com/vincentbollaert/binance-test-react#readme",
+  "scripts": {
+    "develop": "webpack-dev-server --progress --watch"
+  },
+  "dependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.3.0",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.5",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "babel-plugin-transform-react-inline-elements": "^6.22.0",
+    "babel-polyfill": "^6.26.0",
+    "copy-webpack-plugin": "^5.1.1",
+    "css-loader": "^3.4.2",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.15.0",
+    "eslint-plugin-jsx-a11y": "^6.2.0",
+    "eslint-plugin-react": "^7.4.0",
+    "extract-text-webpack-plugin": "next",
+    "file-loader": "^5.0.2",
+    "html-loader": "^0.5.1",
+    "html-webpack-plugin": "^3.1.0",
+    "mini-css-extract-plugin": "^0.9.0",
+    "node-sass": "^4.9.0",
+    "normalize.css": "^8.0.0",
+    "prop-types": "^15.7.1",
+    "raw-loader": "^4.0.0",
+    "react": "^16.8.1",
+    "react-addons-test-utils": "^15.6.2",
+    "react-dom": "^16.8.1",
+    "react-hot-loader": "^4.6.5",
+    "react-router": "^5.1.2",
+    "react-router-dom": "^5.1.2",
+    "react-test-renderer": "^16.8.1",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^1.1.3",
+    "styled-components": "^5.0.0",
+    "url-loader": "^3.0.0",
+    "webpack": "^4.29.3",
+    "webpack-cli": "3.3.10",
+    "webpack-dev-middleware": "^3.5.2",
+    "webpack-dev-server": "^3.1.1",
+    "webpack-hot-middleware": "^2.20.0"
+  }
+}
