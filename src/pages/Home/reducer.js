@@ -6,13 +6,14 @@ import {
 } from '../../constants/shapeState'
 import { randomiseArray } from '../../utils'
 
+// get data
 export const GET_DATA_REQUESTED = 'GET_DATA_REQUESTED'
 export const getDataRequested = () => ({
   type: GET_DATA_REQUESTED,
 })
 
 export const GET_DATA_SUCCEEDED = 'GET_DATA_SUCCEEDED'
-export const getDataSucceeded = (payload) => ({
+export const getDataSucceeded = ({ payload }) => ({
   type: GET_DATA_SUCCEEDED,
   payload,
 })
@@ -23,15 +24,28 @@ export const getDataFailed = (error) => ({
   error,
 })
 
+// select choice
+export const SELECT_CHOICE = 'SELECT_CHOICE'
+export const selectChoice = (({ id, selectedChoice, correctChoice }) => ({
+  type: SELECT_CHOICE,
+  payload: {
+    id,
+    selectedChoice,
+    correctChoice,
+  },
+}))
+
 export const init = () => ({
   count: 0,
   terms: [],
+  choices: [],
   asyncStatus: SHAPE_ASYNC_STATUS_INITIAL,
 })
 
 
 export default function reducer(state, action) {
   switch (action.type) {
+    // get data
     case GET_DATA_REQUESTED: {
       return {
         ...state,
@@ -40,7 +54,7 @@ export default function reducer(state, action) {
     }
 
     case GET_DATA_SUCCEEDED: {
-      const { payload } = action.payload
+      const { payload } = action
       const NUMBER_OF_QUESTIONS = 10
       const NUMBER_OF_CHOICES = 3
 
@@ -70,6 +84,18 @@ export default function reducer(state, action) {
       return {
         ...state,
         asyncStatus: SHAPE_ASYNC_STATUS_FAILED(action.payload || 'could not get glossary'),
+      }
+    }
+
+    // select choice
+    case SELECT_CHOICE: {
+      console.log(action.payload)
+      return {
+        ...state,
+        choices: [
+          ...state.choices,
+          action.payload,
+        ],
       }
     }
 
