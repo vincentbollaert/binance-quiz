@@ -36,6 +36,12 @@ const Answer = styled.div`
   padding: 4px 8px;
   color: #eee;
   margin: 0 4px;
+
+  ${props => props.isQuizComplete && `
+    ${props.isCorrectAnswer && 'background-color: green'};
+    ${props.isSelectedAnswer && 'background-color: blue'};
+    ${props.isCorrectAnswer && props.isSelectedAnswer && 'background-color: pink'};
+  `}
 `
 
 const SelectedAnswers = styled.div`
@@ -51,7 +57,14 @@ const SelectedAnswer = styled.div`
 
 const Home = () => {
   const [state, dispatch] = useReducer(reducer, undefined, init)
-  const { isQuizComplete, questions, selectedAnswers, timeRemaining, asyncStatus } = state
+  const {
+    isQuizComplete,
+    questions,
+    selectedAnswers,
+    timeRemaining,
+    totalTime,
+    asyncStatus
+  } = state
 
   useEffect(() => {
     dispatch(getDataRequested())
@@ -60,10 +73,9 @@ const Home = () => {
       .catch(error => dispatch(getDataFailed({ payload: error })))
   }, [])
 
-  function onSelectAnswer({ id, selectedAnswer, correctAnswer, isFinalQuestion }) {
-    console.log(selectedAnswer, correctAnswer)
-    dispatch(selectAnswer({ id, selectedAnswer, correctAnswer }))
-    isFinalQuestion && dispatch(completeQuiz())
+  function onSelectAnswer({ id, selectedAnswer, correctAnswer, timeToChoose, isFinalQuestion }) {
+    dispatch(selectAnswer({ id, selectedAnswer, correctAnswer, timeToChoose }))
+    if (isFinalQuestion) { dispatch(completeQuiz()) }
   }
 
   function onSetTimer(payload) {
@@ -83,6 +95,7 @@ const Home = () => {
             <div>correct? {selectedAnswer === correctAnswer ? 'YES :)' : 'NO :('}</div>
           </SelectedAnswer>
         ))}
+        Total time: {totalTime} seconds
       </SelectedAnswers>
       <Terms>
         {questions.map(({ id, title, slug, excerpt, answers, isFinalQuestion }) => (
@@ -92,7 +105,16 @@ const Home = () => {
               {answers.map(answer => (
                 <Answer
                   key={answer}
-                  onClick={() => onSelectAnswer({ id, selectedAnswer: answer, correctAnswer: title, isFinalQuestion })}
+                  isCorrectAnswer={title === answer}
+                  isSelectedAnswer={(selectedAnswers.filter(selectedAnswer => selectedAnswer.id === id)[0] || {}).selectedAnswer === answer}
+                  isQuizComplete={isQuizComplete}
+                  onClick={() => onSelectAnswer({
+                    id,
+                    selectedAnswer: answer,
+                    correctAnswer: title,
+                    timeToChoose: 30 - timeRemaining,
+                    isFinalQuestion,
+                  })}
                 >
                   {answer}
                 </Answer>

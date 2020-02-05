@@ -26,12 +26,13 @@ export const getDataFailed = (error) => ({
 
 // select choice
 export const SELECT_ANSWER = 'SELECT_ANSWER'
-export const selectAnswer = (({ id, selectedAnswer, correctAnswer }) => ({
+export const selectAnswer = (({ id, selectedAnswer, correctAnswer, timeToChoose }) => ({
   type: SELECT_ANSWER,
   payload: {
     id,
     selectedAnswer,
     correctAnswer,
+    timeToChoose,
   },
 }))
 
@@ -56,6 +57,7 @@ export const init = () => ({
   questions: [],
   selectedAnswers: [],
   timeRemaining: 30,
+  totalTime: 0,
   asyncStatus: SHAPE_ASYNC_STATUS_INITIAL,
 })
 
@@ -115,6 +117,7 @@ export default function reducer(state, action) {
           ...state.selectedAnswers,
           action.payload,
         ],
+        totalTime: state.totalTime + action.payload.timeToChoose,
       }
     }
 
