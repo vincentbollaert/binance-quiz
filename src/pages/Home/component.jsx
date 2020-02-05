@@ -42,8 +42,8 @@ const Answers = styled.div`
   font-size: 15px;
 `
 const Answer = styled.div`
-  background: #444;
-  padding: 16px 24px 16px 49px;
+  background: #525252;
+  padding: 20px 24px 20px 49px;
   color: #eee;
   margin: 10px 0;
   display: flex;
@@ -54,6 +54,10 @@ const Answer = styled.div`
     ${props.isCorrect && 'box-shadow: inset 0 0 0 2px #5cf2aa; color: #5cf2aa; fill: #5cf2aa'};
     ${props.isIncorrect && 'box-shadow: inset 0 0 0 2px #f25c5c; color: #f25c5c; fill: #f25c5c'};
   `}
+  ${props => props.isTimeout && `
+    opacity: 0.5;
+    cursor: not-allowed;
+  `};
 `
 const AnswerStatus = styled(Svg)`
   position: absolute;
@@ -62,7 +66,7 @@ const AnswerStatus = styled(Svg)`
   line-height: 49px;
   text-align: center;
   width: 50px;
-  height: 50px;
+  height: 100%;
   fill: inherit;
   padding: 18px;
 `
@@ -73,6 +77,7 @@ const AdditionalInfo = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: ${props => props.isTimeout ? '#b8b8b8' : 'inherit'};
 `
 const Link = styled.a`
   color: inherit;
@@ -108,7 +113,7 @@ const Next = styled.div`
 `
 const ProgressItems = styled.div`
   padding: 8px 0;
-  box-shadow: inset -8px 0 13px -12px #2e2e2e;
+  box-shadow: inset -5px 0 11px -10px #0000008c;
   background: #404040;
   color: #a1a1a1;
 `
@@ -138,8 +143,9 @@ const Home = () => {
       .catch(error => dispatch(getDataFailed({ payload: error })))
   }, [])
 
-  function onSelectAnswer({ id, selectedAnswer, correctAnswer, timeToChoose, isFinalQuestion }) {
-    dispatch(selectAnswer({ id, selectedAnswer, correctAnswer, timeToChoose }))
+  function onSelectAnswer({ id, selectedAnswer, correctAnswer, timeToChoose, isFinalQuestion, isTimeout }) {
+    dispatch(selectAnswer({ id, selectedAnswer, correctAnswer, timeToChoose, isTimeout }))
+    onResetTimer()
     if (isFinalQuestion) { dispatch(completeQuiz()) }
   }
 
@@ -154,11 +160,21 @@ const Home = () => {
   function onGetTimeRemaining() {
     return childRef.current.onGetTimeRemaining()
   }
+  function onTimeFinished() {
+    console.log('whoops no more time')
+    onSelectAnswer({
+      id: activeQuestion.id,
+      selectedAnswer: '',
+      correctAnswer: activeQuestion.title,
+      timeToChoose: 30,
+      isTimeout: true,
+    })
+  }
 
   return (
     <div>
       <SpinnerLoader asyncStatus={asyncStatus} />
-      <Timer ref={childRef} />
+      <Timer ref={childRef} setTimeFinished={onTimeFinished} />
       <SelectedAnswers isShow={isQuizComplete}>
         Total time: {totalTime} seconds
       </SelectedAnswers>
@@ -170,7 +186,7 @@ const Home = () => {
         </ProgressItems>
         <Questions>
           {questions.map(({ id, title, slug, excerpt, answers, isFinalQuestion }) => {
-            const { selectedAnswer } = (selectedAnswers.filter(({ id: answerId }) => answerId === id)[0] || {})
+            const { selectedAnswer, isTimeout } = (selectedAnswers.filter(({ id: answerId }) => answerId === id)[0] || {})
             const isCorrect = selectedAnswer === title
 
             return (
@@ -184,6 +200,7 @@ const Home = () => {
                     return (
                       <Answer
                         key={answer}
+                        isTimeout={isTimeout}
                         isCorrect={isCorrect && isSelectedAnswerOption}
                         isIncorrect={!isCorrect && isSelectedAnswerOption}
                         isQuizComplete
@@ -210,6 +227,7 @@ const Home = () => {
                             {isCorrect && `${dummyRandomNumber}% of users got this right`}
                           </AdditionalInfo>
                         )}
+                        {isTimeout && <AdditionalInfo isTimeout>Took too long</AdditionalInfo>}
                       </Answer>
                     )
                   })}
