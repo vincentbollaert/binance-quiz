@@ -12,6 +12,9 @@ import reducer, {
   showNextQuestion,
 } from './reducer'
 import SpinnerLoader from '../../components/Spinner/component'
+import cancelSvg from '../../assets/svg/cancel.svg'
+import tickSvg from '../../assets/svg/tick.svg'
+import Svg from '../../components/Svg/component'
 import Timer from './Timer/component'
 
 const QuizWrap = styled.div`
@@ -48,20 +51,21 @@ const Answer = styled.div`
   position: relative;
 
   ${props => props.isQuizComplete && `
-    ${props.isCorrectAnswer && 'box-shadow: inset 0 0 0 2px #5cf2aa; color: #5cf2aa;'};
-    ${props.isSelectedAnswer && 'box-shadow: inset 0 0 0 2px #f25c5c; color: #f25c5c'};
-    ${props.isCorrectAnswer && props.isSelectedAnswer && 'box-shadow: inset 0 0 0 2px #5cf2aa; color: #5cf2aa;'};
+    ${props.isCorrectAnswer && 'box-shadow: inset 0 0 0 2px #5cf2aa; color: #5cf2aa; fill: #5cf2aa'};
+    ${props.isSelectedAnswer && 'box-shadow: inset 0 0 0 2px #f25c5c; color: #f25c5c; fill: #f25c5c'};
+    ${props.isCorrectAnswer && props.isSelectedAnswer && 'box-shadow: inset 0 0 0 2px #5cf2aa; color: #5cf2aa; fill: #5cf2aa'};
   `}
 `
-const Icon = styled.div`
+const AnswerStatus = styled(Svg)`
   position: absolute;
+  top: 0;
   left: 0px;
-  height: 49px;
-  width: 49px;
   line-height: 49px;
   text-align: center;
-  top: 0;
-  color: #5cf2aa;
+  width: 50px;
+  height: 50px;
+  fill: inherit;
+  padding: 18px;
 `
 const AdditionalInformation = styled.div`
   font-size: 12px;
@@ -172,7 +176,7 @@ const Home = () => {
                       isFinalQuestion,
                     })}
                   >
-                    <Icon>O</Icon>
+                    <AnswerStatus svg={tickSvg} />
                     {answer}
                     <AdditionalInformation>30% blah blah</AdditionalInformation>
                   </Answer>
