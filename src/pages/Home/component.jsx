@@ -18,7 +18,7 @@ import Svg from '../../components/Svg/component'
 import Timer from './Timer/component'
 
 const QuizWrap = styled.div`
-  max-width: 750px;
+  max-width: 860px;
   margin: 0 auto;
   display: flex;
 `
@@ -47,7 +47,7 @@ const Answer = styled.div`
   color: #eee;
   margin: 10px 0;
   display: flex;
-  align-items: baseline;
+  align-items: center;
   position: relative;
 
   ${props => props.isQuizComplete && `
@@ -66,9 +66,20 @@ const AnswerStatus = styled(Svg)`
   fill: inherit;
   padding: 18px;
 `
-const AdditionalInformation = styled.div`
+const AdditionalInfo = styled.div`
   font-size: 12px;
   margin-left: auto;
+  max-width: 280px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`
+const Link = styled.a`
+  color: inherit;
+
+  &:hover {
+    text-decoration: underline;
+  };
 `
 
 const SelectedAnswers = styled.div`
@@ -112,6 +123,7 @@ const Home = () => {
   const {
     isQuizComplete,
     questions,
+    allQuestions,
     activeQuestion,
     selectedAnswers,
     totalTime,
@@ -167,6 +179,8 @@ const Home = () => {
                 <Answers>
                   {answers.map(answer => {
                     const isSelectedAnswerOption = answer === selectedAnswer
+                    const questionMatchingAnswer = allQuestions.find(question => question.title === answer)
+                    const dummyRandomNumber = Math.round(Math.random() * 100)
                     return (
                       <Answer
                         key={answer}
@@ -183,7 +197,19 @@ const Home = () => {
                       >
                         {isSelectedAnswerOption && <AnswerStatus svg={isCorrect ? tickSvg : cancelSvg} />}
                         {answer}
-                        <AdditionalInformation>30% blah blah</AdditionalInformation>
+                        {isSelectedAnswerOption && (
+                          <AdditionalInfo>
+                            {!isCorrect && (
+                              <Link
+                                href={`https://www.binance.vision/glossary/${questionMatchingAnswer.slug}`}
+                                target="_blank"
+                              >
+                                {questionMatchingAnswer.excerpt}
+                              </Link>
+                            )}
+                            {isCorrect && `${dummyRandomNumber}% of users got this right`}
+                          </AdditionalInfo>
+                        )}
                       </Answer>
                     )
                   })}

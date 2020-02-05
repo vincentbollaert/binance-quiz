@@ -55,6 +55,7 @@ export const init = () => ({
   isQuizComplete: false,
   count: 0,
   questions: [],
+  allQuestions: [],
   activeQuestion: {
     answers: [],
   },
@@ -100,6 +101,7 @@ export default function reducer(state, action) {
       return {
         ...state,
         questions: termsForQuiz,
+        allQuestions: termsByRandom,
         activeQuestion: termsForQuiz[0],
         asyncStatus: SHAPE_ASYNC_STATUS_SUCCEEDED,
       }
