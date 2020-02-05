@@ -122,7 +122,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getDataRequested())
-    axios.get('http://api.binance.vision/api/glossaries/')
+    axios.get('http://api.binance.vision/api/glossaries')
       .then(({ data }) => dispatch(getDataSucceeded({ payload: data })))
       .catch(error => dispatch(getDataFailed({ payload: error })))
   }, [])

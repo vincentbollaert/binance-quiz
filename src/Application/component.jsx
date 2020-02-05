@@ -4,6 +4,7 @@ import styled, { createGlobalStyle } from 'styled-components'
 
 import { media, UNIT_LG_INT, UNIT_LG } from '../styles'
 import reset from '../styles/reset'
+import logoImage from '../assets/logo.png'
 import Home from '../pages/Home/component'
 
 export const CLASSNAME_APPLICATION = 'application'
@@ -11,21 +12,27 @@ const GlobalStyle = createGlobalStyle`
   ${reset};
 `
 
-const STYLE_HEADER_HEIGHT_INT = 4.4
-const STYLE_HEADER_HEIGHT_SM_INT = 6.4
+const STYLE_HEADER_HEIGHT = '5rem'
+const STYLE_HEADER_HEIGHT_SM = '6.4rem'
 
 const AppContainer = styled.div`
   min-height: 100vh;
   display: grid;
-  grid-template: "header" 64px "body" auto "footer" 380px;
+  grid-template: "header" ${STYLE_HEADER_HEIGHT} "body" auto "footer" 380px;
+
+  ${media.sm`
+    grid-template: "header" ${STYLE_HEADER_HEIGHT_SM} "body" auto "footer" 380px;
+  `}
 `
 const Header = styled.div`
-  height: ${STYLE_HEADER_HEIGHT_INT}rem;
+  grid-area: header;
+  display: flex;
+  align-items: center;
+  padding: 0 ${UNIT_LG};
   background-color: #202020;
-  
-  ${media.sm`
-    height: ${STYLE_HEADER_HEIGHT_SM_INT}rem;
-  `};
+`
+const Logo = styled.img`
+  background: red;
 `
 
 const Footer = styled.div`
@@ -49,7 +56,9 @@ const Application = () => {
     <>
       <GlobalStyle />
       <AppContainer>
-        <Header />
+        <Header>
+          <Logo src={logoImage} />
+        </Header>
         <PageWrap>
           <Switch>
             <Route path="/" component={Home} />
