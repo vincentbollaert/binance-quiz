@@ -51,9 +51,8 @@ const Answer = styled.div`
   position: relative;
 
   ${props => props.isQuizComplete && `
-    ${props.isCorrectAnswer && 'box-shadow: inset 0 0 0 2px #5cf2aa; color: #5cf2aa; fill: #5cf2aa'};
-    ${props.isSelectedAnswer && 'box-shadow: inset 0 0 0 2px #f25c5c; color: #f25c5c; fill: #f25c5c'};
-    ${props.isCorrectAnswer && props.isSelectedAnswer && 'box-shadow: inset 0 0 0 2px #5cf2aa; color: #5cf2aa; fill: #5cf2aa'};
+    ${props.isCorrect && 'box-shadow: inset 0 0 0 2px #5cf2aa; color: #5cf2aa; fill: #5cf2aa'};
+    ${props.isIncorrect && 'box-shadow: inset 0 0 0 2px #f25c5c; color: #f25c5c; fill: #f25c5c'};
   `}
 `
 const AnswerStatus = styled(Svg)`
@@ -98,7 +97,7 @@ const Next = styled.div`
 `
 const ProgressItems = styled.div`
   padding: 8px 0;
-  box-shadow: inset -12px 0 10px -8px #353535;
+  box-shadow: inset -8px 0 13px -12px #2e2e2e;
   background: #404040;
   color: #a1a1a1;
 `
@@ -158,32 +157,40 @@ const Home = () => {
           ))}
         </ProgressItems>
         <Questions>
-          {questions.map(({ id, title, slug, excerpt, answers, isFinalQuestion }) => (
-            <Question isQuizComplete={isQuizComplete} isActiveQuestion={id === activeQuestion.id}>
-              <Description>{excerpt}</Description>
-              <Answers>
-                {answers.map(answer => (
-                  <Answer
-                    key={answer}
-                    isCorrectAnswer={title === answer}
-                    isSelectedAnswer={(selectedAnswers.filter(selectedAnswer => selectedAnswer.id === id)[0] || {}).selectedAnswer === answer}
-                    isQuizComplete
-                    onClick={() => onSelectAnswer({
-                      id,
-                      selectedAnswer: answer,
-                      correctAnswer: title,
-                      timeToChoose: onGetTimeRemaining(),
-                      isFinalQuestion,
-                    })}
-                  >
-                    <AnswerStatus svg={tickSvg} />
-                    {answer}
-                    <AdditionalInformation>30% blah blah</AdditionalInformation>
-                  </Answer>
-                ))}
-              </Answers>
-            </Question>
-          ))}
+          {questions.map(({ id, title, slug, excerpt, answers, isFinalQuestion }) => {
+            const { selectedAnswer } = (selectedAnswers.filter(({ id: answerId }) => answerId === id)[0] || {})
+            const isCorrect = selectedAnswer === title
+
+            return (
+              <Question isQuizComplete={isQuizComplete} isActiveQuestion={id === activeQuestion.id}>
+                <Description>{excerpt}</Description>
+                <Answers>
+                  {answers.map(answer => {
+                    const isSelectedAnswerOption = answer === selectedAnswer
+                    return (
+                      <Answer
+                        key={answer}
+                        isCorrect={isCorrect && isSelectedAnswerOption}
+                        isIncorrect={!isCorrect && isSelectedAnswerOption}
+                        isQuizComplete
+                        onClick={() => onSelectAnswer({
+                          id,
+                          selectedAnswer: answer,
+                          correctAnswer: title,
+                          timeToChoose: onGetTimeRemaining(),
+                          isFinalQuestion,
+                        })}
+                      >
+                        {isSelectedAnswerOption && <AnswerStatus svg={isCorrect ? tickSvg : cancelSvg} />}
+                        {answer}
+                        <AdditionalInformation>30% blah blah</AdditionalInformation>
+                      </Answer>
+                    )
+                  })}
+                </Answers>
+              </Question>
+            )
+          })}
         </Questions>
         {!isQuizComplete && <Next onClick={() => onNextClick({ activeQuestionId: activeQuestion.id })}>Next</Next>}
       </QuizWrap>
