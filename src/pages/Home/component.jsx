@@ -14,14 +14,14 @@ import reducer, {
 import SpinnerLoader from '../../components/Spinner/component'
 import Timer from './Timer/component'
 
-const Terms = styled.div`
+const Questions = styled.div`
   max-width: 600px;
   margin: 0 auto;
 `
-const Term = styled.div`
+const Question = styled.div`
   padding: 24px;
   margin-bottom: 12px;
-  background-color: #e1e1e1;
+  background-color: #ffffff1c;
 `
 const Description = styled.div`
 `
@@ -97,9 +97,9 @@ const Home = () => {
         ))}
         Total time: {totalTime} seconds
       </SelectedAnswers>
-      <Terms>
+      <Questions>
         {questions.map(({ id, title, slug, excerpt, answers, isFinalQuestion }) => (
-          <Term key={id}>
+          <Question key={id}>
             <Description>{excerpt}</Description>
             <Answers>
               {answers.map(answer => (
@@ -120,9 +120,9 @@ const Home = () => {
                 </Answer>
               ))}
             </Answers>
-          </Term>
+          </Question>
         ))}
-      </Terms>
+      </Questions>
     </div>
   )
 }
