@@ -19,10 +19,12 @@ const QuizWrap = styled.div`
   margin: 0 auto;
   display: flex;
 `
-const Questions = styled.div``
+const Questions = styled.div`
+`
 const Question = styled.div`
   display: ${props => props.isQuizComplete || props.isActiveQuestion ? 'block' : 'none'};
   padding: 46px;
+  padding-bottom: 18px;
   background-color: #ffffff1c;
   padding-left: 0;
   padding-right: 0;
@@ -75,6 +77,7 @@ const SelectedAnswers = styled.div`
 `
 
 const Next = styled.div`
+  margin-left: 1px;
   background: #444;
   width: 114px;
   height: 114px;
@@ -83,6 +86,21 @@ const Next = styled.div`
   line-height: 114px;
   text-transform: uppercase;
   font-size: 14px;
+  cursor: pointer;
+
+  &:hover {
+    background: #3d3d3d;
+  };
+`
+const ProgressItems = styled.div`
+  padding: 8px 0;
+  box-shadow: inset -12px 0 10px -8px #353535;
+  background: #404040;
+  color: #a1a1a1;
+`
+const Progress = styled.div`
+  margin: 0px 1px 0px 0;
+  padding: 8px 14px;
 `
 
 const Home = () => {
@@ -130,6 +148,11 @@ const Home = () => {
         Total time: {totalTime} seconds
       </SelectedAnswers>
       <QuizWrap>
+        <ProgressItems>
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(item => (
+            <Progress>item</Progress>
+          ))}
+        </ProgressItems>
         <Questions>
           {questions.map(({ id, title, slug, excerpt, answers, isFinalQuestion }) => (
             <Question isQuizComplete={isQuizComplete} isActiveQuestion={id === activeQuestion.id}>
@@ -140,7 +163,7 @@ const Home = () => {
                     key={answer}
                     isCorrectAnswer={title === answer}
                     isSelectedAnswer={(selectedAnswers.filter(selectedAnswer => selectedAnswer.id === id)[0] || {}).selectedAnswer === answer}
-                    isQuizComplete={isQuizComplete}
+                    isQuizComplete
                     onClick={() => onSelectAnswer({
                       id,
                       selectedAnswer: answer,
