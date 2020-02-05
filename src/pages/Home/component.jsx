@@ -2,7 +2,15 @@ import React, { useEffect, useReducer } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 
-import reducer, { init, getDataRequested, getDataSucceeded, getDataFailed, selectAnswer, setTimer } from './reducer'
+import reducer, {
+  init,
+  getDataRequested,
+  getDataSucceeded,
+  getDataFailed,
+  selectAnswer,
+  setTimer,
+  completeQuiz,
+} from './reducer'
 import SpinnerLoader from '../../components/Spinner/component'
 import Timer from './Timer/component'
 
@@ -31,6 +39,7 @@ const Answer = styled.div`
 `
 
 const SelectedAnswers = styled.div`
+  display: ${props => props.isShow ? 'block' : 'none'};
   position: fixed;
   top: 40px;
   right: 40px;
@@ -42,7 +51,7 @@ const SelectedAnswer = styled.div`
 
 const Home = () => {
   const [state, dispatch] = useReducer(reducer, undefined, init)
-  const { terms, selectedAnswers, timeRemaining, asyncStatus } = state
+  const { isQuizComplete, questions, selectedAnswers, timeRemaining, asyncStatus } = state
 
   useEffect(() => {
     dispatch(getDataRequested())
@@ -51,21 +60,21 @@ const Home = () => {
       .catch(error => dispatch(getDataFailed({ payload: error })))
   }, [])
 
-  function onSelectAnswer({ id, selectedAnswer, correctAnswer }) {
+  function onSelectAnswer({ id, selectedAnswer, correctAnswer, isFinalQuestion }) {
     console.log(selectedAnswer, correctAnswer)
     dispatch(selectAnswer({ id, selectedAnswer, correctAnswer }))
+    isFinalQuestion && dispatch(completeQuiz())
   }
 
   function onSetTimer(payload) {
     dispatch(setTimer({ timeRemaining: payload }))
   }
-  console.log('timeRemainingtimeRemaining', timeRemaining)
 
   return (
     <div>
       <SpinnerLoader asyncStatus={asyncStatus} />
       <Timer timeRemaining={timeRemaining} setTimer={onSetTimer} />
-      <SelectedAnswers>
+      <SelectedAnswers isShow={isQuizComplete}>
         {selectedAnswers.map(({ id, selectedAnswer, correctAnswer }) => (
           <SelectedAnswer>
             <div>Term id: {id}</div>
@@ -76,14 +85,14 @@ const Home = () => {
         ))}
       </SelectedAnswers>
       <Terms>
-        {terms.map(({ id, title, slug, excerpt, answers }) => (
+        {questions.map(({ id, title, slug, excerpt, answers, isFinalQuestion }) => (
           <Term key={id}>
             <Description>{excerpt}</Description>
             <Answers>
               {answers.map(answer => (
                 <Answer
                   key={answer}
-                  onClick={() => onSelectAnswer({ id, selectedAnswer: answer, correctAnswer: title })}
+                  onClick={() => onSelectAnswer({ id, selectedAnswer: answer, correctAnswer: title, isFinalQuestion })}
                 >
                   {answer}
                 </Answer>

@@ -35,6 +35,12 @@ export const selectAnswer = (({ id, selectedAnswer, correctAnswer }) => ({
   },
 }))
 
+// complete quiz
+export const COMPLETE_QUIZ = 'COMPLETE_QUIZ'
+export const completeQuiz = () => ({
+  type: COMPLETE_QUIZ,
+})
+
 // set timer
 export const SET_TIMER = 'SET_TIMER'
 export const setTimer = ({ timeRemaining }) => ({
@@ -45,12 +51,15 @@ export const setTimer = ({ timeRemaining }) => ({
 })
 
 export const init = () => ({
+  isQuizComplete: false,
   count: 0,
-  terms: [],
+  questions: [],
   selectedAnswers: [],
   timeRemaining: 30,
   asyncStatus: SHAPE_ASYNC_STATUS_INITIAL,
 })
+
+const NUMBER_OF_QUESTIONS = 10
 
 
 export default function reducer(state, action) {
@@ -65,7 +74,6 @@ export default function reducer(state, action) {
 
     case GET_DATA_SUCCEEDED: {
       const { payload } = action
-      const NUMBER_OF_QUESTIONS = 10
       const NUMBER_OF_CHOICES = 3
 
       const termsByRandom = [...payload]
@@ -80,12 +88,13 @@ export default function reducer(state, action) {
           const incorrectAnswersForTerm = incorrectAnswers.slice(index * NUMBER_OF_CHOICES, (index * NUMBER_OF_CHOICES) + NUMBER_OF_CHOICES)
           return ({
             ...term,
-            answers: [term.title, ...incorrectAnswersForTerm]
+            answers: [term.title, ...incorrectAnswersForTerm],
+            isFinalQuestion: index === NUMBER_OF_QUESTIONS - 1
           })
         })
       return {
         ...state,
-        terms: termsForQuiz,
+        questions: termsForQuiz,
         asyncStatus: SHAPE_ASYNC_STATUS_SUCCEEDED,
       }
     }
@@ -106,6 +115,14 @@ export default function reducer(state, action) {
           ...state.selectedAnswers,
           action.payload,
         ],
+      }
+    }
+
+    // complete quiz
+    case COMPLETE_QUIZ: {
+      return {
+        ...state,
+        isQuizComplete: true,
       }
     }
 

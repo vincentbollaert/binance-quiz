@@ -8,6 +8,8 @@ const Timer = ({ timeRemaining, setTimer }) => {
     }
   })
 
+  // TODO: fix this timer
+
   return (
     <div>
       {timeRemaining}
