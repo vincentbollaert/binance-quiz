@@ -49,14 +49,19 @@ const Answer = styled.div`
   display: flex;
   align-items: center;
   position: relative;
+  cursor: pointer;
+  transition: box-shadow 0.1s ease;
 
-  ${props => props.isQuizComplete && `
-    ${props.isCorrect && 'box-shadow: inset 0 0 0 2px #5cf2aa; color: #5cf2aa; fill: #5cf2aa'};
-    ${props.isIncorrect && 'box-shadow: inset 0 0 0 2px #f25c5c; color: #f25c5c; fill: #f25c5c'};
-  `}
-  ${props => props.isTimeout && `
-    opacity: 0.5;
+  ${props => props.isQuestionFinished && `
+    opacity: 0.7;
     cursor: not-allowed;
+    ${(props.isCorrect || props.isIncorrect) && `
+      opacity: 1;
+      cursor: pointer;
+      box-shadow: inset 0 0 0 2px ${props.accentColor};
+      color: ${props.accentColor};
+      fill: ${props.accentColor};
+    `};
   `};
 `
 const AnswerStatus = styled(Svg)`
@@ -97,7 +102,7 @@ const SelectedAnswers = styled.div`
 
 const Next = styled.div`
   margin-left: 1px;
-  background: #444;
+  background-color: #444;
   width: 114px;
   height: 114px;
   flex-shrink: 0;
@@ -106,10 +111,21 @@ const Next = styled.div`
   text-transform: uppercase;
   font-size: 14px;
   cursor: pointer;
+  text-transform: uppercase;
+  font-weight: bold;
 
   &:hover {
-    background: #3d3d3d;
+    background-color: #3d3d3d;
   };
+
+  ${props => props.isQuestionFinished && `
+    background-color: #f0b90b;
+    color: #705603;
+
+    &:hover {
+      background-color: #ffba0a;
+    };
+  `}
 `
 const ProgressItems = styled.div`
   padding: 8px 0;
@@ -161,7 +177,6 @@ const Home = () => {
     return childRef.current.onGetTimeRemaining()
   }
   function onTimeFinished() {
-    console.log('whoops no more time')
     onSelectAnswer({
       id: activeQuestion.id,
       selectedAnswer: '',
@@ -170,6 +185,7 @@ const Home = () => {
       isTimeout: true,
     })
   }
+  console.log(selectedAnswers)
 
   return (
     <div>
@@ -188,6 +204,7 @@ const Home = () => {
           {questions.map(({ id, title, slug, excerpt, answers, isFinalQuestion }) => {
             const { selectedAnswer, isTimeout } = (selectedAnswers.filter(({ id: answerId }) => answerId === id)[0] || {})
             const isCorrect = selectedAnswer === title
+            const isQuestionFinished = selectedAnswer || isTimeout
 
             return (
               <Question isQuizComplete={isQuizComplete} isActiveQuestion={id === activeQuestion.id}>
@@ -200,11 +217,12 @@ const Home = () => {
                     return (
                       <Answer
                         key={answer}
-                        isTimeout={isTimeout}
+                        isQuestionFinished={isQuestionFinished}
                         isCorrect={isCorrect && isSelectedAnswerOption}
                         isIncorrect={!isCorrect && isSelectedAnswerOption}
+                        accentColor={isCorrect ? '#5cf2aa' : '#f25c5c'}
                         isQuizComplete
-                        onClick={() => onSelectAnswer({
+                        onClick={() => !isQuestionFinished && onSelectAnswer({
                           id,
                           selectedAnswer: answer,
                           correctAnswer: title,
@@ -236,7 +254,14 @@ const Home = () => {
             )
           })}
         </Questions>
-        {!isQuizComplete && <Next onClick={() => onNextClick({ activeQuestionId: activeQuestion.id })}>Next</Next>}
+        {!isQuizComplete && (
+          <Next
+            isQuestionFinished={(selectedAnswers[selectedAnswers.length - 1] || {}).id === activeQuestion.id}
+            onClick={() => onNextClick({ activeQuestionId: activeQuestion.id })}
+          >
+            Next
+          </Next>
+        )}
       </QuizWrap>
     </div>
   )
