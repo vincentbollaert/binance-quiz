@@ -42,12 +42,12 @@ export const completeQuiz = () => ({
   type: COMPLETE_QUIZ,
 })
 
-// set timer
-export const SET_TIMER = 'SET_TIMER'
-export const setTimer = ({ timeRemaining }) => ({
-  type: SET_TIMER,
+// show next question
+export const SHOW_NEXT_QUESTION = 'SHOW_NEXT_QUESTION'
+export const showNextQuestion = ({ activeQuestionId }) => ({
+  type: SHOW_NEXT_QUESTION,
   payload: {
-    timeRemaining,
+    activeQuestionId,
   },
 })
 
@@ -55,6 +55,9 @@ export const init = () => ({
   isQuizComplete: false,
   count: 0,
   questions: [],
+  activeQuestion: {
+    answers: [],
+  },
   selectedAnswers: [],
   timeRemaining: 30,
   totalTime: 0,
@@ -97,6 +100,7 @@ export default function reducer(state, action) {
       return {
         ...state,
         questions: termsForQuiz,
+        activeQuestion: termsForQuiz[0],
         asyncStatus: SHAPE_ASYNC_STATUS_SUCCEEDED,
       }
     }
@@ -110,7 +114,6 @@ export default function reducer(state, action) {
 
     // select choice
     case SELECT_ANSWER: {
-      console.log(action.payload)
       return {
         ...state,
         selectedAnswers: [
@@ -129,11 +132,13 @@ export default function reducer(state, action) {
       }
     }
 
-    // set timer
-    case SET_TIMER: {
+    // show next question
+    case SHOW_NEXT_QUESTION: {
+      const activeQuestionIndex = state.questions.findIndex(question => question.id === action.payload.activeQuestionId)
+      console.log(activeQuestionIndex)
       return {
         ...state,
-        timeRemaining: action.payload.timeRemaining,
+        activeQuestion: state.questions.find((question, index) => index === activeQuestionIndex + 1),
       }
     }
 

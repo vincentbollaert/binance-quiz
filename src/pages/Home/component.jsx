@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react'
+import React, { useEffect, useReducer, useRef } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 
@@ -8,8 +8,8 @@ import reducer, {
   getDataSucceeded,
   getDataFailed,
   selectAnswer,
-  setTimer,
   completeQuiz,
+  showNextQuestion,
 } from './reducer'
 import SpinnerLoader from '../../components/Spinner/component'
 import Timer from './Timer/component'
@@ -55,16 +55,23 @@ const SelectedAnswer = styled.div`
   border-bottom: 1px solid red;
 `
 
+const Next = styled.div`
+  background-color: red;
+`
+
 const Home = () => {
   const [state, dispatch] = useReducer(reducer, undefined, init)
+
   const {
     isQuizComplete,
     questions,
+    activeQuestion,
     selectedAnswers,
-    timeRemaining,
     totalTime,
     asyncStatus
   } = state
+  const { id, title, slug, excerpt, answers, isFinalQuestion } = activeQuestion
+  const childRef = useRef()
 
   useEffect(() => {
     dispatch(getDataRequested())
@@ -78,14 +85,22 @@ const Home = () => {
     if (isFinalQuestion) { dispatch(completeQuiz()) }
   }
 
-  function onSetTimer(payload) {
-    dispatch(setTimer({ timeRemaining: payload }))
+  function onNextClick({ activeQuestionId }) {
+    dispatch(showNextQuestion({ activeQuestionId }))
+    onResetTimer()
+  }
+
+  function onResetTimer() {
+    childRef.current.onResetTimer()
+  }
+  function onGetTimeRemaining() {
+    return childRef.current.onGetTimeRemaining()
   }
 
   return (
     <div>
       <SpinnerLoader asyncStatus={asyncStatus} />
-      <Timer timeRemaining={timeRemaining} setTimer={onSetTimer} />
+      <Timer ref={childRef} />
       <SelectedAnswers isShow={isQuizComplete}>
         {selectedAnswers.map(({ id, selectedAnswer, correctAnswer }) => (
           <SelectedAnswer>
@@ -97,32 +112,29 @@ const Home = () => {
         ))}
         Total time: {totalTime} seconds
       </SelectedAnswers>
-      <Questions>
-        {questions.map(({ id, title, slug, excerpt, answers, isFinalQuestion }) => (
-          <Question key={id}>
-            <Description>{excerpt}</Description>
-            <Answers>
-              {answers.map(answer => (
-                <Answer
-                  key={answer}
-                  isCorrectAnswer={title === answer}
-                  isSelectedAnswer={(selectedAnswers.filter(selectedAnswer => selectedAnswer.id === id)[0] || {}).selectedAnswer === answer}
-                  isQuizComplete={isQuizComplete}
-                  onClick={() => onSelectAnswer({
-                    id,
-                    selectedAnswer: answer,
-                    correctAnswer: title,
-                    timeToChoose: 30 - timeRemaining,
-                    isFinalQuestion,
-                  })}
-                >
-                  {answer}
-                </Answer>
-              ))}
-            </Answers>
-          </Question>
-        ))}
-      </Questions>
+      <Question>
+        <Description>{excerpt}</Description>
+        <Answers>
+          {answers.map(answer => (
+            <Answer
+              key={answer}
+              isCorrectAnswer={title === answer}
+              isSelectedAnswer={(selectedAnswers.filter(selectedAnswer => selectedAnswer.id === id)[0] || {}).selectedAnswer === answer}
+              isQuizComplete={isQuizComplete}
+              onClick={() => onSelectAnswer({
+                id,
+                selectedAnswer: answer,
+                correctAnswer: title,
+                timeToChoose: onGetTimeRemaining(),
+                isFinalQuestion,
+              })}
+            >
+              {answer}
+            </Answer>
+          ))}
+        </Answers>
+      </Question>
+      <Next onClick={() => onNextClick({ activeQuestionId: id })}>Next</Next>
     </div>
   )
 }
