@@ -136,6 +136,7 @@ const ProgressItems = styled.div`
 const Progress = styled.div`
   margin: 0px 1px 0px 0;
   padding: 8px 14px;
+  ${props => (props.isCorrect || props.isIncorrect) && `color: ${props.accentColor}`};
 `
 
 const Home = () => {
@@ -159,8 +160,8 @@ const Home = () => {
       .catch(error => dispatch(getDataFailed({ payload: error })))
   }, [])
 
-  function onSelectAnswer({ id, selectedAnswer, correctAnswer, timeToChoose, isFinalQuestion, isTimeout }) {
-    dispatch(selectAnswer({ id, selectedAnswer, correctAnswer, timeToChoose, isTimeout }))
+  function onSelectAnswer({ id, selectedAnswer, correctAnswer, timeToChoose, isFinalQuestion, isTimeout, isCorrect }) {
+    dispatch(selectAnswer({ id, selectedAnswer, correctAnswer, timeToChoose, isTimeout, isCorrect }))
     onResetTimer()
     if (isFinalQuestion) { dispatch(completeQuiz()) }
   }
@@ -181,6 +182,7 @@ const Home = () => {
       id: activeQuestion.id,
       selectedAnswer: '',
       correctAnswer: activeQuestion.title,
+      isCorrect: false,
       timeToChoose: 30,
       isTimeout: true,
     })
@@ -196,9 +198,18 @@ const Home = () => {
       </SelectedAnswers>
       <QuizWrap>
         <ProgressItems>
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(item => (
-            <Progress>item</Progress>
-          ))}
+          {questions.map(({ id }, index) => {
+            const { selectedAnswer, correctAnswer, isCorrect } = (selectedAnswers.filter(answer => answer.id === id)[0] || {})
+            return (
+              <Progress
+                isCorrect={isCorrect}
+                isIncorrect={isCorrect === false}
+                accentColor={isCorrect ? '#5cf2aa' : '#f25c5c'}
+              >
+                {index}
+              </Progress>
+            )
+          })}
         </ProgressItems>
         <Questions>
           {questions.map(({ id, title, slug, excerpt, answers, isFinalQuestion }) => {
@@ -226,6 +237,7 @@ const Home = () => {
                           id,
                           selectedAnswer: answer,
                           correctAnswer: title,
+                          isCorrect: answer === title,
                           timeToChoose: onGetTimeRemaining(),
                           isFinalQuestion,
                         })}

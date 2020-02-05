@@ -26,7 +26,7 @@ export const getDataFailed = (error) => ({
 
 // select choice
 export const SELECT_ANSWER = 'SELECT_ANSWER'
-export const selectAnswer = (({ id, selectedAnswer, correctAnswer, timeToChoose, isTimeout }) => ({
+export const selectAnswer = (({ id, selectedAnswer, correctAnswer, timeToChoose, isTimeout, isCorrect }) => ({
   type: SELECT_ANSWER,
   payload: {
     id,
@@ -34,6 +34,7 @@ export const selectAnswer = (({ id, selectedAnswer, correctAnswer, timeToChoose,
     correctAnswer,
     timeToChoose,
     isTimeout,
+    isCorrect,
   },
 }))
 
