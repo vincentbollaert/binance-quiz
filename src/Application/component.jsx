@@ -13,13 +13,13 @@ const GlobalStyle = createGlobalStyle`
 
 const STYLE_HEADER_HEIGHT_INT = 4.4
 const STYLE_HEADER_HEIGHT_SM_INT = 6.4
-const STYLE_PAGE_MARGIN = `${STYLE_HEADER_HEIGHT_INT + UNIT_LG_INT}rem auto 0`
-const STYLE_PAGE_MARGIN_SM = `${STYLE_HEADER_HEIGHT_SM_INT + UNIT_LG_INT}rem auto 0`
 
+const AppContainer = styled.div`
+  min-height: 100vh;
+  display: grid;
+  grid-template: "header" 64px "body" auto "footer" 380px;
+`
 const Header = styled.div`
-  position: fixed;
-  top: 0;
-  width: 100%;
   height: ${STYLE_HEADER_HEIGHT_INT}rem;
   background-color: #202020;
   
@@ -27,14 +27,19 @@ const Header = styled.div`
     height: ${STYLE_HEADER_HEIGHT_SM_INT}rem;
   `};
 `
+
+const Footer = styled.div`
+  grid-area: footer;
+  background-color: #202020;
+`
 const PageWrap = styled.div`
-  margin: ${STYLE_PAGE_MARGIN};
+  grid-area: body;
+  margin: ${UNIT_LG_INT}rem auto;
   padding: ${UNIT_LG};
   max-width: 1140px;
-  background-color: #353535;
+  background-color: #35353585;
 
   ${media.sm`
-    margin: ${STYLE_PAGE_MARGIN_SM};
     padding: 32px;
   `};
 `
@@ -43,12 +48,15 @@ const Application = () => {
   return (
     <>
       <GlobalStyle />
-      <Header />
-      <PageWrap>
-        <Switch>
-          <Route path="/" component={Home} />
-        </Switch>
-      </PageWrap>
+      <AppContainer>
+        <Header />
+        <PageWrap>
+          <Switch>
+            <Route path="/" component={Home} />
+          </Switch>
+        </PageWrap>
+        <Footer />
+      </AppContainer>
     </>
   )
 }
