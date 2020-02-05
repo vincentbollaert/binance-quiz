@@ -25,20 +25,30 @@ export const getDataFailed = (error) => ({
 })
 
 // select choice
-export const SELECT_CHOICE = 'SELECT_CHOICE'
-export const selectChoice = (({ id, selectedChoice, correctChoice }) => ({
-  type: SELECT_CHOICE,
+export const SELECT_ANSWER = 'SELECT_ANSWER'
+export const selectAnswer = (({ id, selectedAnswer, correctAnswer }) => ({
+  type: SELECT_ANSWER,
   payload: {
     id,
-    selectedChoice,
-    correctChoice,
+    selectedAnswer,
+    correctAnswer,
   },
 }))
+
+// set timer
+export const SET_TIMER = 'SET_TIMER'
+export const setTimer = ({ timeRemaining }) => ({
+  type: SET_TIMER,
+  payload: {
+    timeRemaining,
+  },
+})
 
 export const init = () => ({
   count: 0,
   terms: [],
-  choices: [],
+  selectedAnswers: [],
+  timeRemaining: 30,
   asyncStatus: SHAPE_ASYNC_STATUS_INITIAL,
 })
 
@@ -61,16 +71,16 @@ export default function reducer(state, action) {
       const termsByRandom = [...payload]
       randomiseArray(termsByRandom)
 
-      const choices = termsByRandom.map(({ title }) => title)
-      const incorrectChoices = choices.filter((item, index) => index >= NUMBER_OF_QUESTIONS)
+      const answers = termsByRandom.map(({ title }) => title)
+      const incorrectAnswers = answers.filter((item, index) => index >= NUMBER_OF_QUESTIONS)
 
       const termsForQuiz = termsByRandom
         .filter((item, index) => index < NUMBER_OF_QUESTIONS)
         .map((term, index) => {
-          const incorrectChoicesForTerm = incorrectChoices.slice(index * NUMBER_OF_CHOICES, (index * NUMBER_OF_CHOICES) + NUMBER_OF_CHOICES)
+          const incorrectAnswersForTerm = incorrectAnswers.slice(index * NUMBER_OF_CHOICES, (index * NUMBER_OF_CHOICES) + NUMBER_OF_CHOICES)
           return ({
             ...term,
-            choices: [term.title, ...incorrectChoicesForTerm]
+            answers: [term.title, ...incorrectAnswersForTerm]
           })
         })
       return {
@@ -88,14 +98,22 @@ export default function reducer(state, action) {
     }
 
     // select choice
-    case SELECT_CHOICE: {
+    case SELECT_ANSWER: {
       console.log(action.payload)
       return {
         ...state,
-        choices: [
-          ...state.choices,
+        selectedAnswers: [
+          ...state.selectedAnswers,
           action.payload,
         ],
+      }
+    }
+
+    // set timer
+    case SET_TIMER: {
+      return {
+        ...state,
+        timeRemaining: action.payload.timeRemaining,
       }
     }
 

@@ -2,8 +2,9 @@ import React, { useEffect, useReducer } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 
-import reducer, { init, getDataRequested, getDataSucceeded, getDataFailed, selectChoice } from './reducer'
+import reducer, { init, getDataRequested, getDataSucceeded, getDataFailed, selectAnswer, setTimer } from './reducer'
 import SpinnerLoader from '../../components/Spinner/component'
+import Timer from './Timer/component'
 
 const Terms = styled.div`
   max-width: 600px;
@@ -17,31 +18,31 @@ const Term = styled.div`
 const Description = styled.div`
 `
 
-const Choices = styled.div`
+const Answers = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 16px;
 `
-const Choice = styled.div`
+const Answer = styled.div`
   background: #444;
   padding: 4px 8px;
   color: #eee;
   margin: 0 4px;
 `
 
-const SelectedChoices = styled.div`
+const SelectedAnswers = styled.div`
   position: fixed;
   top: 40px;
   right: 40px;
   font-size: 12px;
 `
-const SelectedChoice = styled.div`
+const SelectedAnswer = styled.div`
   border-bottom: 1px solid red;
 `
 
 const Home = () => {
   const [state, dispatch] = useReducer(reducer, undefined, init)
-  const { terms, choices, asyncStatus } = state
+  const { terms, selectedAnswers, timeRemaining, asyncStatus } = state
 
   useEffect(() => {
     dispatch(getDataRequested())
@@ -50,38 +51,44 @@ const Home = () => {
       .catch(error => dispatch(getDataFailed({ payload: error })))
   }, [])
 
-  function handleChoiceSelect({ id, choice, correctChoice }) {
-    console.log(choice, correctChoice)
-    dispatch(selectChoice({ id, selectedChoice: choice, correctChoice }))
+  function onSelectAnswer({ id, selectedAnswer, correctAnswer }) {
+    console.log(selectedAnswer, correctAnswer)
+    dispatch(selectAnswer({ id, selectedAnswer, correctAnswer }))
   }
+
+  function onSetTimer(payload) {
+    dispatch(setTimer({ timeRemaining: payload }))
+  }
+  console.log('timeRemainingtimeRemaining', timeRemaining)
 
   return (
     <div>
       <SpinnerLoader asyncStatus={asyncStatus} />
-      <SelectedChoices>
-        {choices.map(({ id, selectedChoice, correctChoice }) => (
-          <SelectedChoice>
+      <Timer timeRemaining={timeRemaining} setTimer={onSetTimer} />
+      <SelectedAnswers>
+        {selectedAnswers.map(({ id, selectedAnswer, correctAnswer }) => (
+          <SelectedAnswer>
             <div>Term id: {id}</div>
-            <div>selected choice: {selectChoice}</div>
-            <div>correct choice: {correctChoice}</div>
-            <div>correct? {selectedChoice === correctChoice ? 'YES :)' : 'NO :('}</div>
-          </SelectedChoice>
+            <div>selected answer: {selectedAnswer}</div>
+            <div>correct answer: {correctAnswer}</div>
+            <div>correct? {selectedAnswer === correctAnswer ? 'YES :)' : 'NO :('}</div>
+          </SelectedAnswer>
         ))}
-      </SelectedChoices>
+      </SelectedAnswers>
       <Terms>
-        {terms.map(({ id, title, slug, excerpt, choices: termChoices }) => (
+        {terms.map(({ id, title, slug, excerpt, answers }) => (
           <Term key={id}>
             <Description>{excerpt}</Description>
-            <Choices>
-              {termChoices.map(choice => (
-                <Choice
-                  key={choice}
-                  onClick={() => handleChoiceSelect({ id, choice, correctChoice: title })}
+            <Answers>
+              {answers.map(answer => (
+                <Answer
+                  key={answer}
+                  onClick={() => onSelectAnswer({ id, selectedAnswer: answer, correctAnswer: title })}
                 >
-                  {choice}
-                </Choice>
+                  {answer}
+                </Answer>
               ))}
-            </Choices>
+            </Answers>
           </Term>
         ))}
       </Terms>
