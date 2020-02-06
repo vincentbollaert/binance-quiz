@@ -37,10 +37,10 @@ class Accordion extends React.Component {
 
   render() {
     const { isOpen } = this.state
-    const { content } = this.props
+    const { content, className } = this.props
     return (
       <>
-        <AccordionToggle isOpen={isOpen} svg={chevronDown} size={2.4} onClick={this.onToggle} />
+        <AccordionToggle isOpen={isOpen} svg={chevronDown} size={2.4} onClick={this.onToggle} className={className} />
         <Wrap>
           <AccordionContent isOpen={isOpen}>
             {content}

@@ -17,9 +17,10 @@ import Timer, { TIMER_LENGTH } from './Timer/component'
 import Radio from '../../components/Radio/component'
 import Tooltip from '../../components/Tooltip/component'
 import Accordion from '../../components/Accordion/component'
+import Results from './Results/component'
 
 const STYLE_QUIZ_WIDTH = 86
-const STYLE_RESULTS_WIDTH = 20
+export const STYLE_RESULTS_WIDTH = 20
 
 const QuizWrap = styled.div`
   width: 100%;
@@ -119,6 +120,16 @@ const AdditionalInfo = styled.div`
     font-size: 12px;
   `};
 `
+const TooltipStyled = styled(Tooltip)`
+  ${media.xsm`
+    display: none;
+  `};
+`
+const AccordionStyled = styled(Accordion)`
+  ${media.xsm`
+    display: none;
+  `};
+`
 const Link = styled.a`
   color: inherit;
 
@@ -179,16 +190,6 @@ const NextTotal = styled.div`
   position: absolute;
   right: 2px;
   bottom: 0px;
-`
-const ResultsBreakdown = styled.div`
-  display: ${props => props.isShow ? 'block' : 'none'};
-  position: fixed;
-  width: ${STYLE_RESULTS_WIDTH}rem;
-  font-size: 12px;
-  background: rebeccapurple;
-  padding: 36px;
-  left: 50%;
-  margin-left: ${33 + UNIT_XSM_INT}rem;
 `
 
 const Home = () => {
@@ -303,10 +304,10 @@ const Home = () => {
                           {isTimeout && 'Took too long'}
                         </AdditionalInfo>
                         {isQuizComplete && isSelectedAnswerOption && isCorrect && (
-                          <Tooltip label={dummyRandomNumber} tooltip={`${dummyRandomNumber}% of users got this right`} />
+                          <TooltipStyled label={dummyRandomNumber} tooltip={`${dummyRandomNumber}% of users got this right`} />
                         )}
                         {isQuizComplete && isSelectedAnswerOption && !isCorrect && (
-                          <Accordion content={`Definition: ${questionMatchingAnswer.excerpt}`} />
+                          <AccordionStyled content={`Definition: ${questionMatchingAnswer.excerpt}`} />
                         )}
                       </Answer>
                     )
@@ -330,9 +331,10 @@ const Home = () => {
             )}
           </Next>
         )}
-        <ResultsBreakdown isShow={isQuizComplete}>
-          Total time: {totalTime} seconds
-        </ResultsBreakdown>
+        <Results
+          isQuizComplete={isQuizComplete}
+          totalTime={totalTime}
+        />
       </QuizWrap>
     </div>
   )
