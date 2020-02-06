@@ -24,6 +24,7 @@ const QuizWrap = styled.div`
   display: flex;
 `
 const Questions = styled.div`
+  position: relative;
 `
 const Question = styled.div`
   display: ${props => props.isQuizComplete || props.isActiveQuestion ? 'block' : 'none'};
@@ -102,7 +103,6 @@ const SelectedAnswers = styled.div`
 `
 
 const Next = styled.button`
-  margin-left: 1px;
   background-color: #444;
   width: 114px;
   height: 114px;
@@ -125,18 +125,6 @@ const Next = styled.button`
       background-color: #ffba0a;
     };
   `}
-`
-const ProgressItems = styled.div`
-  display: none;
-  padding: 8px 0;
-  box-shadow: inset -5px 0 11px -10px #0000008c;
-  background: #404040;
-  color: #a1a1a1;
-`
-const Progress = styled.div`
-  margin: 0px 1px 0px 0;
-  padding: 8px 14px;
-  ${props => (props.isCorrect || props.isIncorrect) && `color: ${props.accentColor}`};
 `
 
 const Home = () => {
@@ -175,7 +163,7 @@ const Home = () => {
     childRef.current.onResetTimer()
   }
   function onGetTimeRemaining() {
-    return childRef.current.onGetTimeRemaining()
+    return childRef.current ? childRef.current.onGetTimeRemaining() : 15
   }
   function onTimeFinished() {
     onSelectAnswer({
@@ -183,35 +171,20 @@ const Home = () => {
       selectedAnswer: '',
       correctAnswer: activeQuestion.title,
       isCorrect: false,
-      timeToChoose: 30,
+      timeToChoose: 15,
       isTimeout: true,
     })
   }
-  console.log(selectedAnswers)
 
   return (
     <div>
       <SpinnerLoader asyncStatus={asyncStatus} />
-      <Timer ref={childRef} setTimeFinished={onTimeFinished} />
       <SelectedAnswers isShow={isQuizComplete}>
         Total time: {totalTime} seconds
       </SelectedAnswers>
       <QuizWrap>
-        <ProgressItems>
-          {questions.map(({ id }, index) => {
-            const { selectedAnswer, correctAnswer, isCorrect } = (selectedAnswers.filter(answer => answer.id === id)[0] || {})
-            return (
-              <Progress
-                isCorrect={isCorrect}
-                isIncorrect={isCorrect === false}
-                accentColor={isCorrect ? '#5cf2aa' : '#f25c5c'}
-              >
-                {index}
-              </Progress>
-            )
-          })}
-        </ProgressItems>
         <Questions>
+          <Timer ref={childRef} setTimeFinished={onTimeFinished} />
           {questions.map(({ id, title, slug, excerpt, answers, isFinalQuestion }) => {
             const { selectedAnswer, isTimeout } = (selectedAnswers.filter(({ id: answerId }) => answerId === id)[0] || {})
             const isCorrect = selectedAnswer === title
