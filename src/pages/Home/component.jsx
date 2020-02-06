@@ -2,7 +2,7 @@ import React, { useEffect, useReducer, useRef } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 
-import { media, UNIT_LG, UNIT_XSM_INT } from '../../styles'
+import { media, UNIT_LG, UNIT_XSM_INT, SELECTIVE_YELLOW, MEDIUM_AQUAMARINE, SUNSET_ORANGE } from '../../styles'
 import reducer, {
   init,
   getDataRequested,
@@ -15,6 +15,7 @@ import reducer, {
 import SpinnerLoader from '../../components/Spinner/component'
 import Timer, { TIMER_LENGTH } from './Timer/component'
 import Radio from '../../components/Radio/component'
+import Tooltip from '../../components/Tooltip/component'
 
 const STYLE_QUIZ_WIDTH = 86
 const STYLE_RESULTS_WIDTH = 20
@@ -96,6 +97,7 @@ const Answer = styled.div`
   `};
 `
 const AdditionalInfo = styled.div`
+  display: none;
   position: absolute;
   right: 4px;
   bottom: 4px;
@@ -107,6 +109,7 @@ const AdditionalInfo = styled.div`
   color: ${props => props.isTimeout ? '#b8b8b8' : 'inherit'};
 
   ${media.xsm`
+    display: block;
     position: static;
     font-size: 12px;
   `};
@@ -137,7 +140,7 @@ const Next = styled.button`
 
   ${props => props.isQuestionFinished && `
     pointer-events: all;
-    background-color: #f0b90b;
+    background-color: ${SELECTIVE_YELLOW};
     color: #705603;
 
     &:hover {
@@ -260,7 +263,7 @@ const Home = () => {
                         isQuestionFinished={isQuestionFinished}
                         isCorrect={isCorrect && isSelectedAnswerOption}
                         isIncorrect={!isCorrect && isSelectedAnswerOption}
-                        accentColor={isCorrect ? '#5cf2aa' : '#f25c5c'}
+                        accentColor={isCorrect ? MEDIUM_AQUAMARINE : SUNSET_ORANGE}
                         isQuizComplete={isQuizComplete}
                         onClick={() => !isQuestionFinished && onSelectAnswer({
                           id,
@@ -276,7 +279,7 @@ const Home = () => {
                           checked={isSelectedAnswerOption}
                           id={id}
                           name={id}
-                          accentColor={isCorrect ? '#5cf2aa' : '#f25c5c'}
+                          accentColor={isCorrect ? MEDIUM_AQUAMARINE : SUNSET_ORANGE}
                         />
                         {answer}
                         <AdditionalInfo isTimeout={isTimeout}>
@@ -294,6 +297,9 @@ const Home = () => {
                           {!isQuizComplete && isSelectedAnswerOption && `${dummyRandomNumber}% of users chose this option`}
                           {isTimeout && 'Took too long'}
                         </AdditionalInfo>
+                        {isQuizComplete && isSelectedAnswerOption && isCorrect && (
+                          <Tooltip label={dummyRandomNumber} tooltip={`${dummyRandomNumber}% of users got this right`} />
+                        )}
                       </Answer>
                     )
                   })}

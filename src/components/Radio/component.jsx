@@ -1,13 +1,11 @@
 import React from 'react'
 import { bool, string, number } from 'prop-types'
 import styled from 'styled-components'
-import { UNIT_SM, UNIT_LG } from '../../styles'
+import { UNIT_LG, SELECTIVE_YELLOW } from '../../styles'
 
 const SIZE = 24
 const BG = '#636363'
 export const RADIO_STYLED_CLASSNAME = 'radio-styled'
-
-const COLOR_PRIMARY = '#f0b90b'
 
 export const Wrap = styled.div`
   display: flex;
@@ -92,7 +90,7 @@ class Radio extends React.PureComponent {
       name,
       className,
     } = this.props
-    const accentColorConditional = isQuizComplete ? accentColor : COLOR_PRIMARY
+    const accentColorConditional = isQuizComplete ? accentColor : SELECTIVE_YELLOW
 
     return (
       <Wrap className={className}>
