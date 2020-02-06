@@ -133,6 +133,7 @@ export default function reducer(state, action) {
       return {
         ...state,
         isQuizComplete: true,
+        activeQuestion: {},
       }
     }
 
