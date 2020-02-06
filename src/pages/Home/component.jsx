@@ -12,6 +12,8 @@ import reducer, {
   completeQuiz,
   showNextQuestion,
 } from './reducer'
+import chevronDown from '../../assets/svg/chevron-down.svg'
+import Svg from '../../components/Svg/component'
 import SpinnerLoader from '../../components/Spinner/component'
 import Timer, { TIMER_LENGTH } from './Timer/component'
 import Radio from '../../components/Radio/component'
@@ -71,6 +73,7 @@ const Answer = styled.div`
   padding: ${UNIT_LG};
   color: #eee;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   position: relative;
   cursor: pointer;
@@ -113,6 +116,21 @@ const AdditionalInfo = styled.div`
     position: static;
     font-size: 12px;
   `};
+`
+const Accordion = styled.div`
+  position: relative;
+`
+const AccordionToggle = styled(Svg)`
+  position: absolute;
+  right: 0;
+  bottom: 100%;
+  transform: translateY(-50%);
+  fill: ${SUNSET_ORANGE};
+  cursor: pointer;
+`
+const AccordionContent = styled.div`
+  margin-top: 8px;
+  margin-left: 40px;
 `
 const Link = styled.a`
   color: inherit;
@@ -299,6 +317,14 @@ const Home = () => {
                         </AdditionalInfo>
                         {isQuizComplete && isSelectedAnswerOption && isCorrect && (
                           <Tooltip label={dummyRandomNumber} tooltip={`${dummyRandomNumber}% of users got this right`} />
+                        )}
+                        {isQuizComplete && isSelectedAnswerOption && !isCorrect && (
+                          <Accordion>
+                            <AccordionToggle svg={chevronDown} size={1.4} />
+                            <AccordionContent>
+                              Definition: {questionMatchingAnswer.excerpt}
+                            </AccordionContent>
+                          </Accordion>
                         )}
                       </Answer>
                     )
