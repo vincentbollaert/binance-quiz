@@ -19,7 +19,7 @@ export const UNIT_XLG = `${UNIT_XLG_INT}rem`
 // media queries
 export const sizes = {
   xsm: 540,
-  sm: 780,
+  sm: 940,
   lg: 1140,
 }
 
