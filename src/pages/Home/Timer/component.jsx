@@ -49,9 +49,10 @@ class Timer extends Component {
   }
 
   render() {
+    const { isQuizComplete } = this.props
     const { timeRemaining } = this.state
     return (
-      <Progress progress={((TIMER_LENGTH - timeRemaining) / TIMER_LENGTH) * 100} />
+      isQuizComplete ? null : <Progress progress={((TIMER_LENGTH - timeRemaining) / TIMER_LENGTH) * 100} />
     )
   }
 }

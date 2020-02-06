@@ -2,6 +2,7 @@ import React, { useEffect, useReducer, useRef } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 
+import { media, UNIT_LG } from '../../styles'
 import reducer, {
   init,
   getDataRequested,
@@ -16,9 +17,14 @@ import Timer, { TIMER_LENGTH } from './Timer/component'
 import Radio from '../../components/Radio/component'
 
 const QuizWrap = styled.div`
-  max-width: 860px;
+  width: 100%;
   margin: 0 auto;
   display: flex;
+  transition: width 1s ease;
+
+  ${media.sm`
+    width: 860px;
+  `};
 `
 const Questions = styled.div`
   position: relative;
@@ -28,6 +34,11 @@ const Question = styled.div`
   padding: 46px 0 26px;
   padding-bottom: 18px;
   background-color: #353535;
+  ${props => props.isQuestionFinished && `margin-bottom: ${UNIT_LG}`};
+
+  &:last-child {
+    margin-bottom: 0;
+  };
 `
 const Description = styled.div`
   font-size: 18px;
@@ -88,18 +99,20 @@ const SelectedAnswers = styled.div`
 `
 
 const Next = styled.button`
+  display: flex;
+  justify-content: center;
   background-color: #444;
   width: 114px;
   height: 114px;
   flex-shrink: 0;
-  text-align: center;
-  line-height: 114px;
+  line-height: 1;
   text-transform: uppercase;
   font-size: 14px;
   cursor: pointer;
   text-transform: uppercase;
   font-weight: bold;
   pointer-events: none;
+  color: #7e7e7e;
 
   ${props => props.isQuestionFinished && `
     pointer-events: all;
@@ -110,6 +123,33 @@ const Next = styled.button`
       background-color: #ffba0a;
     };
   `}
+`
+const NextContent = styled.div`
+  width: 40px;
+  height: 40px;
+  position: relative;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  font-size: 17px;
+`
+const NextCurrent = styled.div`
+  position: absolute;
+  top: 0px;
+  left: 4px;
+`
+const NextDivider = styled.div`
+  width: 47px;
+  height: 1px;
+  background: ${props => props.isQuestionFinished ? '#997e287a' : '#ffffff21'};
+  position: absolute;
+  margin-top: 0px;
+  margin-left: 0px;
+`
+const NextTotal = styled.div`
+  position: absolute;
+  right: 2px;
+  bottom: 0px;
 `
 
 const Home = () => {
@@ -133,15 +173,15 @@ const Home = () => {
       .catch(error => dispatch(getDataFailed({ payload: error })))
   }, [])
 
-  function onSelectAnswer({ id, selectedAnswer, correctAnswer, timeToChoose, isFinalQuestion, isTimeout, isCorrect }) {
+  function onSelectAnswer({ id, selectedAnswer, correctAnswer, timeToChoose, isTimeout, isCorrect }) {
     dispatch(selectAnswer({ id, selectedAnswer, correctAnswer, timeToChoose, isTimeout, isCorrect }))
     onStopTimer({ isReset: false })
-    if (isFinalQuestion) { dispatch(completeQuiz()) }
   }
 
-  function onNextClick({ activeQuestionId }) {
+  function onNextClick({ activeQuestionId, isFinalQuestion }) {
     dispatch(showNextQuestion({ activeQuestionId }))
     onStopTimer({ isReset: true })
+    if (isFinalQuestion) { dispatch(completeQuiz()) }
   }
 
   function onStopTimer({ isReset }) {
@@ -160,6 +200,7 @@ const Home = () => {
       isTimeout: true,
     })
   }
+  const isQuestionFinished2 = (selectedAnswers[selectedAnswers.length - 1] || {}).id === activeQuestion.id
 
   return (
     <div>
@@ -169,8 +210,8 @@ const Home = () => {
       </SelectedAnswers>
       <QuizWrap>
         <Questions>
-          <Timer ref={childRef} setTimeFinished={onTimeFinished} />
-          {questions.map(({ id, title, excerpt, answers, isFinalQuestion }) => {
+          <Timer isQuizComplete={isQuizComplete} ref={childRef} setTimeFinished={onTimeFinished} />
+          {questions.map(({ id, title, excerpt, answers }) => {
             const { selectedAnswer, isTimeout } = (selectedAnswers.filter(({ id: answerId }) => answerId === id)[0] || {})
             const isCorrect = selectedAnswer === title
             const isQuestionFinished = selectedAnswer || isTimeout
@@ -198,7 +239,6 @@ const Home = () => {
                           correctAnswer: title,
                           isCorrect: answer === title,
                           timeToChoose: onGetTimeRemaining(),
-                          isFinalQuestion,
                         })}
                       >
                         <Radio
@@ -235,10 +275,16 @@ const Home = () => {
         </Questions>
         {!isQuizComplete && (
           <Next
-            isQuestionFinished={(selectedAnswers[selectedAnswers.length - 1] || {}).id === activeQuestion.id}
-            onClick={() => onNextClick({ activeQuestionId: activeQuestion.id })}
+            isQuestionFinished={isQuestionFinished2}
+            onClick={() => onNextClick({ activeQuestionId: activeQuestion.id, isFinalQuestion: activeQuestion.isFinalQuestion })}
           >
-            Next
+            {selectedAnswers.length && selectedAnswers.length === questions.length ? 'Finish' : (
+              <NextContent>
+                <NextCurrent>{selectedAnswers.length + 1}</NextCurrent>
+                <NextDivider isQuestionFinished={isQuestionFinished2} />
+                <NextTotal>10</NextTotal>
+              </NextContent>
+            )}
           </Next>
         )}
       </QuizWrap>
