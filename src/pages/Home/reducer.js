@@ -140,7 +140,6 @@ export default function reducer(state, action) {
     // show next question
     case SHOW_NEXT_QUESTION: {
       const activeQuestionIndex = state.questions.findIndex(question => question.id === action.payload.activeQuestionId)
-      console.log(activeQuestionIndex)
       return {
         ...state,
         activeQuestion: state.questions.find((question, index) => index === activeQuestionIndex + 1),

@@ -2,7 +2,7 @@ import React, { useEffect, useReducer, useRef } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 
-import { media, UNIT_LG } from '../../styles'
+import { media, UNIT_LG, UNIT_XSM_INT } from '../../styles'
 import reducer, {
   init,
   getDataRequested,
@@ -16,14 +16,17 @@ import SpinnerLoader from '../../components/Spinner/component'
 import Timer, { TIMER_LENGTH } from './Timer/component'
 import Radio from '../../components/Radio/component'
 
+const STYLE_QUIZ_WIDTH = 86
+const STYLE_RESULTS_WIDTH = 20
+
 const QuizWrap = styled.div`
   width: 100%;
   margin: 0 auto;
   display: flex;
-  transition: width 1s ease;
+  transition: width 0.1s ease-out;
 
   ${media.sm`
-    width: 860px;
+    width: ${props => props.isQuizComplete ? `${STYLE_QUIZ_WIDTH - STYLE_RESULTS_WIDTH}rem` : `${STYLE_QUIZ_WIDTH}rem`};
   `};
 `
 const Questions = styled.div`
@@ -90,14 +93,6 @@ const Link = styled.a`
   };
 `
 
-const SelectedAnswers = styled.div`
-  display: ${props => props.isShow ? 'block' : 'none'};
-  position: fixed;
-  top: 40px;
-  right: 40px;
-  font-size: 12px;
-`
-
 const Next = styled.button`
   display: flex;
   justify-content: center;
@@ -151,12 +146,22 @@ const NextTotal = styled.div`
   right: 2px;
   bottom: 0px;
 `
+const ResultsBreakdown = styled.div`
+  display: ${props => props.isShow ? 'block' : 'none'};
+  position: fixed;
+  width: ${STYLE_RESULTS_WIDTH}rem;
+  font-size: 12px;
+  background: rebeccapurple;
+  padding: 36px;
+  left: 50%;
+  margin-left: ${33 + UNIT_XSM_INT}rem;
+`
 
 const Home = () => {
   const [state, dispatch] = useReducer(reducer, undefined, init)
 
   const {
-    isQuizComplete,
+    // isQuizComplete,
     questions,
     allQuestions,
     activeQuestion,
@@ -201,14 +206,12 @@ const Home = () => {
     })
   }
   const isQuestionFinished2 = (selectedAnswers[selectedAnswers.length - 1] || {}).id === activeQuestion.id
+  const isQuizComplete = true
 
   return (
     <div>
       <SpinnerLoader asyncStatus={asyncStatus} />
-      <SelectedAnswers isShow={isQuizComplete}>
-        Total time: {totalTime} seconds
-      </SelectedAnswers>
-      <QuizWrap>
+      <QuizWrap isQuizComplete={isQuizComplete}>
         <Questions>
           <Timer isQuizComplete={isQuizComplete} ref={childRef} setTimeFinished={onTimeFinished} />
           {questions.map(({ id, title, excerpt, answers }) => {
@@ -287,6 +290,9 @@ const Home = () => {
             )}
           </Next>
         )}
+        <ResultsBreakdown isShow={isQuizComplete}>
+          Total time: {totalTime} seconds
+        </ResultsBreakdown>
       </QuizWrap>
     </div>
   )
