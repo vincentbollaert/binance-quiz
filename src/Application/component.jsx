@@ -41,10 +41,12 @@ const Footer = styled.div`
 `
 const PageWrap = styled.div`
   grid-area: body;
-  margin: ${UNIT_LG_INT}rem auto;
-  padding: ${UNIT_LG};
   max-width: 1140px;
 
+  ${media.xsm`
+    margin: ${UNIT_LG_INT}rem auto;
+    padding: ${UNIT_LG};
+  `}
   ${media.sm`
     padding: 32px;
   `};

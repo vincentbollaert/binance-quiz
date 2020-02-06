@@ -34,26 +34,40 @@ const Questions = styled.div`
 `
 const Question = styled.div`
   display: ${props => props.isQuizComplete || props.isActiveQuestion ? 'block' : 'none'};
-  padding: 46px 0 26px;
-  padding-bottom: 18px;
+  padding-top: ${UNIT_LG};
+  padding-bottom: 0;
   background-color: #353535;
   ${props => props.isQuestionFinished && `margin-bottom: ${UNIT_LG}`};
 
+  ${media.xsm`
+    padding-top: 46px;
+    padding-bottom: 18px;
+  `}
   &:last-child {
     margin-bottom: 0;
   };
 `
 const Description = styled.div`
-  font-size: 18px;
-  margin-bottom: 50px;
-  padding: 0 46px;
+  font-size: 16px;
+  margin-bottom: ${UNIT_LG};
+  padding: 0 ${UNIT_LG};
+
+  ${media.xsm`
+    font-size: 18px;
+    margin-bottom: 50px;
+    padding: 0 46px;
+  `}
 `
 
 const Answers = styled.div`
-  font-size: 15px;
+  font-size: 12px;
+
+  ${media.xsm`
+    font-size: 15px;
+  `}
 `
 const Answer = styled.div`
-  padding: 24px 24px 24px 46px;
+  padding: ${UNIT_LG};
   color: #eee;
   display: flex;
   align-items: center;
@@ -75,15 +89,27 @@ const Answer = styled.div`
       color: ${props.isQuizComplete ? props.accentColor : 'inherit'};
     `};
   `};
+
+  ${media.xsm`
+    padding: 24px;
+    padding-left: 46px;
+  `};
 `
 const AdditionalInfo = styled.div`
-  font-size: 12px;
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
   margin-left: auto;
   max-width: 280px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   color: ${props => props.isTimeout ? '#b8b8b8' : 'inherit'};
+
+  ${media.xsm`
+    position: static;
+    font-size: 12px;
+  `};
 `
 const Link = styled.a`
   color: inherit;
