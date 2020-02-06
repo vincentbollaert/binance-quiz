@@ -53,7 +53,7 @@ const Description = styled.div`
   color: #acacad;
 `
 
-const Results = ({ isQuizComplete, totalTime }) => (
+const Results = ({ isQuizComplete, totalTime, onResetQuiz, asyncStatus }) => (
   isQuizComplete ? (
     <Wrap isShow={isQuizComplete}>
       <Header>Quiz complete</Header>
@@ -66,7 +66,7 @@ const Results = ({ isQuizComplete, totalTime }) => (
         <Description>8 / 10</Description>
       </Row>
       <Row>
-        <Button>Try again</Button>
+        <Button onClick={onResetQuiz} asyncStatus={asyncStatus}>Try again</Button>
       </Row>
     </Wrap>) : null
 )

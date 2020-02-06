@@ -55,14 +55,12 @@ export const showNextQuestion = ({ activeQuestionId }) => ({
 
 export const init = () => ({
   isQuizComplete: false,
-  count: 0,
   questions: [],
   allQuestions: [],
   activeQuestion: {
     answers: [],
   },
   selectedAnswers: [],
-  timeRemaining: 30,
   totalTime: 0,
   asyncStatus: SHAPE_ASYNC_STATUS_INITIAL,
 })
@@ -102,6 +100,9 @@ export default function reducer(state, action) {
         })
       return {
         ...state,
+        isQuizComplete: false,
+        selectedAnswers: [],
+        totalTime: 0,
         questions: termsForQuiz,
         allQuestions: termsByRandom,
         activeQuestion: termsForQuiz[0],

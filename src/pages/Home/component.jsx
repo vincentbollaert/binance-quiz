@@ -2,7 +2,7 @@ import React, { useEffect, useReducer, useRef } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 
-import { media, UNIT_LG, UNIT_XSM_INT, SELECTIVE_YELLOW, MEDIUM_AQUAMARINE, SUNSET_ORANGE } from '../../styles'
+import { media, UNIT_LG, SELECTIVE_YELLOW, MEDIUM_AQUAMARINE, SUNSET_ORANGE } from '../../styles'
 import reducer, {
   init,
   getDataRequested,
@@ -42,6 +42,7 @@ const QuizWrap = styled.div`
 `
 const Questions = styled.div`
   position: relative;
+  width: 100%;
 `
 const Question = styled.div`
   display: ${props => props.isQuizComplete || props.isActiveQuestion ? 'block' : 'none'};
@@ -210,16 +211,20 @@ const Home = () => {
     activeQuestion,
     selectedAnswers,
     totalTime,
-    asyncStatus
+    asyncStatus,
   } = state
   const childRef = useRef()
 
   useEffect(() => {
+    getData()
+  }, [])
+
+  function getData() {
     dispatch(getDataRequested())
-    axios.get(`https://api.allorigins.win/raw?url=http://api.binance.vision/api/glossaries`)
+    axios.get('https://api.allorigins.win/raw?url=http://api.binance.vision/api/glossaries')
       .then(({ data }) => dispatch(getDataSucceeded({ payload: data })))
       .catch(error => dispatch(getDataFailed({ payload: error })))
-  }, [])
+  }
 
   function onSelectAnswer({ id, selectedAnswer, correctAnswer, timeToChoose, isTimeout, isCorrect }) {
     dispatch(selectAnswer({ id, selectedAnswer, correctAnswer, timeToChoose, isTimeout, isCorrect }))
@@ -342,6 +347,8 @@ const Home = () => {
         <Results
           isQuizComplete={isQuizComplete}
           totalTime={totalTime}
+          onResetQuiz={getData}
+          asyncStatus={asyncStatus}
         />
       </QuizWrap>
     </div>
