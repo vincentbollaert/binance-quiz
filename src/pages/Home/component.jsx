@@ -26,7 +26,7 @@ const QuizWrap = styled.div`
   width: 100%;
   margin: 0 auto;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: ${props => props.isQuizComplete ? 'column-reverse' : 'column'};
   transition: width 0.1s ease-out;
 
   ${media.sm`
@@ -45,7 +45,7 @@ const Questions = styled.div`
 `
 const Question = styled.div`
   display: ${props => props.isQuizComplete || props.isActiveQuestion ? 'block' : 'none'};
-  ${props => props.isQuestionFinished && `margin-bottom: ${UNIT_LG}`};
+  ${props => props.isQuizComplete && `margin-bottom: ${UNIT_LG}`};
   padding-top: 2.4rem;
   padding-bottom: 0.8rem;
   background-color: #353535;
@@ -78,11 +78,10 @@ const Answers = styled.div`
 
   ${media.xsm`
     font-size: 15px;
-  `}
+  `};
 `
 const Answer = styled.div`
   padding: ${UNIT_LG};
-  /* color: #eee; */
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -148,6 +147,7 @@ const Link = styled.a`
 
 const Next = styled.button`
   display: flex;
+  margin-left: auto;
   justify-content: center;
   background-color: #444;
   width: 114px;
@@ -204,7 +204,7 @@ const Home = () => {
   const [state, dispatch] = useReducer(reducer, undefined, init)
 
   const {
-    // isQuizComplete,
+    isQuizComplete,
     questions,
     allQuestions,
     activeQuestion,
@@ -249,7 +249,7 @@ const Home = () => {
     })
   }
   const isQuestionFinished2 = (selectedAnswers[selectedAnswers.length - 1] || {}).id === activeQuestion.id
-  const isQuizComplete = true
+  // const isQuizComplete = true
 
   return (
     <div>
