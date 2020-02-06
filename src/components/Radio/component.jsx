@@ -15,11 +15,6 @@ export const Wrap = styled.div`
   margin-right: ${UNIT_LG};
 `
 
-export const Label = styled.label`
-  margin-right: ${UNIT_SM};
-  color: ${props => props.checked ? COLOR_PRIMARY : 'inherit'};
-`
-
 export const RadioWrap = styled.div`
   position: relative;
   width: ${SIZE}px;
@@ -28,11 +23,11 @@ export const RadioWrap = styled.div`
   ${props => !props.isDisabled && `
     .sdsds:hover & {
       .${RADIO_STYLED_CLASSNAME} {
-        border-color: ${COLOR_PRIMARY};
+        border-color: ${props.accentColor};
 
         &::before {
           visibility: visible;
-          background-color: ${COLOR_PRIMARY};
+          background-color: ${props.accentColor};
         }
       }
     }
@@ -44,13 +39,13 @@ export const RadioField = styled.input`
 
   &:checked ~ {
     .${RADIO_STYLED_CLASSNAME} {
-      border-color: ${COLOR_PRIMARY};
+      border-color: ${props => props.accentColor};
 
       &::before {
         visibility: visible;
         width: ${SIZE / 2}px;
         height: ${SIZE / 2}px;
-        background-color: ${COLOR_PRIMARY};
+        background-color: ${props => props.accentColor};
       }
     }
   }
@@ -89,17 +84,20 @@ export const RadioStyled = styled.div`
 class Radio extends React.PureComponent {
   render() {
     const {
+      isQuizComplete,
       isDisabled,
       checked,
-      className,
+      accentColor,
       id,
       name,
+      className,
     } = this.props
+    const accentColorConditional = isQuizComplete ? accentColor : COLOR_PRIMARY
 
     return (
       <Wrap className={className}>
-        <RadioWrap isDisabled={isDisabled}>
-          <RadioField checked={checked} type="radio" id={id} name={name} readOnly />
+        <RadioWrap accentColor={accentColorConditional} isDisabled={isDisabled}>
+          <RadioField accentColor={accentColorConditional} checked={checked} type="radio" id={id} name={name} readOnly />
           <RadioLabel htmlFor={id} />
           <RadioStyled className={RADIO_STYLED_CLASSNAME} />
         </RadioWrap>
@@ -109,8 +107,10 @@ class Radio extends React.PureComponent {
 }
 
 Radio.propTypes = {
+  isQuizComplete: bool.isRequired,
   isDisabled: bool,
   checked: bool,
+  accentColor: string.isRequired,
   id: number.isRequired,
   name: number,
   className: string,

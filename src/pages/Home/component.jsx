@@ -12,9 +12,6 @@ import reducer, {
   showNextQuestion,
 } from './reducer'
 import SpinnerLoader from '../../components/Spinner/component'
-import cancelSvg from '../../assets/svg/cancel.svg'
-import tickSvg from '../../assets/svg/tick.svg'
-import Svg from '../../components/Svg/component'
 import Timer, { TIMER_LENGTH } from './Timer/component'
 import Radio from '../../components/Radio/component'
 
@@ -61,21 +58,9 @@ const Answer = styled.div`
     ${(props.isCorrect || props.isIncorrect) && `
       opacity: 1;
       cursor: pointer;
-      // box-shadow: inset 0 0 0 2px ${props.accentColor};
-      color: ${props.accentColor};
+      color: ${props.isQuizComplete ? props.accentColor : 'inherit'};
     `};
   `};
-`
-const AnswerStatus = styled(Svg)`
-  position: absolute;
-  top: 0;
-  left: 0px;
-  line-height: 49px;
-  text-align: center;
-  width: 50px;
-  height: 100%;
-  fill: inherit;
-  padding: 18px;
 `
 const AdditionalInfo = styled.div`
   font-size: 12px;
@@ -185,7 +170,7 @@ const Home = () => {
       <QuizWrap>
         <Questions>
           <Timer ref={childRef} setTimeFinished={onTimeFinished} />
-          {questions.map(({ id, title, slug, excerpt, answers, isFinalQuestion }) => {
+          {questions.map(({ id, title, excerpt, answers, isFinalQuestion }) => {
             const { selectedAnswer, isTimeout } = (selectedAnswers.filter(({ id: answerId }) => answerId === id)[0] || {})
             const isCorrect = selectedAnswer === title
             const isQuestionFinished = selectedAnswer || isTimeout
@@ -206,7 +191,7 @@ const Home = () => {
                         isCorrect={isCorrect && isSelectedAnswerOption}
                         isIncorrect={!isCorrect && isSelectedAnswerOption}
                         accentColor={isCorrect ? '#5cf2aa' : '#f25c5c'}
-                        isQuizComplete
+                        isQuizComplete={isQuizComplete}
                         onClick={() => !isQuestionFinished && onSelectAnswer({
                           id,
                           selectedAnswer: answer,
@@ -216,23 +201,30 @@ const Home = () => {
                           isFinalQuestion,
                         })}
                       >
-                        {isSelectedAnswerOption && <AnswerStatus svg={isCorrect ? tickSvg : cancelSvg} />}
-                        <Radio isDisabled={isQuestionFinished} checked={isSelectedAnswerOption} id={id} name={id} />
+                        <Radio
+                          isQuizComplete={isQuizComplete}
+                          isDisabled={isQuestionFinished}
+                          checked={isSelectedAnswerOption}
+                          id={id}
+                          name={id}
+                          accentColor={isCorrect ? '#5cf2aa' : '#f25c5c'}
+                        />
                         {answer}
-                        {isSelectedAnswerOption && (
-                          <AdditionalInfo>
-                            {!isCorrect && (
-                              <Link
-                                href={`https://www.binance.vision/glossary/${questionMatchingAnswer.slug}`}
-                                target="_blank"
-                              >
-                                {questionMatchingAnswer.excerpt}
-                              </Link>
-                            )}
-                            {isCorrect && `${dummyRandomNumber}% of users got this right`}
-                          </AdditionalInfo>
-                        )}
-                        {isTimeout && <AdditionalInfo isTimeout>Took too long</AdditionalInfo>}
+                        <AdditionalInfo isTimeout={isTimeout}>
+                          {isQuizComplete && isSelectedAnswerOption && !isCorrect && (
+                            <Link
+                              href={`https://www.binance.vision/glossary/${questionMatchingAnswer.slug}`}
+                              target="_blank"
+                            >
+                              {questionMatchingAnswer.excerpt}
+                            </Link>
+                          )}
+                          {isQuizComplete && isSelectedAnswerOption && isCorrect && (
+                            `${dummyRandomNumber}% of users got this right`
+                          )}
+                          {!isQuizComplete && isSelectedAnswerOption && `${dummyRandomNumber}% of users chose this option`}
+                          {isTimeout && 'Took too long'}
+                        </AdditionalInfo>
                       </Answer>
                     )
                   })}
