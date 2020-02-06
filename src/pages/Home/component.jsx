@@ -12,7 +12,7 @@ import reducer, {
   completeQuiz,
   showNextQuestion,
 } from './reducer'
-import SpinnerLoader from '../../components/Spinner/component'
+import { LineLoader } from '../../components/Loader'
 import Timer, { TIMER_LENGTH } from './Timer/component'
 import Radio from '../../components/Radio/component'
 import Tooltip from '../../components/Tooltip/component'
@@ -258,7 +258,7 @@ const Home = () => {
 
   return (
     <div>
-      <SpinnerLoader asyncStatus={asyncStatus} />
+      <LineLoader asyncStatus={asyncStatus} />
       <QuizWrap isQuizComplete={isQuizComplete}>
         <Questions>
           <Timer isQuizComplete={isQuizComplete} ref={childRef} setTimeFinished={onTimeFinished} />

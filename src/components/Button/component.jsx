@@ -1,15 +1,19 @@
 import React from 'react'
 import { string, func, node, shape } from 'prop-types'
 import styled from 'styled-components'
-import { UNIT_XLG, UNIT_SM, SELECTIVE_YELLOW } from '../../styles'
+import { UNIT_XLG, SELECTIVE_YELLOW, UNIT_LG } from '../../styles'
 import { PROP_ASYNC_STATUS } from '../../constants'
-import SpinnerLoader from '../Spinner/component'
+import { ButtonLoader } from '../Loader'
 
 const Wrap = styled.button`
+  display: flex;
   position: relative;
   margin-top: ${UNIT_XLG};
-  padding: 0 ${UNIT_XLG};
+  padding: 0 ${UNIT_LG};
   align-items: center;
+  justify-items: center;
+  text-align: center;
+  width: 100%;
   height: 3.6rem;
   white-space: nowrap;
   text-transform: uppercase;
@@ -26,20 +30,6 @@ const Wrap = styled.button`
   };
 `
 
-const SpinnerLoaderStyled = styled(SpinnerLoader)`
-  margin-left: ${UNIT_SM};
-
-  path {
-    &:nth-child(1) {
-      opacity: 1;
-      fill: rgba(0, 0, 0, 0.2);
-    };
-    &:nth-child(2) {
-      fill: rgba(0, 0, 0, 0.3);
-    };
-  };
-`;
-
 class Button extends React.PureComponent {
   render() {
     const { onClick, children, asyncStatus, className } = this.props;
@@ -48,12 +38,7 @@ class Button extends React.PureComponent {
     return (
       <Wrap onClick={onClick} className={className}>
         {!isBusy && children}
-        <SpinnerLoaderStyled
-          isAlwaysVisible
-          asyncStatus={asyncStatus}
-          isStatic
-          size={2}
-        />
+        <ButtonLoader asyncStatus={asyncStatus} />
       </Wrap>
     )
   }
