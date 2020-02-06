@@ -36,29 +36,32 @@ const Questions = styled.div`
 `
 const Question = styled.div`
   display: ${props => props.isQuizComplete || props.isActiveQuestion ? 'block' : 'none'};
-  padding-top: ${UNIT_LG};
-  padding-bottom: 0;
-  background-color: #353535;
   ${props => props.isQuestionFinished && `margin-bottom: ${UNIT_LG}`};
+  padding-top: 2.4rem;
+  padding-bottom: 0.8rem;
+  background-color: #353535;
+  transition: padding 0.1s ease-out;
 
   ${media.xsm`
     padding-top: 46px;
     padding-bottom: 18px;
-  `}
+  `};
+
   &:last-child {
     margin-bottom: 0;
   };
 `
 const Description = styled.div`
-  font-size: 16px;
   margin-bottom: ${UNIT_LG};
   padding: 0 ${UNIT_LG};
+  line-height: 1.4;
+  font-size: 16px;
 
   ${media.xsm`
-    font-size: 18px;
     margin-bottom: 50px;
     padding: 0 46px;
-  `}
+    font-size: 18px;
+  `};
 `
 
 const Answers = styled.div`
@@ -70,7 +73,7 @@ const Answers = styled.div`
 `
 const Answer = styled.div`
   padding: ${UNIT_LG};
-  color: #eee;
+  /* color: #eee; */
   display: flex;
   flex-wrap: wrap;
   align-items: center;

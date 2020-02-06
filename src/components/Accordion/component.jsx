@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import chevronDown from '../../assets/svg/chevron-down.svg'
-import { SUNSET_ORANGE } from '../../styles'
+import { SUNSET_ORANGE, UNIT_XSM } from '../../styles'
 import Svg from '../Svg/component'
 
 const Wrap = styled.div`
@@ -9,8 +9,13 @@ const Wrap = styled.div`
 `
 const AccordionToggle = styled(Svg)`
   margin-left: auto;
-  fill: ${SUNSET_ORANGE};
+  padding: ${UNIT_XSM};
+  fill: ${props => props.isOpen ? '#eee' : '#5e5e5e'};
   cursor: pointer;
+
+  &:hover {
+    fill: #eee;
+  };
 `
 const AccordionContent = styled.div`
   display: ${props => props.isOpen ? 'block' : 'none'};
@@ -35,7 +40,7 @@ class Accordion extends React.Component {
     const { content } = this.props
     return (
       <>
-        <AccordionToggle svg={chevronDown} size={1.4} onClick={this.onToggle} />
+        <AccordionToggle isOpen={isOpen} svg={chevronDown} size={2.4} onClick={this.onToggle} />
         <Wrap>
           <AccordionContent isOpen={isOpen}>
             {content}
