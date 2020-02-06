@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import styled, { createGlobalStyle } from 'styled-components'
 
-import { media, UNIT_LG_INT, UNIT_LG } from '../styles'
+import { media, UNIT_LG } from '../styles'
 import reset from '../styles/reset'
 import logoImage from '../assets/logo.png'
 import Home from '../pages/Home/component'
@@ -44,11 +44,16 @@ const PageWrap = styled.div`
   max-width: 1140px;
 
   ${media.xsm`
-    margin: ${UNIT_LG_INT}rem auto;
+    margin: ${UNIT_LG} auto;
     padding: ${UNIT_LG};
   `}
   ${media.sm`
     padding: 32px;
+    margin: ${UNIT_LG};
+    margin-right: auto;
+  `};
+  ${media.lg`
+    margin: ${UNIT_LG} auto;
   `};
 `
 

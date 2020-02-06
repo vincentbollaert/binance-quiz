@@ -26,11 +26,19 @@ const QuizWrap = styled.div`
   width: 100%;
   margin: 0 auto;
   display: flex;
+  flex-direction: column-reverse;
   transition: width 0.1s ease-out;
 
   ${media.sm`
-    width: ${props => props.isQuizComplete ? `${STYLE_QUIZ_WIDTH - STYLE_RESULTS_WIDTH}rem` : `${STYLE_QUIZ_WIDTH}rem`};
+    flex-direction: row;
+    margin-left: 0;
+    width: ${props => props.isQuizComplete ? 'calc(100% - 214px)' : '100%'};
   `};
+
+  ${media.lg`
+    transition: none;
+    width: ${props => props.isQuizComplete ? `${STYLE_QUIZ_WIDTH - STYLE_RESULTS_WIDTH}rem` : `${STYLE_QUIZ_WIDTH}rem`};
+  `}
 `
 const Questions = styled.div`
   position: relative;

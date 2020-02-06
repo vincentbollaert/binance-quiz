@@ -1,20 +1,34 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { UNIT_XSM_INT, UNIT_LG, UNIT_XSM } from '../../../styles'
-import { STYLE_RESULTS_WIDTH } from '../component'
+import { media, UNIT_XSM_INT, UNIT_LG, UNIT_XSM } from '../../../styles'
+// import { STYLE_RESULTS_WIDTH } from '../component'
 import Button from '../../../components/Button/component'
 
 const Wrap = styled.div`
   display: ${props => props.isShow ? 'block' : 'none'};
-  position: fixed;
+  margin: 32px auto;
+  padding: 46px;
   width: 214px;
   font-size: 12px;
   background: #202020;
-  padding: 46px;
-  left: 50%;
-  margin-left: ${33 + UNIT_XSM_INT}rem;
   line-height: 1.4;
+
+  ${media.xsm`
+    margin-top: 0;
+  `};
+
+  ${media.sm`
+    position: fixed;
+    right: 0;
+    margin: 0;
+  `};
+
+  ${media.lg`
+    right: auto;
+    left: 50%;
+    margin-left: 330px;
+  `};
 `
 const Header = styled.div`
   margin-bottom: ${UNIT_LG};
