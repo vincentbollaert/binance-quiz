@@ -29,6 +29,7 @@ class Timer extends Component {
     })
     if (this.state.timeRemaining === 0) {
       clearTimeout(this.timeoutId)
+      this.props.setTimeFinished()
     }
     return this.state.timeRemaining
   }
