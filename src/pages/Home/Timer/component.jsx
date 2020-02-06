@@ -10,11 +10,13 @@ const Progress = styled.div`
   transition: width 0.1s ease, background-color 0.1s ease;
 `
 
+export const TIMER_LENGTH = 20
+
 class Timer extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      timeRemaining: 20,
+      timeRemaining: TIMER_LENGTH,
     }
     this.timeoutId = undefined
   }
@@ -34,8 +36,12 @@ class Timer extends Component {
     return this.state.timeRemaining
   }
 
-  onResetTimer = () => {
+  onStopTimer = ({ isReset }) => {
     clearTimeout(this.timeoutId)
+    if (isReset) {
+      this.setState({ timeRemaining: TIMER_LENGTH })
+      this.timeoutId = setInterval(() => this.clock(), 1000)
+    }
   }
 
   onGetTimeRemaining = () => {
@@ -45,7 +51,7 @@ class Timer extends Component {
   render() {
     const { timeRemaining } = this.state
     return (
-      <Progress progress={((20 - timeRemaining) / 20) * 100} />
+      <Progress progress={((TIMER_LENGTH - timeRemaining) / TIMER_LENGTH) * 100} />
     )
   }
 }

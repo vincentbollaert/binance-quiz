@@ -15,7 +15,7 @@ import SpinnerLoader from '../../components/Spinner/component'
 import cancelSvg from '../../assets/svg/cancel.svg'
 import tickSvg from '../../assets/svg/tick.svg'
 import Svg from '../../components/Svg/component'
-import Timer from './Timer/component'
+import Timer, { TIMER_LENGTH } from './Timer/component'
 import Radio from '../../components/Radio/component'
 
 const QuizWrap = styled.div`
@@ -150,20 +150,20 @@ const Home = () => {
 
   function onSelectAnswer({ id, selectedAnswer, correctAnswer, timeToChoose, isFinalQuestion, isTimeout, isCorrect }) {
     dispatch(selectAnswer({ id, selectedAnswer, correctAnswer, timeToChoose, isTimeout, isCorrect }))
-    onResetTimer()
+    onStopTimer({ isReset: false })
     if (isFinalQuestion) { dispatch(completeQuiz()) }
   }
 
   function onNextClick({ activeQuestionId }) {
     dispatch(showNextQuestion({ activeQuestionId }))
-    onResetTimer()
+    onStopTimer({ isReset: true })
   }
 
-  function onResetTimer() {
-    childRef.current.onResetTimer()
+  function onStopTimer({ isReset }) {
+    childRef.current.onStopTimer({ isReset })
   }
   function onGetTimeRemaining() {
-    return childRef.current ? childRef.current.onGetTimeRemaining() : 15
+    return childRef.current ? childRef.current.onGetTimeRemaining() : TIMER_LENGTH
   }
   function onTimeFinished() {
     onSelectAnswer({
@@ -171,7 +171,7 @@ const Home = () => {
       selectedAnswer: '',
       correctAnswer: activeQuestion.title,
       isCorrect: false,
-      timeToChoose: 15,
+      timeToChoose: TIMER_LENGTH,
       isTimeout: true,
     })
   }
