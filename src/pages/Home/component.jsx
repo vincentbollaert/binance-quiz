@@ -201,6 +201,7 @@ const Home = () => {
                     return (
                       <Answer
                         key={answer}
+                        className="sdsds"
                         isQuestionFinished={isQuestionFinished}
                         isCorrect={isCorrect && isSelectedAnswerOption}
                         isIncorrect={!isCorrect && isSelectedAnswerOption}
@@ -216,12 +217,7 @@ const Home = () => {
                         })}
                       >
                         {isSelectedAnswerOption && <AnswerStatus svg={isCorrect ? tickSvg : cancelSvg} />}
-                        <Radio
-                          checked={true}
-                          id={id}
-                          name={id}
-                          // onClick,
-                        />
+                        <Radio isDisabled={isQuestionFinished} checked={isSelectedAnswerOption} id={id} name={id} />
                         {answer}
                         {isSelectedAnswerOption && (
                           <AdditionalInfo>

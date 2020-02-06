@@ -1,5 +1,5 @@
 import React from 'react'
-import { bool, string, func } from 'prop-types'
+import { bool, string, number } from 'prop-types'
 import styled from 'styled-components'
 import { UNIT_SM, UNIT_LG } from '../../styles'
 
@@ -13,11 +13,6 @@ export const Wrap = styled.div`
   display: flex;
   align-items: center;
   margin-right: ${UNIT_LG};
-
-  ${props => props.isDisabled && `
-    opacity: 0.6;
-    pointer-events: none;
-  `};
 `
 
 export const Label = styled.label`
@@ -30,16 +25,18 @@ export const RadioWrap = styled.div`
   width: ${SIZE}px;
   height: ${SIZE}px;
 
-  &:hover {
-    .${RADIO_STYLED_CLASSNAME} {
-      border-color: ${COLOR_PRIMARY};
+  ${props => !props.isDisabled && `
+    .sdsds:hover & {
+      .${RADIO_STYLED_CLASSNAME} {
+        border-color: ${COLOR_PRIMARY};
 
-      &::before {
-        visibility: visible;
-        background-color: ${COLOR_PRIMARY};
+        &::before {
+          visibility: visible;
+          background-color: ${COLOR_PRIMARY};
+        }
       }
     }
-  }
+  `}
 `
 
 export const RadioField = styled.input`
@@ -92,17 +89,17 @@ export const RadioStyled = styled.div`
 class Radio extends React.PureComponent {
   render() {
     const {
+      isDisabled,
       checked,
       className,
       id,
       name,
-      onClick,
     } = this.props
 
     return (
       <Wrap className={className}>
-        <RadioWrap>
-          <RadioField checked={checked} type="radio" id={id} name={name} onClick={onClick} />
+        <RadioWrap isDisabled={isDisabled}>
+          <RadioField checked={checked} type="radio" id={id} name={name} readOnly />
           <RadioLabel htmlFor={id} />
           <RadioStyled className={RADIO_STYLED_CLASSNAME} />
         </RadioWrap>
@@ -112,14 +109,15 @@ class Radio extends React.PureComponent {
 }
 
 Radio.propTypes = {
+  isDisabled: bool,
   checked: bool,
-  id: string.isRequired,
-  name: string,
+  id: number.isRequired,
+  name: number,
   className: string,
-  onClick: func.isRequired,
 }
 
 Radio.defaultProps = {
+  isDisabled: false,
   checked: undefined,
   name: undefined,
   className: '',
