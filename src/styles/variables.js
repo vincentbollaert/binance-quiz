@@ -1,6 +1,10 @@
 import { css } from 'styled-components'
 
-export const JET = '#333'
+// colors
+export const SELECTIVE_YELLOW = '#F0B90B'
+export const MEDIUM_AQUAMARINE = '#5CF2AA'
+export const SUNSET_ORANGE = '#F25C5C'
+
 
 // units
 export const UNIT_XSM_INT = 0.4
