@@ -16,6 +16,7 @@ import cancelSvg from '../../assets/svg/cancel.svg'
 import tickSvg from '../../assets/svg/tick.svg'
 import Svg from '../../components/Svg/component'
 import Timer from './Timer/component'
+import Radio from '../../components/Radio/component'
 
 const QuizWrap = styled.div`
   max-width: 860px;
@@ -26,15 +27,13 @@ const Questions = styled.div`
 `
 const Question = styled.div`
   display: ${props => props.isQuizComplete || props.isActiveQuestion ? 'block' : 'none'};
-  padding: 46px;
+  padding: 46px 0 26px;
   padding-bottom: 18px;
-  background-color: #ffffff1c;
-  padding-left: 0;
-  padding-right: 0;
+  background-color: #353535;
 `
 const Description = styled.div`
   font-size: 18px;
-  margin-bottom: 70px;
+  margin-bottom: 50px;
   padding: 0 46px;
 `
 
@@ -42,15 +41,18 @@ const Answers = styled.div`
   font-size: 15px;
 `
 const Answer = styled.div`
-  background: #525252;
-  padding: 20px 24px 20px 49px;
+  padding: 24px 24px 24px 46px;
   color: #eee;
-  margin: 10px 0;
   display: flex;
   align-items: center;
   position: relative;
   cursor: pointer;
   transition: box-shadow 0.1s ease;
+  border-bottom: 1px solid #5d5d5d66;
+
+  &:last-child {
+    border-bottom: none;
+  };
 
   ${props => props.isQuestionFinished && `
     opacity: 0.7;
@@ -58,9 +60,8 @@ const Answer = styled.div`
     ${(props.isCorrect || props.isIncorrect) && `
       opacity: 1;
       cursor: pointer;
-      box-shadow: inset 0 0 0 2px ${props.accentColor};
+      // box-shadow: inset 0 0 0 2px ${props.accentColor};
       color: ${props.accentColor};
-      fill: ${props.accentColor};
     `};
   `};
 `
@@ -100,7 +101,7 @@ const SelectedAnswers = styled.div`
   font-size: 12px;
 `
 
-const Next = styled.div`
+const Next = styled.button`
   margin-left: 1px;
   background-color: #444;
   width: 114px;
@@ -113,12 +114,10 @@ const Next = styled.div`
   cursor: pointer;
   text-transform: uppercase;
   font-weight: bold;
-
-  &:hover {
-    background-color: #3d3d3d;
-  };
+  pointer-events: none;
 
   ${props => props.isQuestionFinished && `
+    pointer-events: all;
     background-color: #f0b90b;
     color: #705603;
 
@@ -128,6 +127,7 @@ const Next = styled.div`
   `}
 `
 const ProgressItems = styled.div`
+  display: none;
   padding: 8px 0;
   box-shadow: inset -5px 0 11px -10px #0000008c;
   background: #404040;
@@ -243,6 +243,12 @@ const Home = () => {
                         })}
                       >
                         {isSelectedAnswerOption && <AnswerStatus svg={isCorrect ? tickSvg : cancelSvg} />}
+                        <Radio
+                          checked={true}
+                          id={id}
+                          name={id}
+                          // onClick,
+                        />
                         {answer}
                         {isSelectedAnswerOption && (
                           <AdditionalInfo>

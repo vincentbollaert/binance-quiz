@@ -44,7 +44,6 @@ const PageWrap = styled.div`
   margin: ${UNIT_LG_INT}rem auto;
   padding: ${UNIT_LG};
   max-width: 1140px;
-  background-color: #35353585;
 
   ${media.sm`
     padding: 32px;
