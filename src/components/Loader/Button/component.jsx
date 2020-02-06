@@ -7,6 +7,7 @@ import Svg from '../../Svg/component'
 
 const LoaderStyledButton = styled(Svg)`
   display: ${props => props.isBusy ? 'inline-flex' : 'none'};
+  margin: 0 auto;
 
   svg {
     width: 2rem;

@@ -6,12 +6,9 @@ import { PROP_ASYNC_STATUS } from '../../constants'
 import { ButtonLoader } from '../Loader'
 
 const Wrap = styled.button`
-  display: flex;
   position: relative;
   margin-top: ${UNIT_XLG};
   padding: 0 ${UNIT_LG};
-  align-items: center;
-  justify-items: center;
   text-align: center;
   width: 100%;
   height: 3.6rem;
