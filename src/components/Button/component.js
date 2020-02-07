@@ -3,7 +3,7 @@ import { string, func, node, shape } from 'prop-types'
 import styled from 'styled-components'
 import { UNIT_XLG, UNIT_LG, FONT_SIZE_LG, TRANSITION, SELECTIVE_YELLOW, RAISIN_BLACK } from '../../styles'
 import { PROP_ASYNC_STATUS } from '../../constants'
-import ButtonLoader from '../Loader/Button/component'
+import { ButtonLoader } from '../Loader'
 
 const Wrap = styled.button`
   position: relative;
