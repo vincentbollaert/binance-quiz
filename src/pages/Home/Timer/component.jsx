@@ -35,10 +35,14 @@ class Timer extends Component {
     return this.state.timeRemaining
   }
 
-  onStopTimer = ({ isReset }) => {
+  onStopTimer = ({ isReset, isRestart }) => {
     clearTimeout(this.timeoutId)
 
     if (isReset) {
+      this.setState({ timeRemaining: TIMER_LENGTH })
+    }
+
+    if (isRestart) {
       this.setState({ timeRemaining: TIMER_LENGTH })
       this.timeoutId = setInterval(() => this.onUpdateTimer(), 1000)
     }

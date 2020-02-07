@@ -149,23 +149,30 @@ const Home = () => {
   function getData() {
     dispatch(getDataRequested())
     axios.get(API_BINANCE_PROXIED)
-      .then(({ data }) => dispatch(getDataSucceeded({ payload: data })))
+      .then(({ data }) => {
+        dispatch(getDataSucceeded({ payload: data }))
+        onStopTimer({ isRestart: true })
+      })
       .catch(error => dispatch(getDataFailed({ payload: error })))
   }
 
   function onSelectAnswer(params) {
     dispatch(selectAnswer({ ...params, isCorrect: params.selectedAnswer === params.correctAnswer }))
-    onStopTimer({ isReset: false })
+    onStopTimer()
   }
 
   function onNextClick({ activeQuestionId, isFinalQuestion }) {
     dispatch(showNextQuestion({ activeQuestionId }))
-    onStopTimer({ isReset: true })
-    if (isFinalQuestion) { dispatch(completeQuiz()) }
+    if (isFinalQuestion) {
+      dispatch(completeQuiz())
+      onStopTimer({ isReset: true })
+    } else {
+      onStopTimer({ isRestart: true })
+    }
   }
 
-  function onStopTimer({ isReset }) {
-    childRef.current.onStopTimer({ isReset })
+  function onStopTimer({ isReset, isRestart } = {}) {
+    childRef.current.onStopTimer({ isReset, isRestart })
   }
   function onGetTimeRemaining() {
     return childRef.current ? childRef.current.onGetTimeRemaining() : TIMER_LENGTH
