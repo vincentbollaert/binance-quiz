@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { bool, number, func, shape } from 'prop-types'
-import { media, UNIT_LG, UNIT_XSM } from '../../../styles'
+import { media, UNIT_XXLG, UNIT_LG, UNIT_XSM, FONT_SIZE_MD } from '../../../styles'
 import { PROP_ASYNC_STATUS } from '../../../constants'
 import { STYLE_RESULTS_WIDTH, STYLE_QUIZ_WIDTH_IS_COMPLETE } from '../shared'
 import Button from '../../../components/Button/component'
@@ -9,9 +9,9 @@ import Button from '../../../components/Button/component'
 const Wrap = styled.div`
   display: ${props => props.isShow ? 'block' : 'none'};
   margin: 32px auto;
-  padding: 46px;
+  padding: ${UNIT_XXLG};
   width: ${STYLE_RESULTS_WIDTH}rem;
-  font-size: 12px;
+  font-size: ${FONT_SIZE_MD};
   background: #202020;
   line-height: 1.4;
 

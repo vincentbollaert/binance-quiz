@@ -2,7 +2,19 @@ import React, { useEffect, useReducer, useRef } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 
-import { media, UNIT_LG, SELECTIVE_YELLOW, MEDIUM_AQUAMARINE, SUNSET_ORANGE, TRANSITION } from '../../styles'
+import {
+  media,
+  UNIT_XXLG,
+  UNIT_LG,
+  SELECTIVE_YELLOW,
+  MEDIUM_AQUAMARINE,
+  SUNSET_ORANGE,
+  TRANSITION,
+  FONT_SIZE_MD,
+  UNIT_XLG,
+  UNIT_SM,
+  UNIT_XSM,
+} from '../../styles'
 import reducer, {
   init, getDataRequested, getDataSucceeded, getDataFailed, selectAnswer, completeQuiz, showNextQuestion,
 } from './reducer'
@@ -39,13 +51,13 @@ const Questions = styled.div`
 const Question = styled.div`
   display: ${props => props.isQuizComplete || props.isActiveQuestion ? 'block' : 'none'};
   ${props => props.isQuizComplete && `margin-bottom: ${UNIT_LG}`};
-  padding-top: 2.4rem;
-  padding-bottom: 0.8rem;
+  padding-top: ${UNIT_XLG};
+  padding-bottom: ${UNIT_SM};
   background-color: #353535;
   transition: padding ${TRANSITION};
 
   ${media.xsm`
-    padding-top: 46px;
+    padding-top: ${UNIT_XXLG};
     padding-bottom: 18px;
   `};
 
@@ -61,13 +73,13 @@ const Description = styled.div`
 
   ${media.xsm`
     margin-bottom: 50px;
-    padding: 0 46px;
+    padding: 0 ${UNIT_XXLG};
     font-size: 18px;
   `};
 `
 
 const Answers = styled.div`
-  font-size: 12px;
+  font-size: ${FONT_SIZE_MD};
 
   ${media.xsm`
     font-size: 15px;
@@ -98,17 +110,17 @@ const Answer = styled.div`
   `};
 
   ${media.xsm`
-    padding: 24px;
-    padding-left: 46px;
+    padding: ${UNIT_XLG};
+    padding-left: ${UNIT_XXLG};
   `};
 `
 const AdditionalInfo = styled.div`
   display: none;
   position: absolute;
-  right: 4px;
-  bottom: 4px;
+  right: ${UNIT_XSM};
+  bottom: ${UNIT_XSM};
   margin-left: auto;
-  max-width: 280px;
+  max-width: 28rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -117,7 +129,7 @@ const AdditionalInfo = styled.div`
   ${media.xsm`
     display: block;
     position: static;
-    font-size: 12px;
+    font-size: ${FONT_SIZE_MD};
   `};
 `
 const TooltipStyled = styled(Tooltip)`
