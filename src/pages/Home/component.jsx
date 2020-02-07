@@ -51,13 +51,14 @@ const Question = styled.div`
   ${props => props.isQuizComplete && `margin-bottom: ${UNIT_LG}`};
   padding-top: ${UNIT_XLG};
   padding-bottom: ${UNIT_SM};
-  min-height: 45rem;
+  min-height: 30rem;
   background-color: ${JET};
   transition: padding ${TRANSITION};
 
   ${media.xsm`
     padding-top: ${UNIT_XXLG};
     padding-bottom: ${UNIT_LG};
+    min-height: 45rem;
   `};
 
   &:last-child {
