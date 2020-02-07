@@ -48,8 +48,8 @@ class Timer extends Component {
     }
   }
 
-  onGetTimeRemaining = () => {
-    return this.state.timeRemaining
+  onGetTimeToChoose = () => {
+    return TIMER_LENGTH - this.state.timeRemaining
   }
 
   render() {

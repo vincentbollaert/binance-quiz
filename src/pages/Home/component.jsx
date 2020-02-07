@@ -120,8 +120,8 @@ const Home = () => {
   function onStopTimer({ isReset, isRestart } = {}) {
     childRef.current.onStopTimer({ isReset, isRestart })
   }
-  function onGetTimeRemaining() {
-    return childRef.current ? childRef.current.onGetTimeRemaining() : TIMER_LENGTH
+  function onGetTimeToChoose() {
+    return childRef.current ? childRef.current.onGetTimeToChoose() : TIMER_LENGTH
   }
   function onTimeFinished() {
     onSelectAnswer({
@@ -154,7 +154,7 @@ const Home = () => {
                   question={question}
                   allQuestions={allQuestions}
                   onSelectAnswer={onSelectAnswer}
-                  onGetTimeRemaining={onGetTimeRemaining}
+                  onGetTimeToChoose={onGetTimeToChoose}
                 />
               </Question>
             )
@@ -174,6 +174,7 @@ const Home = () => {
         <Results
           isQuizComplete={isQuizComplete}
           totalTime={totalTime}
+          selectedAnswers={selectedAnswers}
           onResetQuiz={getData}
           asyncStatus={asyncStatus}
         />

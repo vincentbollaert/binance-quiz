@@ -1,10 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-import { bool, number, func, shape } from 'prop-types'
+import { bool, number, func, shape, arrayOf } from 'prop-types'
 import { media, UNIT_XXLG, UNIT_LG, UNIT_XSM, FONT_SIZE_LG, FONT_SIZE_MD, RAISIN_BLACK } from '../../../styles'
 import { PROP_ASYNC_STATUS } from '../../../constants'
 import { STYLE_RESULTS_WIDTH, STYLE_QUIZ_WIDTH_IS_COMPLETE } from '../shared'
 import Button from '../../../components/Button/component'
+import { selectAnswer } from '../reducer'
 
 const Wrap = styled.div`
   display: ${props => props.isShow ? 'block' : 'none'};
@@ -54,27 +55,33 @@ const Description = styled.div`
   color: #acacad;
 `
 
-const Results = ({ isQuizComplete, totalTime, onResetQuiz, asyncStatus }) => (
-  isQuizComplete ? (
-    <Wrap isShow={isQuizComplete}>
-      <Header>Quiz complete</Header>
-      <Row>
-        <Term>Total time</Term>
-        <Description>{totalTime} s</Description>
-      </Row>
-      <Row>
-        <Term>Score</Term>
-        <Description>8 / 10</Description>
-      </Row>
-      <Row>
-        <Button onClick={onResetQuiz} asyncStatus={asyncStatus}>Try again</Button>
-      </Row>
-    </Wrap>) : null
-)
+const Results = ({ isQuizComplete, totalTime, selectedAnswers, onResetQuiz, asyncStatus }) => {
+  const totalAnswers = selectedAnswers.length
+  const totalCorrectAnswers = selectedAnswers.filter(answer => answer.isCorrect).length
+
+  return (
+    isQuizComplete ? (
+      <Wrap isShow={isQuizComplete}>
+        <Header>Quiz complete</Header>
+        <Row>
+          <Term>Total time</Term>
+          <Description>{totalTime} s</Description>
+        </Row>
+        <Row>
+          <Term>Score</Term>
+          <Description>{totalCorrectAnswers} / {totalAnswers}</Description>
+        </Row>
+        <Row>
+          <Button onClick={onResetQuiz} asyncStatus={asyncStatus}>Try again</Button>
+        </Row>
+      </Wrap>) : null
+  )
+}
 
 Results.propTypes = {
   isQuizComplete: bool.isRequired,
   totalTime: number.isRequired,
+  selectedAnswers: arrayOf(shape({})).isRequired,
   onResetQuiz: func.isRequired,
   asyncStatus: shape(PROP_ASYNC_STATUS).isRequired,
 }
