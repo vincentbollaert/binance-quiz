@@ -3,6 +3,7 @@ import { bool, shape, arrayOf, func } from 'prop-types'
 import styled from 'styled-components'
 
 import { FONT_SIZE_LG, FONT_SIZE_XLG, SELECTIVE_YELLOW, CHARLESTON_GREEN_DARKER } from '../../../styles'
+import { SHAPE_QUIZ_QUESTION, SHAPE_SELECTED_ANSWER } from '../shapePropTypes'
 
 const Wrap = styled.button`
   display: ${props => props.isShow ? 'flex' : 'none'};
@@ -88,8 +89,8 @@ NextButton.propTypes = {
   isQuizComplete: bool.isRequired,
   isActiveQuestionFinished: bool.isRequired,
   isLastQuestion: bool.isRequired,
-  activeQuestion: shape({}).isRequired,
-  selectedAnswers: arrayOf(shape({})).isRequired,
+  activeQuestion: shape(SHAPE_QUIZ_QUESTION).isRequired,
+  selectedAnswers: arrayOf(shape(SHAPE_SELECTED_ANSWER)).isRequired,
   onNextClick: func.isRequired,
 }
 

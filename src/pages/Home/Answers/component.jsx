@@ -14,6 +14,7 @@ import {
   UNIT_XLG,
   JET_LIGHTER,
 } from '../../../styles'
+import { SHAPE_QUIZ_QUESTION, SHAPE_QUESTION, SHAPE_SELECTED_ANSWER } from '../shapePropTypes'
 import { CN_ANSWER } from '../shared'
 import Radio from '../../../components/Radio/component'
 import Tooltip from '../../../components/Tooltip/component'
@@ -72,15 +73,18 @@ const AccordionStyled = styled(Accordion)`
 const Answers = ({
   isQuizComplete,
   selectedAnswers,
-  question: { id, title, answers },
+  question,
   allQuestions,
   onSelectAnswer,
   onGetTimeToChoose,
 }) => {
+  const { id, title, answers } = question
   const { selectedAnswer, isTimeout } = (selectedAnswers.find(({ id: answerId }) => answerId === id) || {})
   const isCorrect = selectedAnswer === title
   const isQuestionFinished = selectedAnswer !== undefined || isTimeout
 
+  console.log('selectedAnswers', selectedAnswers)
+  // console.log('q', question)
   return (
     <Wrap>
       {answers.map(answer => {
@@ -138,14 +142,9 @@ const Answers = ({
 
 Answers.propTypes = {
   isQuizComplete: bool.isRequired,
-  selectedAnswers: arrayOf(shape({})).isRequired,
-  question: shape({
-    id: number.isRequired,
-    title: string.isRequired,
-    excerpt: string.isRequired,
-    answers: arrayOf(string).isRequired,
-  }).isRequired,
-  allQuestions: arrayOf(shape({})).isRequired,
+  selectedAnswers: arrayOf(shape(SHAPE_SELECTED_ANSWER)).isRequired,
+  question: shape(SHAPE_QUIZ_QUESTION).isRequired,
+  allQuestions: arrayOf(shape(SHAPE_QUESTION)).isRequired,
   onSelectAnswer: func.isRequired,
   onGetTimeToChoose: func.isRequired,
 }

@@ -2,6 +2,7 @@ import React from 'react'
 import { bool, shape, number } from 'prop-types'
 import styled from 'styled-components'
 import { media, FONT_SIZE_MD, SELECTIVE_YELLOW, SUNSET_ORANGE, UNIT_LG, UNIT_SM, JET } from '../../../styles'
+import { SHAPE_QUIZ_QUESTION } from '../shapePropTypes'
 
 const Wrap = styled.div`
   display: ${props => props.isTimeout ? 'block' : 'none'};
@@ -65,7 +66,7 @@ AdditionalInfo.propTypes = {
   isCorrect: bool.isRequired,
   isQuizComplete: bool.isRequired,
   isSelectedAnswerOption: bool.isRequired,
-  questionMatchingAnswer: shape({}).isRequired,
+  questionMatchingAnswer: shape(SHAPE_QUIZ_QUESTION).isRequired,
   dummyRandomNumber: number.isRequired,
 }
 

@@ -134,7 +134,6 @@ const Home = () => {
   }
   const isActiveQuestionFinished = (selectedAnswers[selectedAnswers.length - 1] || {}).id === activeQuestion.id
   const isLastQuestion = selectedAnswers.length ? selectedAnswers.length === questions.length : false
-  // const isQuizComplete = true
 
   return (
     <div>

@@ -1,11 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 import { bool, number, func, shape, arrayOf } from 'prop-types'
+
 import { media, UNIT_XXLG, UNIT_LG, UNIT_XSM, FONT_SIZE_LG, FONT_SIZE_MD, RAISIN_BLACK } from '../../../styles'
+import { SHAPE_SELECTED_ANSWER } from '../shapePropTypes'
 import { PROP_ASYNC_STATUS } from '../../../constants'
 import { STYLE_RESULTS_WIDTH, STYLE_QUIZ_WIDTH_IS_COMPLETE } from '../shared'
 import Button from '../../../components/Button/component'
-import { selectAnswer } from '../reducer'
 
 const Wrap = styled.div`
   display: ${props => props.isShow ? 'block' : 'none'};
@@ -81,7 +82,7 @@ const Results = ({ isQuizComplete, totalTime, selectedAnswers, onResetQuiz, asyn
 Results.propTypes = {
   isQuizComplete: bool.isRequired,
   totalTime: number.isRequired,
-  selectedAnswers: arrayOf(shape({})).isRequired,
+  selectedAnswers: arrayOf(shape(SHAPE_SELECTED_ANSWER)).isRequired,
   onResetQuiz: func.isRequired,
   asyncStatus: shape(PROP_ASYNC_STATUS).isRequired,
 }
