@@ -51,19 +51,14 @@ const Footer = styled.div`
 const PageWrap = styled.div`
   position: relative;
   grid-area: body;
-  margin-top: ${UNIT_LG};
+  margin: auto;
   max-width: 114rem;
 
   ${media.xsm`
-    margin: ${UNIT_LG};
     padding: ${UNIT_LG};
   `};
   ${media.sm`
     padding: 3.2rem;
-    margin: ${UNIT_LG};
-  `};
-  ${media.lg`
-    margin: 0 auto;
   `};
 `
 

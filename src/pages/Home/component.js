@@ -46,6 +46,7 @@ const QuizWrap = styled.div`
 const Questions = styled.div`
   position: relative;
   width: 100%;
+  box-shadow: 2px 3px 13px -13px #00000066;
 `
 const Question = styled.div`
   display: ${props => props.isQuizComplete || props.isActiveQuestion ? 'block' : 'none'};
