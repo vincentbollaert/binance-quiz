@@ -51,6 +51,7 @@ const Question = styled.div`
   ${props => props.isQuizComplete && `margin-bottom: ${UNIT_LG}`};
   padding-top: ${UNIT_XLG};
   padding-bottom: ${UNIT_SM};
+  min-height: 45rem;
   background-color: ${JET};
   transition: padding ${TRANSITION};
 
@@ -148,7 +149,7 @@ const Home = () => {
                 <Answers
                   isQuizComplete={isQuizComplete}
                   selectedAnswers={selectedAnswers}
-                  question={question}
+                  activeQuestion={question}
                   allQuestions={allQuestions}
                   onSelectAnswer={onSelectAnswer}
                   onGetTimeToChoose={onGetTimeToChoose}

@@ -55,7 +55,9 @@ export const showNextQuestion = ({ activeQuestionId }) => ({
 
 export const init = () => ({
   isQuizComplete: false,
-  questions: [],
+  questions: [{
+    answers: [],
+  }],
   allQuestions: [],
   activeQuestion: {
     answers: [],
