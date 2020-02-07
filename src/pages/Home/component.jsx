@@ -6,29 +6,22 @@ import {
   media,
   UNIT_XXLG,
   UNIT_LG,
-  SELECTIVE_YELLOW,
-  MEDIUM_AQUAMARINE,
-  SUNSET_ORANGE,
   TRANSITION,
-  FONT_SIZE_MD,
   FONT_SIZE_LG,
   FONT_SIZE_XLG,
   UNIT_XLG,
   UNIT_SM,
-  UNIT_XSM,
+  JET,
 } from '../../styles'
 import { API_BINANCE_PROXIED } from '../../api'
 import reducer, {
   init, getDataRequested, getDataSucceeded, getDataFailed, selectAnswer, completeQuiz, showNextQuestion,
 } from './reducer'
 import { LineLoader } from '../../components/Loader'
-import Radio from '../../components/Radio/component'
-import Tooltip from '../../components/Tooltip/component'
-import Accordion from '../../components/Accordion/component'
-import { CN_ANSWER, TIMER_LENGTH, STYLE_QUIZ_WIDTH, STYLE_RESULTS_WIDTH, STYLE_QUIZ_WIDTH_IS_COMPLETE } from './shared'
+import { TIMER_LENGTH, STYLE_QUIZ_WIDTH, STYLE_RESULTS_WIDTH, STYLE_QUIZ_WIDTH_IS_COMPLETE } from './shared'
 import Timer from './Timer/component'
+import Answers from './Answers/component'
 import NextButton from './NextButton/component'
-import AdditionalInfo from './AdditionalInfo/component'
 import Results from './Results/component'
 
 const QuizWrap = styled.div`
@@ -58,7 +51,7 @@ const Question = styled.div`
   ${props => props.isQuizComplete && `margin-bottom: ${UNIT_LG}`};
   padding-top: ${UNIT_XLG};
   padding-bottom: ${UNIT_SM};
-  background-color: #353535;
+  background-color: ${JET};
   transition: padding ${TRANSITION};
 
   ${media.xsm`
@@ -82,53 +75,6 @@ const Description = styled.div`
     font-size: ${FONT_SIZE_XLG};
   `};
 `
-
-const Answers = styled.div`
-  font-size: ${FONT_SIZE_MD};
-
-  ${media.xsm`
-    font-size: ${FONT_SIZE_LG};
-  `};
-`
-const Answer = styled.div`
-  padding: ${UNIT_LG};
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  position: relative;
-  cursor: pointer;
-  border-bottom: 1px solid #5d5d5d66;
-
-  &:last-child {
-    border-bottom: none;
-  };
-
-  ${props => props.isSelectedAnswerQuizIncomplete && `border-bottom-color: ${SELECTIVE_YELLOW};`};
-  ${props => props.isQuestionFinished && `
-    opacity: 0.4;
-    cursor: default;
-    ${(props.isCorrect || props.isIncorrect) && `
-      opacity: 1;
-      color: ${props.isQuizComplete ? props.accentColor : 'inherit'};
-    `};
-  `};
-
-  ${media.xsm`
-    padding: ${UNIT_XLG};
-    padding-left: ${UNIT_XXLG};
-  `};
-`
-const TooltipStyled = styled(Tooltip)`
-  ${media.xsm`
-    display: none;
-  `};
-`
-const AccordionStyled = styled(Accordion)`
-  ${media.xsm`
-    display: none;
-  `};
-`
-
 
 const Home = () => {
   const [state, dispatch] = useReducer(reducer, undefined, init)
@@ -196,65 +142,20 @@ const Home = () => {
       <QuizWrap isQuizComplete={isQuizComplete}>
         <Questions>
           <Timer isQuizComplete={isQuizComplete} ref={childRef} setTimeFinished={onTimeFinished} />
-          {questions.map(({ id, title, excerpt, answers }) => {
-            const { selectedAnswer, isTimeout } = (selectedAnswers.find(({ id: answerId }) => answerId === id) || {})
-            const isCorrect = selectedAnswer === title
-            const isQuestionFinished = selectedAnswer || isTimeout
+          {questions.map((question) => {
+            const { id, excerpt } = question
 
             return (
               <Question isQuizComplete={isQuizComplete} isActiveQuestion={id === activeQuestion.id}>
                 <Description>{excerpt}</Description>
-                <Answers>
-                  {answers.map(answer => {
-                    const isSelectedAnswerOption = answer === selectedAnswer
-                    const questionMatchingAnswer = allQuestions.find(question => question.title === answer)
-                    const dummyRandomNumber = Math.round(Math.random() * 100)
-                    return (
-                      <Answer
-                        key={answer}
-                        className={CN_ANSWER}
-                        isQuestionFinished={isQuestionFinished}
-                        isCorrect={isCorrect && isSelectedAnswerOption}
-                        isIncorrect={!isCorrect && isSelectedAnswerOption}
-                        isSelectedAnswerQuizIncomplete={isSelectedAnswerOption && !isQuizComplete}
-                        accentColor={isCorrect ? MEDIUM_AQUAMARINE : SUNSET_ORANGE}
-                        isQuizComplete={isQuizComplete}
-                        onClick={() => !isQuestionFinished && onSelectAnswer({
-                          id,
-                          selectedAnswer: answer,
-                          correctAnswer: title,
-                          timeToChoose: onGetTimeRemaining(),
-                        })}
-                      >
-                        <Radio
-                          isQuizComplete={isQuizComplete}
-                          isDisabled={isQuestionFinished}
-                          checked={isSelectedAnswerOption}
-                          id={id}
-                          accentColor={isCorrect ? MEDIUM_AQUAMARINE : SUNSET_ORANGE}
-                        />
-                        {answer}
-                        <AdditionalInfo
-                          isTimeout={isTimeout}
-                          isCorrect={isCorrect}
-                          isQuizComplete={isQuizComplete}
-                          isSelectedAnswerOption={isSelectedAnswerOption}
-                          questionMatchingAnswer={questionMatchingAnswer}
-                          dummyRandomNumber={dummyRandomNumber}
-                        />
-                        <TooltipStyled
-                          isShow={isQuizComplete && isSelectedAnswerOption && isCorrect}
-                          label={dummyRandomNumber}
-                          tooltip={`${dummyRandomNumber}% of users got this right`}
-                        />
-                        <AccordionStyled
-                          isShow={isQuizComplete && isSelectedAnswerOption && !isCorrect}
-                          content={`Definition: ${questionMatchingAnswer.excerpt}`}
-                        />
-                      </Answer>
-                    )
-                  })}
-                </Answers>
+                <Answers
+                  isQuizComplete={isQuizComplete}
+                  selectedAnswers={selectedAnswers}
+                  question={question}
+                  allQuestions={allQuestions}
+                  onSelectAnswer={onSelectAnswer}
+                  onGetTimeRemaining={onGetTimeRemaining}
+                />
               </Question>
             )
           })}
