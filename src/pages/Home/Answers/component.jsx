@@ -73,12 +73,12 @@ const AccordionStyled = styled(Accordion)`
 const Answers = ({
   isQuizComplete,
   selectedAnswers,
-  question,
+  activeQuestion,
   allQuestions,
   onSelectAnswer,
   onGetTimeToChoose,
 }) => {
-  const { id, title, answers } = question
+  const { id, title, answers } = activeQuestion
   const { selectedAnswer, isTimeout } = (selectedAnswers.find(({ id: answerId }) => answerId === id) || {})
   const isCorrect = selectedAnswer === title
   const isQuestionFinished = selectedAnswer !== undefined || isTimeout
@@ -141,7 +141,7 @@ const Answers = ({
 Answers.propTypes = {
   isQuizComplete: bool.isRequired,
   selectedAnswers: arrayOf(shape(SHAPE_SELECTED_ANSWER)).isRequired,
-  question: shape(SHAPE_QUIZ_QUESTION).isRequired,
+  activeQuestion: shape(SHAPE_QUIZ_QUESTION).isRequired,
   allQuestions: arrayOf(shape(SHAPE_QUESTION)).isRequired,
   onSelectAnswer: func.isRequired,
   onGetTimeToChoose: func.isRequired,
