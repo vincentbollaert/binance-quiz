@@ -4,24 +4,15 @@ import styled from 'styled-components'
 
 import { media, UNIT_LG, SELECTIVE_YELLOW, MEDIUM_AQUAMARINE, SUNSET_ORANGE } from '../../styles'
 import reducer, {
-  init,
-  getDataRequested,
-  getDataSucceeded,
-  getDataFailed,
-  selectAnswer,
-  completeQuiz,
-  showNextQuestion,
+  init, getDataRequested, getDataSucceeded, getDataFailed, selectAnswer, completeQuiz, showNextQuestion,
 } from './reducer'
 import { LineLoader } from '../../components/Loader'
 import Radio from '../../components/Radio/component'
 import Tooltip from '../../components/Tooltip/component'
 import Accordion from '../../components/Accordion/component'
-import { CN_ANSWER } from './shared'
-import Timer, { TIMER_LENGTH } from './Timer/component'
+import { CN_ANSWER, TIMER_LENGTH, STYLE_QUIZ_WIDTH, STYLE_RESULTS_WIDTH, STYLE_QUIZ_WIDTH_IS_COMPLETE } from './shared'
+import Timer from './Timer/component'
 import Results from './Results/component'
-
-const STYLE_QUIZ_WIDTH = 86
-export const STYLE_RESULTS_WIDTH = 20
 
 const QuizWrap = styled.div`
   width: 100%;
@@ -33,12 +24,12 @@ const QuizWrap = styled.div`
   ${media.sm`
     flex-direction: row;
     margin-left: 0;
-    width: ${props => props.isQuizComplete ? 'calc(100% - 214px)' : '100%'};
+    width: ${props => props.isQuizComplete ? `calc(100% - ${STYLE_RESULTS_WIDTH}rem)` : '100%'};
   `};
 
   ${media.lg`
     transition: none;
-    width: ${props => props.isQuizComplete ? `${STYLE_QUIZ_WIDTH - STYLE_RESULTS_WIDTH}rem` : `${STYLE_QUIZ_WIDTH}rem`};
+    width: ${props => props.isQuizComplete ? `${STYLE_QUIZ_WIDTH_IS_COMPLETE}rem` : `${STYLE_QUIZ_WIDTH}rem`};
   `}
 `
 const Questions = styled.div`

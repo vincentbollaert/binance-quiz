@@ -1,15 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
-
-import { media, UNIT_XSM_INT, UNIT_LG, UNIT_XSM } from '../../../styles'
-// import { STYLE_RESULTS_WIDTH } from '../component'
+import { bool, number, func, shape } from 'prop-types'
+import { media, UNIT_LG, UNIT_XSM } from '../../../styles'
+import { PROP_ASYNC_STATUS } from '../../../constants'
+import { STYLE_RESULTS_WIDTH, STYLE_QUIZ_WIDTH_IS_COMPLETE } from '../shared'
 import Button from '../../../components/Button/component'
 
 const Wrap = styled.div`
   display: ${props => props.isShow ? 'block' : 'none'};
   margin: 32px auto;
   padding: 46px;
-  width: 214px;
+  width: ${STYLE_RESULTS_WIDTH}rem;
   font-size: 12px;
   background: #202020;
   line-height: 1.4;
@@ -27,7 +28,7 @@ const Wrap = styled.div`
   ${media.lg`
     right: auto;
     left: 50%;
-    margin-left: 330px;
+    margin-left: ${STYLE_QUIZ_WIDTH_IS_COMPLETE / 2}rem;
   `};
 `
 const Header = styled.div`
@@ -70,5 +71,12 @@ const Results = ({ isQuizComplete, totalTime, onResetQuiz, asyncStatus }) => (
       </Row>
     </Wrap>) : null
 )
+
+Results.propTypes = {
+  isQuizComplete: bool.isRequired,
+  totalTime: number.isRequired,
+  onResetQuiz: func.isRequired,
+  asyncStatus: shape(PROP_ASYNC_STATUS).isRequired,
+}
 
 export default Results
