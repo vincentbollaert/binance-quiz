@@ -27,6 +27,7 @@ import Tooltip from '../../components/Tooltip/component'
 import Accordion from '../../components/Accordion/component'
 import { CN_ANSWER, TIMER_LENGTH, STYLE_QUIZ_WIDTH, STYLE_RESULTS_WIDTH, STYLE_QUIZ_WIDTH_IS_COMPLETE } from './shared'
 import Timer from './Timer/component'
+import NextButton from './NextButton/component'
 import AdditionalInfo from './AdditionalInfo/component'
 import Results from './Results/component'
 
@@ -105,10 +106,9 @@ const Answer = styled.div`
   ${props => props.isSelectedAnswerQuizIncomplete && `border-bottom-color: ${SELECTIVE_YELLOW};`};
   ${props => props.isQuestionFinished && `
     opacity: 0.4;
-    cursor: not-allowed;
+    cursor: default;
     ${(props.isCorrect || props.isIncorrect) && `
       opacity: 1;
-      cursor: pointer;
       color: ${props.isQuizComplete ? props.accentColor : 'inherit'};
     `};
   `};
@@ -129,60 +129,6 @@ const AccordionStyled = styled(Accordion)`
   `};
 `
 
-const Next = styled.button`
-  display: flex;
-  margin-left: auto;
-  justify-content: center;
-  background-color: #444;
-  width: 11.4rem;
-  height: 11.4rem;
-  flex-shrink: 0;
-  line-height: 1;
-  text-transform: uppercase;
-  font-size: ${FONT_SIZE_LG};
-  cursor: pointer;
-  text-transform: uppercase;
-  font-weight: bold;
-  pointer-events: none;
-  color: #7e7e7e;
-
-  ${props => props.isQuestionFinished && `
-    pointer-events: all;
-    background-color: ${SELECTIVE_YELLOW};
-    color: #705603;
-
-    &:hover {
-      background-color: #ffba0a;
-    };
-  `};
-`
-const NextContent = styled.div`
-  width: 4rem;
-  height: 4rem;
-  position: relative;
-  justify-content: center;
-  display: flex;
-  align-items: center;
-  font-size: ${FONT_SIZE_XLG};
-`
-const NextCurrent = styled.div`
-  position: absolute;
-  top: 0px;
-  left: 4px;
-`
-const NextDivider = styled.div`
-  width: 4.7rem;
-  height: 1px;
-  background: ${props => props.isQuestionFinished ? '#997e287a' : '#ffffff21'};
-  position: absolute;
-  margin-top: 0px;
-  margin-left: 0px;
-`
-const NextTotal = styled.div`
-  position: absolute;
-  right: 2px;
-  bottom: 0px;
-`
 
 const Home = () => {
   const [state, dispatch] = useReducer(reducer, undefined, init)
@@ -233,7 +179,8 @@ const Home = () => {
       isTimeout: true,
     })
   }
-  const isQuestionFinished2 = (selectedAnswers[selectedAnswers.length - 1] || {}).id === activeQuestion.id
+  const isActiveQuestionFinished = (selectedAnswers[selectedAnswers.length - 1] || {}).id === activeQuestion.id
+  const isLastQuestion = selectedAnswers.length && selectedAnswers.length === questions.length
   // const isQuizComplete = true
 
   return (
@@ -243,7 +190,7 @@ const Home = () => {
         <Questions>
           <Timer isQuizComplete={isQuizComplete} ref={childRef} setTimeFinished={onTimeFinished} />
           {questions.map(({ id, title, excerpt, answers }) => {
-            const { selectedAnswer, isTimeout } = (selectedAnswers.filter(({ id: answerId }) => answerId === id)[0] || {})
+            const { selectedAnswer, isTimeout } = (selectedAnswers.find(({ id: answerId }) => answerId === id) || {})
             const isCorrect = selectedAnswer === title
             const isQuestionFinished = selectedAnswer || isTimeout
 
@@ -277,7 +224,6 @@ const Home = () => {
                           isDisabled={isQuestionFinished}
                           checked={isSelectedAnswerOption}
                           id={id}
-                          name={id}
                           accentColor={isCorrect ? MEDIUM_AQUAMARINE : SUNSET_ORANGE}
                         />
                         {answer}
@@ -289,12 +235,15 @@ const Home = () => {
                           questionMatchingAnswer={questionMatchingAnswer}
                           dummyRandomNumber={dummyRandomNumber}
                         />
-                        {isQuizComplete && isSelectedAnswerOption && isCorrect && (
-                          <TooltipStyled label={dummyRandomNumber} tooltip={`${dummyRandomNumber}% of users got this right`} />
-                        )}
-                        {isQuizComplete && isSelectedAnswerOption && !isCorrect && (
-                          <AccordionStyled>Definition: ${questionMatchingAnswer.excerpt}</AccordionStyled>
-                        )}
+                        <TooltipStyled
+                          isShow={isQuizComplete && isSelectedAnswerOption && isCorrect}
+                          label={dummyRandomNumber}
+                          tooltip={`${dummyRandomNumber}% of users got this right`}
+                        />
+                        <AccordionStyled
+                          isShow={isQuizComplete && isSelectedAnswerOption && !isCorrect}
+                          content={`Definition: ${questionMatchingAnswer.excerpt}`}
+                        />
                       </Answer>
                     )
                   })}
@@ -303,20 +252,17 @@ const Home = () => {
             )
           })}
         </Questions>
-        {!isQuizComplete && (
-          <Next
-            isQuestionFinished={isQuestionFinished2}
-            onClick={() => onNextClick({ activeQuestionId: activeQuestion.id, isFinalQuestion: activeQuestion.isFinalQuestion })}
-          >
-            {selectedAnswers.length && selectedAnswers.length === questions.length ? 'Finish' : (
-              <NextContent>
-                <NextCurrent>{selectedAnswers.length + 1}</NextCurrent>
-                <NextDivider isQuestionFinished={isQuestionFinished2} />
-                <NextTotal>10</NextTotal>
-              </NextContent>
-            )}
-          </Next>
-        )}
+        <NextButton
+          isQuizComplete={isQuizComplete}
+          isActiveQuestionFinished={isActiveQuestionFinished}
+          isLastQuestion={isLastQuestion}
+          activeQuestion={activeQuestion}
+          selectedAnswers={selectedAnswers}
+          onNextClick={() => onNextClick({
+            activeQuestionId: activeQuestion.id,
+            isFinalQuestion: activeQuestion.isFinalQuestion,
+          })}
+        />
         <Results
           isQuizComplete={isQuizComplete}
           totalTime={totalTime}
