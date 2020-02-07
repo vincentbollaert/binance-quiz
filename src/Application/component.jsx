@@ -5,6 +5,8 @@ import styled, { createGlobalStyle } from 'styled-components'
 import { media, UNIT_LG, RAISIN_BLACK } from '../styles'
 import reset from '../styles/reset'
 import logoImage from '../assets/logo.png'
+import logoSvg from '../assets/svg/glossary-quiz-logo.svg'
+import Svg from '../components/Svg/component'
 import { STYLE_HEADER_HEIGHT, STYLE_HEADER_HEIGHT_SM } from './shared'
 import Home from '../pages/Home/component'
 
@@ -29,8 +31,17 @@ const Header = styled.div`
   padding: 0 ${UNIT_LG};
   background-color: ${RAISIN_BLACK};
 `
-const Logo = styled.img`
-  background: red;
+const Logo = styled.img``
+const Bg = styled(Svg)`
+  position: fixed;
+  width: 200rem;
+  transform: rotate(45deg) translate(-600px, 583px);
+  left: 100%;
+  top: 0;
+
+  * {
+    fill: rgba(73, 73, 73, 0.05);
+  };
 `
 
 const Footer = styled.div`
@@ -60,6 +71,7 @@ const Application = () => {
     <Router>
       <GlobalStyle />
       <AppContainer>
+        <Bg svg={logoSvg} />
         <Header>
           <Logo src={logoImage} />
         </Header>
