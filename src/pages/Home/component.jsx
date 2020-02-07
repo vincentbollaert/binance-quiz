@@ -13,10 +13,11 @@ import reducer, {
   showNextQuestion,
 } from './reducer'
 import { LineLoader } from '../../components/Loader'
-import Timer, { TIMER_LENGTH } from './Timer/component'
 import Radio from '../../components/Radio/component'
 import Tooltip from '../../components/Tooltip/component'
 import Accordion from '../../components/Accordion/component'
+import { CN_ANSWER } from './shared'
+import Timer, { TIMER_LENGTH } from './Timer/component'
 import Results from './Results/component'
 
 const STYLE_QUIZ_WIDTH = 86
@@ -278,7 +279,7 @@ const Home = () => {
                     return (
                       <Answer
                         key={answer}
-                        className="sdsds"
+                        className={CN_ANSWER}
                         isQuestionFinished={isQuestionFinished}
                         isCorrect={isCorrect && isSelectedAnswerOption}
                         isIncorrect={!isCorrect && isSelectedAnswerOption}

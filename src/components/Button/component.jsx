@@ -27,18 +27,15 @@ const Wrap = styled.button`
   };
 `
 
-class Button extends React.PureComponent {
-  render() {
-    const { onClick, children, asyncStatus, className } = this.props;
-    const { isBusy } = asyncStatus
+const Button = ({ onClick, children, asyncStatus, className }) => {
+  const { isBusy } = asyncStatus
 
-    return (
-      <Wrap onClick={onClick} className={className}>
-        {!isBusy && children}
-        <ButtonLoader asyncStatus={asyncStatus} />
-      </Wrap>
-    )
-  }
+  return (
+    <Wrap onClick={onClick} className={className}>
+      {!isBusy && children}
+      <ButtonLoader asyncStatus={asyncStatus} />
+    </Wrap>
+  )
 }
 
 Button.propTypes = {

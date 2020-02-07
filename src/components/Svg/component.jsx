@@ -14,21 +14,15 @@ const Wrap = styled.span`
   };
 `
 
-class Svg extends React.PureComponent {
-  render() {
-    const { svg, width, size, className, onClick } = this.props
-
-    return (
-      <Wrap
-        width={width}
-        size={size}
-        className={className}
-        onClick={onClick}
-        dangerouslySetInnerHTML={{ __html: svg }}
-      />
-    )
-  }
-}
+const Svg = ({ svg, width, size, className, onClick }) => (
+  <Wrap
+    width={width}
+    size={size}
+    className={className}
+    onClick={onClick}
+    dangerouslySetInnerHTML={{ __html: svg }}
+  />
+)
 
 Svg.propTypes = {
   svg: string.isRequired,

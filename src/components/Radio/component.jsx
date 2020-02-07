@@ -2,10 +2,11 @@ import React from 'react'
 import { bool, string, number } from 'prop-types'
 import styled from 'styled-components'
 import { UNIT_LG, SELECTIVE_YELLOW } from '../../styles'
+import { CN_ANSWER } from '../../pages/Home/shared'
 
 const SIZE = 24
 const BG = '#636363'
-export const RADIO_STYLED_CLASSNAME = 'radio-styled'
+export const CN_RADIO = 'radio'
 
 export const Wrap = styled.div`
   display: flex;
@@ -19,24 +20,24 @@ export const RadioWrap = styled.div`
   height: ${SIZE}px;
 
   ${props => !props.isDisabled && `
-    .sdsds:hover & {
-      .${RADIO_STYLED_CLASSNAME} {
+    .${CN_ANSWER}:hover & {
+      .${CN_RADIO} {
         border-color: ${props.accentColor};
 
         &::before {
           visibility: visible;
           background-color: ${props.accentColor};
-        }
-      }
-    }
-  `}
+        };
+      };
+    };
+  `};
 `
 
 export const RadioField = styled.input`
   display: none;
 
   &:checked ~ {
-    .${RADIO_STYLED_CLASSNAME} {
+    .${CN_RADIO} {
       border-color: ${props => props.accentColor};
 
       &::before {
@@ -44,9 +45,9 @@ export const RadioField = styled.input`
         width: ${SIZE / 2}px;
         height: ${SIZE / 2}px;
         background-color: ${props => props.accentColor};
-      }
-    }
-  }
+      };
+    };
+  };
 `
 
 export const RadioLabel = styled.label`
@@ -79,29 +80,18 @@ export const RadioStyled = styled.div`
   }
 `
 
-class Radio extends React.PureComponent {
-  render() {
-    const {
-      isQuizComplete,
-      isDisabled,
-      checked,
-      accentColor,
-      id,
-      name,
-      className,
-    } = this.props
-    const accentColorConditional = isQuizComplete ? accentColor : SELECTIVE_YELLOW
+const Radio = ({ isQuizComplete, isDisabled, checked, accentColor, id, name, className }) => {
+  const accentColorConditional = isQuizComplete ? accentColor : SELECTIVE_YELLOW
 
-    return (
-      <Wrap className={className}>
-        <RadioWrap accentColor={accentColorConditional} isDisabled={isDisabled}>
-          <RadioField accentColor={accentColorConditional} checked={checked} type="radio" id={id} name={name} readOnly />
-          <RadioLabel htmlFor={id} />
-          <RadioStyled className={RADIO_STYLED_CLASSNAME} />
-        </RadioWrap>
-      </Wrap>
-    )
-  }
+  return (
+    <Wrap className={className}>
+      <RadioWrap accentColor={accentColorConditional} isDisabled={isDisabled}>
+        <RadioField accentColor={accentColorConditional} checked={checked} type="radio" id={id} name={name} readOnly />
+        <RadioLabel htmlFor={id} />
+        <RadioStyled className={CN_RADIO} />
+      </RadioWrap>
+    </Wrap>
+  )
 }
 
 Radio.propTypes = {

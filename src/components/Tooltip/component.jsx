@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { string } from 'prop-types'
 import styled from 'styled-components'
-import { UNIT_MD, UNIT_LG, MEDIUM_AQUAMARINE } from '../../styles'
+import { UNIT_LG, UNIT_MD, MEDIUM_AQUAMARINE } from '../../styles'
 
-const TooltipInnerWrap = styled.div`
+const Wrap = styled.div`
   position: absolute;
   right: ${UNIT_LG};
 `
@@ -30,7 +30,7 @@ const Tooltip = styled.div`
   font-size: 11px;
   text-transform: uppercase;
   background-color: ${MEDIUM_AQUAMARINE};
-  color: #0d683c;
+  color: rgba(0, 0, 0, 0.6);
   font-weight: bold;
   border-radius: 2px;
   white-space: nowrap;
@@ -53,35 +53,20 @@ const Tooltip = styled.div`
     visibility: visible;
     margin-right: ${UNIT_LG};
     transition: margin 0.2s ease-out, visibility 0.4s ease-out;
-    transition-delay: 0.4s;
   `};
 `
 
-class TooltipWrap extends React.PureComponent {
-  constructor(props) {
-    super(props)
-    this.state = {
-      isVisible: false,
-    }
-  }
+const TooltipWrap = ({ label, tooltip, className }) => {
+  const [isVisible, setIsVisible] = useState(false)
 
-  onClickHandler = () => {
-    this.setState({ isVisible: !this.state.isVisible })
-  }
-
-  render() {
-    const { isVisible } = this.state
-    const { label, tooltip, className } = this.props;
-
-    return (
-      <TooltipInnerWrap className={className} onClick={this.onClickHandler}>
-        <Label>{label}</Label>
-        <Tooltip isVisible={isVisible}>
-          {tooltip}
-        </Tooltip>
-      </TooltipInnerWrap>
-    )
-  }
+  return (
+    <Wrap className={className} onClick={() => setIsVisible(!isVisible)}>
+      <Label>{label}</Label>
+      <Tooltip isVisible={isVisible}>
+        {tooltip}
+      </Tooltip>
+    </Wrap>
+  )
 }
 
 TooltipWrap.propTypes = {
