@@ -1,23 +1,25 @@
 import React from 'react'
 import { bool, shape, number } from 'prop-types'
 import styled from 'styled-components'
-import { media, UNIT_XSM, FONT_SIZE_MD, SELECTIVE_YELLOW, SUNSET_ORANGE } from '../../../styles'
+import { media, FONT_SIZE_MD, SELECTIVE_YELLOW, SUNSET_ORANGE, UNIT_LG } from '../../../styles'
 
 const Wrap = styled.div`
   display: none;
   position: absolute;
-  right: ${UNIT_XSM};
-  bottom: ${UNIT_XSM};
+  right: ${UNIT_LG};
   margin-left: auto;
+  padding: 8px;
+  padding-right: 0;
   max-width: 28rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  background-color: #353535;
+  box-shadow: -22px 0px 17px -4px #353535;
   color: ${props => props.accentColor || 'inherit'};
 
   ${media.xsm`
     display: block;
-    position: static;
     font-size: ${FONT_SIZE_MD};
   `};
 `
