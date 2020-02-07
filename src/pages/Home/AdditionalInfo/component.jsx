@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { media, FONT_SIZE_MD, SELECTIVE_YELLOW, SUNSET_ORANGE, UNIT_LG, UNIT_SM, JET } from '../../../styles'
 
 const Wrap = styled.div`
-  display: none;
+  display: ${props => props.isTimeout ? 'block' : 'none'};
   position: absolute;
   right: ${UNIT_LG};
   right: 3.4rem;

@@ -75,7 +75,7 @@ const Answers = ({
   question: { id, title, answers },
   allQuestions,
   onSelectAnswer,
-  onGetTimeRemaining,
+  onGetTimeToChoose,
 }) => {
   const { selectedAnswer, isTimeout } = (selectedAnswers.find(({ id: answerId }) => answerId === id) || {})
   const isCorrect = selectedAnswer === title
@@ -101,7 +101,7 @@ const Answers = ({
               id,
               selectedAnswer: answer,
               correctAnswer: title,
-              timeToChoose: onGetTimeRemaining(),
+              timeToChoose: onGetTimeToChoose(),
             })}
           >
             <Radio
@@ -147,7 +147,7 @@ Answers.propTypes = {
   }).isRequired,
   allQuestions: arrayOf(shape({})).isRequired,
   onSelectAnswer: func.isRequired,
-  onGetTimeRemaining: func.isRequired,
+  onGetTimeToChoose: func.isRequired,
 }
 
 export default Answers
