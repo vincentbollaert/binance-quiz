@@ -27,6 +27,7 @@ import Tooltip from '../../components/Tooltip/component'
 import Accordion from '../../components/Accordion/component'
 import { CN_ANSWER, TIMER_LENGTH, STYLE_QUIZ_WIDTH, STYLE_RESULTS_WIDTH, STYLE_QUIZ_WIDTH_IS_COMPLETE } from './shared'
 import Timer from './Timer/component'
+import AdditionalInfo from './AdditionalInfo/component'
 import Results from './Results/component'
 
 const QuizWrap = styled.div`
@@ -101,8 +102,9 @@ const Answer = styled.div`
     border-bottom: none;
   };
 
+  ${props => props.isSelectedAnswerQuizIncomplete && `border-bottom-color: ${SELECTIVE_YELLOW};`};
   ${props => props.isQuestionFinished && `
-    opacity: 0.7;
+    opacity: 0.4;
     cursor: not-allowed;
     ${(props.isCorrect || props.isIncorrect) && `
       opacity: 1;
@@ -116,24 +118,6 @@ const Answer = styled.div`
     padding-left: ${UNIT_XXLG};
   `};
 `
-const AdditionalInfo = styled.div`
-  display: none;
-  position: absolute;
-  right: ${UNIT_XSM};
-  bottom: ${UNIT_XSM};
-  margin-left: auto;
-  max-width: 28rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: ${props => props.isTimeout ? '#b8b8b8' : 'inherit'};
-
-  ${media.xsm`
-    display: block;
-    position: static;
-    font-size: ${FONT_SIZE_MD};
-  `};
-`
 const TooltipStyled = styled(Tooltip)`
   ${media.xsm`
     display: none;
@@ -143,13 +127,6 @@ const AccordionStyled = styled(Accordion)`
   ${media.xsm`
     display: none;
   `};
-`
-const Link = styled.a`
-  color: inherit;
-
-  &:hover {
-    text-decoration: underline;
-  };
 `
 
 const Next = styled.button`
@@ -285,6 +262,7 @@ const Home = () => {
                         isQuestionFinished={isQuestionFinished}
                         isCorrect={isCorrect && isSelectedAnswerOption}
                         isIncorrect={!isCorrect && isSelectedAnswerOption}
+                        isSelectedAnswerQuizIncomplete={isSelectedAnswerOption && !isQuizComplete}
                         accentColor={isCorrect ? MEDIUM_AQUAMARINE : SUNSET_ORANGE}
                         isQuizComplete={isQuizComplete}
                         onClick={() => !isQuestionFinished && onSelectAnswer({
@@ -303,21 +281,14 @@ const Home = () => {
                           accentColor={isCorrect ? MEDIUM_AQUAMARINE : SUNSET_ORANGE}
                         />
                         {answer}
-                        <AdditionalInfo isTimeout={isTimeout}>
-                          {isQuizComplete && isSelectedAnswerOption && !isCorrect && (
-                            <Link
-                              href={`https://www.binance.vision/glossary/${questionMatchingAnswer.slug}`}
-                              target="_blank"
-                            >
-                              {questionMatchingAnswer.excerpt}
-                            </Link>
-                          )}
-                          {isQuizComplete && isSelectedAnswerOption && isCorrect && (
-                            `${dummyRandomNumber}% of users got this right`
-                          )}
-                          {!isQuizComplete && isSelectedAnswerOption && `${dummyRandomNumber}% of users chose this option`}
-                          {isTimeout && 'Took too long'}
-                        </AdditionalInfo>
+                        <AdditionalInfo
+                          isTimeout={isTimeout}
+                          isCorrect={isCorrect}
+                          isQuizComplete={isQuizComplete}
+                          isSelectedAnswerOption={isSelectedAnswerOption}
+                          questionMatchingAnswer={questionMatchingAnswer}
+                          dummyRandomNumber={dummyRandomNumber}
+                        />
                         {isQuizComplete && isSelectedAnswerOption && isCorrect && (
                           <TooltipStyled label={dummyRandomNumber} tooltip={`${dummyRandomNumber}% of users got this right`} />
                         )}
