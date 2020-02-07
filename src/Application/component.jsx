@@ -1,5 +1,6 @@
 import React from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Router, Route, Switch } from 'react-router-dom'
+import { createBrowserHistory } from 'history'
 import styled, { createGlobalStyle } from 'styled-components'
 
 import { media, UNIT_LG, RAISIN_BLACK } from '../styles'
@@ -7,22 +8,23 @@ import reset from '../styles/reset'
 import logoImage from '../assets/logo.png'
 import Home from '../pages/Home/component'
 
-export const CLASSNAME_APPLICATION = 'application'
+const history = createBrowserHistory()
+
 const GlobalStyle = createGlobalStyle`
   ${reset};
 `
-
 const STYLE_HEADER_HEIGHT = '5rem'
 const STYLE_HEADER_HEIGHT_SM = '6.4rem'
+const STYLE_FOOTER_HEIGHT = '20rem'
 
 const AppContainer = styled.div`
   min-height: 100vh;
   display: grid;
-  grid-template: "header" ${STYLE_HEADER_HEIGHT} "body" auto "footer" 380px;
+  grid-template: "header" ${STYLE_HEADER_HEIGHT} "body" auto "footer" ${STYLE_FOOTER_HEIGHT};
 
   ${media.sm`
-    grid-template: "header" ${STYLE_HEADER_HEIGHT_SM} "body" auto "footer" 380px;
-  `}
+    grid-template: "header" ${STYLE_HEADER_HEIGHT_SM} "body" auto "footer" ${STYLE_FOOTER_HEIGHT};
+  `};
 `
 const Header = styled.div`
   grid-area: header;
@@ -41,14 +43,14 @@ const Footer = styled.div`
 `
 const PageWrap = styled.div`
   grid-area: body;
-  max-width: 1140px;
+  max-width: 114rem;
 
   ${media.xsm`
     margin: ${UNIT_LG} auto;
     padding: ${UNIT_LG};
   `}
   ${media.sm`
-    padding: 32px;
+    padding: 3.2rem;
     margin: ${UNIT_LG};
     margin-right: auto;
   `};
@@ -59,7 +61,7 @@ const PageWrap = styled.div`
 
 const Application = () => {
   return (
-    <>
+    <Router history={history}>
       <GlobalStyle />
       <AppContainer>
         <Header>
@@ -72,7 +74,7 @@ const Application = () => {
         </PageWrap>
         <Footer />
       </AppContainer>
-    </>
+    </Router>
   )
 }
 
