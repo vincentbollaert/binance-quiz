@@ -49,6 +49,7 @@ const Footer = styled.div`
   background-color: ${RAISIN_BLACK};
 `
 const PageWrap = styled.div`
+  position: relative;
   grid-area: body;
   margin-top: ${UNIT_LG};
   max-width: 114rem;
