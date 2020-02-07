@@ -1,29 +1,29 @@
 import { number, string, shape, arrayOf, bool } from 'prop-types'
 
 export const SHAPE_QUIZ_QUESTION = {
-  id: number.isRequired,
-  title: string.isRequired,
-  slug: string.isRequired,
-  excerpt: string.isRequired,
-  difficulty_id: number.isRequired,
+  id: number,
+  title: string,
+  slug: string,
+  excerpt: string,
+  difficulty_id: number,
   difficulty: shape({
-    level: number.isRequired,
-    title: string.isRequired,
-  }).isRequired,
-  answers: arrayOf(string).isRequired,
-  isFinalQuestion: bool.isRequired,
+    level: number,
+    title: string,
+  }),
+  answers: arrayOf(string),
+  isFinalQuestion: bool,
 }
 
 export const SHAPE_QUESTION = {
-  id: number.isRequired,
-  title: string.isRequired,
-  slug: string.isRequired,
-  excerpt: string.isRequired,
-  difficulty_id: number.isRequired,
+  id: number,
+  title: string,
+  slug: string,
+  excerpt: string,
+  difficulty_id: number,
   difficulty: shape({
-    level: number.isRequired,
-    title: string.isRequired,
-  }).isRequired,
+    level: number,
+    title: string,
+  }),
 }
 
 export const SHAPE_SELECTED_ANSWER = {
