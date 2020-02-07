@@ -8,7 +8,7 @@ import Button from '../../../components/Button/component'
 
 const Wrap = styled.div`
   display: ${props => props.isShow ? 'block' : 'none'};
-  margin: 32px auto;
+  margin: 3.2rem auto;
   padding: ${UNIT_XXLG};
   width: ${STYLE_RESULTS_WIDTH}rem;
   font-size: ${FONT_SIZE_MD};

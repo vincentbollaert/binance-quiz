@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { UNIT_LG, SELECTIVE_YELLOW, TRANSITION, GRANITE_GRAY } from '../../styles'
 import { CN_ANSWER } from '../../pages/Home/shared'
 
-const SIZE = 24
+export const STYLE_RADIO_SIZE_PX = 24
 export const CN_RADIO = 'radio'
 
 export const Wrap = styled.div`
@@ -15,8 +15,8 @@ export const Wrap = styled.div`
 
 export const RadioWrap = styled.div`
   position: relative;
-  width: ${SIZE}px;
-  height: ${SIZE}px;
+  width: ${STYLE_RADIO_SIZE_PX}px;
+  height: ${STYLE_RADIO_SIZE_PX}px;
 
   ${props => !props.isDisabled && `
     .${CN_ANSWER}:hover & {
@@ -41,8 +41,8 @@ export const RadioField = styled.input`
 
       &::before {
         visibility: visible;
-        width: ${SIZE / 2}px;
-        height: ${SIZE / 2}px;
+        width: ${STYLE_RADIO_SIZE_PX / 2}px;
+        height: ${STYLE_RADIO_SIZE_PX / 2}px;
         background-color: ${props => props.accentColor};
       };
     };
@@ -70,8 +70,8 @@ export const RadioStyled = styled.div`
     content: '';
     position: absolute;
     visibility: hidden;
-    height: ${SIZE / 4}px;
-    width: ${SIZE / 4}px;
+    height: ${STYLE_RADIO_SIZE_PX / 4}px;
+    width: ${STYLE_RADIO_SIZE_PX / 4}px;
     border-radius: 50%;
     background-color: ${GRANITE_GRAY};
     transition: width ${TRANSITION}, height ${TRANSITION}, background-color ${TRANSITION};
