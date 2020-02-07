@@ -19,9 +19,9 @@ export const getDataSucceeded = ({ payload }) => ({
 })
 
 export const GET_DATA_FAILED = 'GET_DATA_FAILED'
-export const getDataFailed = (error) => ({
+export const getDataFailed = ({ payload }) => ({
   type: GET_DATA_FAILED,
-  error,
+  payload,
 })
 
 // select choice
@@ -53,15 +53,15 @@ export const showNextQuestion = ({ activeQuestionId }) => ({
   },
 })
 
+const MOCK_QUESTION = {
+  id: 0,
+  answers: [],
+}
 export const init = () => ({
   isQuizComplete: false,
-  questions: [{
-    answers: [],
-  }],
+  questions: [MOCK_QUESTION],
   allQuestions: [],
-  activeQuestion: {
-    answers: [],
-  },
+  activeQuestion: MOCK_QUESTION,
   selectedAnswers: [],
   totalTime: 0,
   asyncStatus: SHAPE_ASYNC_STATUS_INITIAL,
@@ -116,9 +116,10 @@ export default function reducer(state, action) {
     }
 
     case GET_DATA_FAILED: {
+      const error = `The following error occured: ${action.payload ? action.payload : 'could not get glossary'}`
       return {
         ...state,
-        asyncStatus: SHAPE_ASYNC_STATUS_FAILED(action.payload || 'could not get glossary'),
+        asyncStatus: SHAPE_ASYNC_STATUS_FAILED(error),
       }
     }
 

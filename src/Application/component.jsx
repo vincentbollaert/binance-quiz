@@ -5,13 +5,12 @@ import styled, { createGlobalStyle } from 'styled-components'
 import { media, UNIT_LG, RAISIN_BLACK } from '../styles'
 import reset from '../styles/reset'
 import logoImage from '../assets/logo.png'
+import { STYLE_HEADER_HEIGHT, STYLE_HEADER_HEIGHT_SM } from './shared'
 import Home from '../pages/Home/component'
 
 const GlobalStyle = createGlobalStyle`
   ${reset};
 `
-const STYLE_HEADER_HEIGHT = '5rem'
-const STYLE_HEADER_HEIGHT_SM = '6.4rem'
 const STYLE_FOOTER_HEIGHT = '20rem'
 
 const AppContainer = styled.div`
