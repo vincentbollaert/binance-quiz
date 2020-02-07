@@ -17,6 +17,7 @@ import {
   UNIT_SM,
   UNIT_XSM,
 } from '../../styles'
+import { API_BINANCE_PROXIED } from '../../api'
 import reducer, {
   init, getDataRequested, getDataSucceeded, getDataFailed, selectAnswer, completeQuiz, showNextQuestion,
 } from './reducer'
@@ -60,7 +61,7 @@ const Question = styled.div`
 
   ${media.xsm`
     padding-top: ${UNIT_XXLG};
-    padding-bottom: 18px;
+    padding-bottom: ${UNIT_LG};
   `};
 
   &:last-child {
@@ -74,7 +75,7 @@ const Description = styled.div`
   font-size: ${FONT_SIZE_LG};
 
   ${media.xsm`
-    margin-bottom: 50px;
+    margin-bottom: ${UNIT_XXLG};
     padding: 0 ${UNIT_XXLG};
     font-size: ${FONT_SIZE_XLG};
   `};
@@ -94,7 +95,6 @@ const Answer = styled.div`
   align-items: center;
   position: relative;
   cursor: pointer;
-  transition: box-shadow 0.1s ease;
   border-bottom: 1px solid #5d5d5d66;
 
   &:last-child {
@@ -157,8 +157,8 @@ const Next = styled.button`
   margin-left: auto;
   justify-content: center;
   background-color: #444;
-  width: 114px;
-  height: 114px;
+  width: 11.4rem;
+  height: 11.4rem;
   flex-shrink: 0;
   line-height: 1;
   text-transform: uppercase;
@@ -177,11 +177,11 @@ const Next = styled.button`
     &:hover {
       background-color: #ffba0a;
     };
-  `}
+  `};
 `
 const NextContent = styled.div`
-  width: 40px;
-  height: 40px;
+  width: 4rem;
+  height: 4rem;
   position: relative;
   justify-content: center;
   display: flex;
@@ -194,7 +194,7 @@ const NextCurrent = styled.div`
   left: 4px;
 `
 const NextDivider = styled.div`
-  width: 47px;
+  width: 4.7rem;
   height: 1px;
   background: ${props => props.isQuestionFinished ? '#997e287a' : '#ffffff21'};
   position: absolute;
@@ -211,7 +211,7 @@ const Home = () => {
   const [state, dispatch] = useReducer(reducer, undefined, init)
 
   const {
-    // isQuizComplete,
+    isQuizComplete,
     questions,
     allQuestions,
     activeQuestion,
@@ -221,19 +221,17 @@ const Home = () => {
   } = state
   const childRef = useRef()
 
-  useEffect(() => {
-    getData()
-  }, [])
+  useEffect(() => { getData() }, [])
 
   function getData() {
     dispatch(getDataRequested())
-    axios.get('https://api.allorigins.win/raw?url=http://api.binance.vision/api/glossaries')
+    axios.get(API_BINANCE_PROXIED)
       .then(({ data }) => dispatch(getDataSucceeded({ payload: data })))
       .catch(error => dispatch(getDataFailed({ payload: error })))
   }
 
-  function onSelectAnswer({ id, selectedAnswer, correctAnswer, timeToChoose, isTimeout, isCorrect }) {
-    dispatch(selectAnswer({ id, selectedAnswer, correctAnswer, timeToChoose, isTimeout, isCorrect }))
+  function onSelectAnswer(params) {
+    dispatch(selectAnswer({ ...params, isCorrect: params.selectedAnswer === params.correctAnswer }))
     onStopTimer({ isReset: false })
   }
 
@@ -254,13 +252,12 @@ const Home = () => {
       id: activeQuestion.id,
       selectedAnswer: '',
       correctAnswer: activeQuestion.title,
-      isCorrect: false,
       timeToChoose: TIMER_LENGTH,
       isTimeout: true,
     })
   }
   const isQuestionFinished2 = (selectedAnswers[selectedAnswers.length - 1] || {}).id === activeQuestion.id
-  const isQuizComplete = true
+  // const isQuizComplete = true
 
   return (
     <div>
@@ -294,7 +291,6 @@ const Home = () => {
                           id,
                           selectedAnswer: answer,
                           correctAnswer: title,
-                          isCorrect: answer === title,
                           timeToChoose: onGetTimeRemaining(),
                         })}
                       >
