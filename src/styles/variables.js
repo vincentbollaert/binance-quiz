@@ -24,8 +24,10 @@ export const UNIT_XLG = `${UNIT_XLG_INT}rem`
 export const UNIT_XXLG = `${UNIT_XXLG_INT}rem`
 
 // font size
+export const FONT_SIZE_SM = '1.1rem'
 export const FONT_SIZE_MD = '1.2rem'
-export const FONT_SIZE_LG = ''
+export const FONT_SIZE_LG = '1.4rem'
+export const FONT_SIZE_XLG = '1.8rem'
 
 // transition
 export const TRANSITION = '0.1s ease-out'

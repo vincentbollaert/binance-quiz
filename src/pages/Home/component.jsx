@@ -11,6 +11,8 @@ import {
   SUNSET_ORANGE,
   TRANSITION,
   FONT_SIZE_MD,
+  FONT_SIZE_LG,
+  FONT_SIZE_XLG,
   UNIT_XLG,
   UNIT_SM,
   UNIT_XSM,
@@ -69,12 +71,12 @@ const Description = styled.div`
   margin-bottom: ${UNIT_LG};
   padding: 0 ${UNIT_LG};
   line-height: 1.4;
-  font-size: 16px;
+  font-size: ${FONT_SIZE_LG};
 
   ${media.xsm`
     margin-bottom: 50px;
     padding: 0 ${UNIT_XXLG};
-    font-size: 18px;
+    font-size: ${FONT_SIZE_XLG};
   `};
 `
 
@@ -82,7 +84,7 @@ const Answers = styled.div`
   font-size: ${FONT_SIZE_MD};
 
   ${media.xsm`
-    font-size: 15px;
+    font-size: ${FONT_SIZE_LG};
   `};
 `
 const Answer = styled.div`
@@ -160,7 +162,7 @@ const Next = styled.button`
   flex-shrink: 0;
   line-height: 1;
   text-transform: uppercase;
-  font-size: 14px;
+  font-size: ${FONT_SIZE_LG};
   cursor: pointer;
   text-transform: uppercase;
   font-weight: bold;
@@ -184,7 +186,7 @@ const NextContent = styled.div`
   justify-content: center;
   display: flex;
   align-items: center;
-  font-size: 17px;
+  font-size: ${FONT_SIZE_XLG};
 `
 const NextCurrent = styled.div`
   position: absolute;

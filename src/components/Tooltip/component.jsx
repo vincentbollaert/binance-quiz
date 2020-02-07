@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { string } from 'prop-types'
 import styled from 'styled-components'
-import { UNIT_LG, UNIT_MD, MEDIUM_AQUAMARINE } from '../../styles'
+import { UNIT_LG, UNIT_MD, MEDIUM_AQUAMARINE, FONT_SIZE_SM } from '../../styles'
 
 const Wrap = styled.div`
   position: absolute;
@@ -16,7 +16,7 @@ const Label = styled.div`
   height: 24px;
   color: ${MEDIUM_AQUAMARINE};
   border-radius: 50%;
-  font-size: 11px;
+  font-size: ${FONT_SIZE_SM};
 `
 const Tooltip = styled.div`
   visibility: hidden;
@@ -27,7 +27,7 @@ const Tooltip = styled.div`
   margin-right: ${UNIT_MD};
   padding: 1rem ${UNIT_LG};
   line-height: 1.1;
-  font-size: 11px;
+  font-size: ${FONT_SIZE_SM};
   text-transform: uppercase;
   background-color: ${MEDIUM_AQUAMARINE};
   color: rgba(0, 0, 0, 0.6);

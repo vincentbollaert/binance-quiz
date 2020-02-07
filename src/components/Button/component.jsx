@@ -1,7 +1,7 @@
 import React from 'react'
 import { string, func, node, shape } from 'prop-types'
 import styled from 'styled-components'
-import { UNIT_XLG, UNIT_LG, SELECTIVE_YELLOW, TRANSITION } from '../../styles'
+import { UNIT_XLG, UNIT_LG, SELECTIVE_YELLOW, TRANSITION, FONT_SIZE_LG } from '../../styles'
 import { PROP_ASYNC_STATUS } from '../../constants'
 import { ButtonLoader } from '../Loader'
 
@@ -17,7 +17,7 @@ const Wrap = styled.button`
   border-radius: 1.8rem;
   color: #202020;
   font-weight: bold;
-  font-size: 14px;
+  font-size: ${FONT_SIZE_LG};
   background: ${SELECTIVE_YELLOW};
   cursor: pointer;
   transition: transform ${TRANSITION};
