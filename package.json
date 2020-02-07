@@ -17,15 +17,14 @@
     "develop": "webpack-dev-server --progress --watch"
   },
   "dependencies": {
-    "@babel/core": "^7.2.2",
+    "@babel/core": "^7.8.4",
     "@babel/plugin-proposal-class-properties": "^7.3.0",
-    "@babel/preset-env": "^7.3.1",
-    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/preset-react": "^7.8.3",
     "axios": "^0.19.2",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
-    "babel-plugin-transform-react-inline-elements": "^6.22.0",
     "babel-polyfill": "^6.26.0",
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^3.4.2",
@@ -49,7 +48,6 @@
     "react-hot-loader": "^4.6.5",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
-    "react-test-renderer": "^16.8.1",
     "sass-loader": "^8.0.2",
     "style-loader": "^1.1.3",
     "styled-components": "^5.0.0",
@@ -59,5 +57,13 @@
     "webpack-dev-middleware": "^3.5.2",
     "webpack-dev-server": "^3.1.1",
     "webpack-hot-middleware": "^2.20.0"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.8.3",
+    "@babel/plugin-transform-react-constant-elements": "^7.8.3",
+    "@babel/plugin-transform-react-inline-elements": "^7.8.3",
+    "@testing-library/react": "^9.4.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.24"
   }
 }
