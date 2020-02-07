@@ -62,19 +62,18 @@ const NextQuestion = styled.div`
 
 const NextButton = ({
   isQuizComplete,
-  isActiveQuestionFinished,
-  isLastQuestion,
   activeQuestion: { id, isFinalQuestion },
   selectedAnswers,
   onNextClick,
 }) => {
+  const isActiveQuestionFinished = (selectedAnswers[selectedAnswers.length - 1] || {}).id === id
   return (
     <Wrap
       isShow={!isQuizComplete}
       isQuestionFinished={isActiveQuestionFinished}
       onClick={() => onNextClick({ activeQuestionId: id, isFinalQuestion })}
     >
-      {isLastQuestion ? 'Finish' : (
+      {isFinalQuestion ? 'Finish' : (
         <InnerWrap>
           <CurrentQuestion>{selectedAnswers.length + 1}</CurrentQuestion>
           <Divider isQuestionFinished={isActiveQuestionFinished} />
@@ -87,11 +86,13 @@ const NextButton = ({
 
 NextButton.propTypes = {
   isQuizComplete: bool.isRequired,
-  isActiveQuestionFinished: bool.isRequired,
-  isLastQuestion: bool.isRequired,
-  activeQuestion: shape(SHAPE_QUIZ_QUESTION).isRequired,
+  activeQuestion: shape(SHAPE_QUIZ_QUESTION),
   selectedAnswers: arrayOf(shape(SHAPE_SELECTED_ANSWER)).isRequired,
   onNextClick: func.isRequired,
+}
+
+NextButton.defaultProps = {
+  activeQuestion: {},
 }
 
 export default NextButton

@@ -132,8 +132,6 @@ const Home = () => {
       isTimeout: true,
     })
   }
-  const isActiveQuestionFinished = (selectedAnswers[selectedAnswers.length - 1] || {}).id === activeQuestion.id
-  const isLastQuestion = selectedAnswers.length ? selectedAnswers.length === questions.length : false
 
   return (
     <div>
@@ -161,8 +159,6 @@ const Home = () => {
         </Questions>
         <NextButton
           isQuizComplete={isQuizComplete}
-          isActiveQuestionFinished={isActiveQuestionFinished}
-          isLastQuestion={isLastQuestion}
           activeQuestion={activeQuestion}
           selectedAnswers={selectedAnswers}
           onNextClick={() => onNextClick({

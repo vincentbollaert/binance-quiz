@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { bool, arrayOf, shape, string, number, func } from 'prop-types'
+import { bool, arrayOf, shape, func } from 'prop-types'
 
 import {
   media,
@@ -83,8 +83,6 @@ const Answers = ({
   const isCorrect = selectedAnswer === title
   const isQuestionFinished = selectedAnswer !== undefined || isTimeout
 
-  console.log('selectedAnswers', selectedAnswers)
-  // console.log('q', question)
   return (
     <Wrap>
       {answers.map(answer => {
