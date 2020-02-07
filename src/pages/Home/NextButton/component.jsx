@@ -66,7 +66,7 @@ const NextButton = ({
   selectedAnswers,
   onNextClick,
 }) => {
-  const isActiveQuestionFinished = (selectedAnswers[selectedAnswers.length - 1] || {}).id === id
+  const isActiveQuestionFinished = selectedAnswers.length && selectedAnswers[selectedAnswers.length - 1].id === id
   return (
     <Wrap
       isShow={!isQuizComplete}
