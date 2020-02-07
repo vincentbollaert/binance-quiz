@@ -205,7 +205,7 @@ const Home = () => {
   const [state, dispatch] = useReducer(reducer, undefined, init)
 
   const {
-    isQuizComplete,
+    // isQuizComplete,
     questions,
     allQuestions,
     activeQuestion,
@@ -254,7 +254,7 @@ const Home = () => {
     })
   }
   const isQuestionFinished2 = (selectedAnswers[selectedAnswers.length - 1] || {}).id === activeQuestion.id
-  // const isQuizComplete = true
+  const isQuizComplete = true
 
   return (
     <div>
@@ -320,7 +320,7 @@ const Home = () => {
                           <TooltipStyled label={dummyRandomNumber} tooltip={`${dummyRandomNumber}% of users got this right`} />
                         )}
                         {isQuizComplete && isSelectedAnswerOption && !isCorrect && (
-                          <AccordionStyled content={`Definition: ${questionMatchingAnswer.excerpt}`} />
+                          <AccordionStyled>Definition: ${questionMatchingAnswer.excerpt}</AccordionStyled>
                         )}
                       </Answer>
                     )

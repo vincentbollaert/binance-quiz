@@ -1,54 +1,52 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { string, any } from 'prop-types'
 import styled from 'styled-components'
 import chevronDown from '../../assets/svg/chevron-down.svg'
-import { SUNSET_ORANGE, UNIT_XSM } from '../../styles'
+import { UNIT_XSM, UNIT_SM, ISABELLINE } from '../../styles'
 import Svg from '../Svg/component'
 
-const Wrap = styled.div`
-  position: relative;
-`
 const AccordionToggle = styled(Svg)`
   margin-left: auto;
   padding: ${UNIT_XSM};
-  fill: ${props => props.isOpen ? '#eee' : '#5e5e5e'};
+  fill: ${props => props.isOpen ? ISABELLINE : '#5e5e5e'};
   cursor: pointer;
 
   &:hover {
-    fill: #eee;
+    fill: ${ISABELLINE};
   };
 `
-const AccordionContent = styled.div`
+const Body = styled.div`
   display: ${props => props.isOpen ? 'block' : 'none'};
-  margin-top: 8px;
+  margin-top: ${UNIT_SM};
   margin-left: 40px;
 `
 
-class Accordion extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      isOpen: false,
-    }
-  }
+const Accordion = ({ children, className }) => {
+  const [isOpen, setIsOpen] = useState(false)
 
-  onToggle = () => {
-    this.setState({ isOpen: !this.state.isOpen })
-  }
+  return (
+    <>
+      <AccordionToggle
+        isOpen={isOpen}
+        svg={chevronDown}
+        size={2.4}
+        onClick={() => setIsOpen(!isOpen)}
+        className={className}
+      />
+      <Body isOpen={isOpen}>
+        {children}
+      </Body>
+    </>
+  )
+}
 
-  render() {
-    const { isOpen } = this.state
-    const { content, className } = this.props
-    return (
-      <>
-        <AccordionToggle isOpen={isOpen} svg={chevronDown} size={2.4} onClick={this.onToggle} className={className} />
-        <Wrap>
-          <AccordionContent isOpen={isOpen}>
-            {content}
-          </AccordionContent>
-        </Wrap>
-      </>
-    )
-  }
+Accordion.propTypes = {
+  children: any.isRequired,
+  className: string,
+}
+
+Accordion.defaultProps = {
+  className: '',
 }
 
 export default Accordion
