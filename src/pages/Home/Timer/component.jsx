@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
+import { bool, func, shape } from 'prop-types'
 import styled from 'styled-components'
+import { TIMER_LENGTH } from '../shared'
+import { PROP_ASYNC_STATUS } from '../../../constants'
 
 const Progress = styled.div`
   position: absolute;
   top: 0;
+  width: ${props => props.progress}%;
   height: 4px;
   background-color: ${props => `rgba(255, 92, 92, ${props.progress / 100})`};
-  width: ${props => props.progress}%;
   transition: width 0.1s ease, background-color 0.1s ease;
 `
-
-export const TIMER_LENGTH = 20
 
 class Timer extends Component {
   constructor(props) {
@@ -22,13 +23,15 @@ class Timer extends Component {
   }
 
   componentDidMount() {
-    this.timeoutId = setInterval(() => this.clock(), 1000)
+    this.timeoutId = setInterval(() => this.onUpdateTimer(), 1000)
   }
 
-  clock = () => {
-    this.setState({
-      timeRemaining: this.state.timeRemaining - 1,
-    })
+  onUpdateTimer = () => {
+    const { asyncStatus: { isSuccessful } } = this.props
+    if (!isSuccessful) return false
+
+    this.setState(prevState => ({ timeRemaining: prevState.timeRemaining - 1 }))
+
     if (this.state.timeRemaining === 0) {
       clearTimeout(this.timeoutId)
       this.props.setTimeFinished()
@@ -36,16 +39,21 @@ class Timer extends Component {
     return this.state.timeRemaining
   }
 
-  onStopTimer = ({ isReset }) => {
+  onSetTimer = ({ isReset, isRestart }) => {
     clearTimeout(this.timeoutId)
+
     if (isReset) {
       this.setState({ timeRemaining: TIMER_LENGTH })
-      this.timeoutId = setInterval(() => this.clock(), 1000)
+    }
+
+    if (isRestart) {
+      this.setState({ timeRemaining: TIMER_LENGTH })
+      this.timeoutId = setInterval(() => this.onUpdateTimer(), 1000)
     }
   }
 
-  onGetTimeRemaining = () => {
-    return this.state.timeRemaining
+  onGetTimeToChoose = () => {
+    return TIMER_LENGTH - this.state.timeRemaining
   }
 
   render() {
@@ -55,6 +63,12 @@ class Timer extends Component {
       isQuizComplete ? null : <Progress progress={((TIMER_LENGTH - timeRemaining) / TIMER_LENGTH) * 100} />
     )
   }
+}
+
+Timer.propTypes = {
+  isQuizComplete: bool.isRequired,
+  setTimeFinished: func.isRequired,
+  asyncStatus: shape(PROP_ASYNC_STATUS).isRequired,
 }
 
 export default Timer

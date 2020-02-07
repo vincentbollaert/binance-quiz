@@ -14,7 +14,7 @@ const transition = keyframes`
 `
 
 const Wrap = styled.div`
-  z-index: 4;
+  z-index: 1;
   position: fixed;
   top: 0;
   right: 0;
@@ -34,15 +34,10 @@ const Wrap = styled.div`
   };
 `
 
-class LineLoader extends React.PureComponent {
-  render() {
-    const { asyncStatus, className } = this.props
-    const { isBusy } = asyncStatus
-
-    return (
-      isBusy ? <Wrap className={className} /> : null
-    )
-  }
+const LineLoader = ({ asyncStatus: { isBusy }, className }) => {
+  return (
+    isBusy ? <Wrap className={className} /> : null
+  )
 }
 
 LineLoader.propTypes = {

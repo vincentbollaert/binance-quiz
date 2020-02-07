@@ -1,11 +1,12 @@
-import React from 'react'
-import { string } from 'prop-types'
+import React, { useState } from 'react'
+import { string, bool, number, oneOfType } from 'prop-types'
 import styled from 'styled-components'
-import { UNIT_MD, UNIT_LG, MEDIUM_AQUAMARINE } from '../../styles'
+import { UNIT_LG, UNIT_MD, MEDIUM_AQUAMARINE, FONT_SIZE_SM } from '../../styles'
 
-const TooltipInnerWrap = styled.div`
+const Wrap = styled.div`
   position: absolute;
   right: ${UNIT_LG};
+  cursor: pointer;
 `
 const Label = styled.div`
   display: flex;
@@ -16,7 +17,7 @@ const Label = styled.div`
   height: 24px;
   color: ${MEDIUM_AQUAMARINE};
   border-radius: 50%;
-  font-size: 11px;
+  font-size: ${FONT_SIZE_SM};
 `
 const Tooltip = styled.div`
   visibility: hidden;
@@ -27,10 +28,10 @@ const Tooltip = styled.div`
   margin-right: ${UNIT_MD};
   padding: 1rem ${UNIT_LG};
   line-height: 1.1;
-  font-size: 11px;
+  font-size: ${FONT_SIZE_SM};
   text-transform: uppercase;
   background-color: ${MEDIUM_AQUAMARINE};
-  color: #0d683c;
+  color: rgba(0, 0, 0, 0.6);
   font-weight: bold;
   border-radius: 2px;
   white-space: nowrap;
@@ -53,39 +54,27 @@ const Tooltip = styled.div`
     visibility: visible;
     margin-right: ${UNIT_LG};
     transition: margin 0.2s ease-out, visibility 0.4s ease-out;
-    transition-delay: 0.4s;
   `};
 `
 
-class TooltipWrap extends React.PureComponent {
-  constructor(props) {
-    super(props)
-    this.state = {
-      isVisible: false,
-    }
-  }
+const TooltipWrap = ({ isShow, label, tooltip, className }) => {
+  const [isVisible, setIsVisible] = useState(false)
 
-  onClickHandler = () => {
-    this.setState({ isVisible: !this.state.isVisible })
-  }
-
-  render() {
-    const { isVisible } = this.state
-    const { label, tooltip, className } = this.props;
-
-    return (
-      <TooltipInnerWrap className={className} onClick={this.onClickHandler}>
+  return (
+    !isShow ? null : (
+      <Wrap className={className} onClick={() => setIsVisible(!isVisible)}>
         <Label>{label}</Label>
         <Tooltip isVisible={isVisible}>
           {tooltip}
         </Tooltip>
-      </TooltipInnerWrap>
+      </Wrap>
     )
-  }
+  )
 }
 
 TooltipWrap.propTypes = {
-  label: string.isRequired,
+  isShow: bool.isRequired,
+  label: oneOfType([string, number]).isRequired,
   tooltip: string.isRequired,
   className: string,
 }

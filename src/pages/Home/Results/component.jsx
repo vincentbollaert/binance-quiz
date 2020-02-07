@@ -1,17 +1,20 @@
 import React from 'react'
 import styled from 'styled-components'
+import { bool, number, func, shape, arrayOf } from 'prop-types'
 
-import { media, UNIT_XSM_INT, UNIT_LG, UNIT_XSM } from '../../../styles'
-// import { STYLE_RESULTS_WIDTH } from '../component'
+import { media, UNIT_XXLG, UNIT_LG, UNIT_XSM, FONT_SIZE_LG, FONT_SIZE_MD, RAISIN_BLACK } from '../../../styles'
+import { SHAPE_SELECTED_ANSWER } from '../shapePropTypes'
+import { PROP_ASYNC_STATUS } from '../../../constants'
+import { STYLE_RESULTS_WIDTH, STYLE_QUIZ_WIDTH_IS_COMPLETE } from '../shared'
 import Button from '../../../components/Button/component'
 
 const Wrap = styled.div`
   display: ${props => props.isShow ? 'block' : 'none'};
-  margin: 32px auto;
-  padding: 46px;
-  width: 214px;
-  font-size: 12px;
-  background: #202020;
+  margin: 3.2rem auto;
+  padding: ${UNIT_XXLG};
+  width: ${STYLE_RESULTS_WIDTH}rem;
+  font-size: ${FONT_SIZE_MD};
+  background: ${RAISIN_BLACK};
   line-height: 1.4;
 
   ${media.xsm`
@@ -27,12 +30,12 @@ const Wrap = styled.div`
   ${media.lg`
     right: auto;
     left: 50%;
-    margin-left: 330px;
+    margin-left: ${STYLE_QUIZ_WIDTH_IS_COMPLETE / 2}rem;
   `};
 `
 const Header = styled.div`
   margin-bottom: ${UNIT_LG};
-  font-size: 14px;
+  font-size: ${FONT_SIZE_LG};
   font-weight: bold;
   text-transform: uppercase;
 `
@@ -53,22 +56,35 @@ const Description = styled.div`
   color: #acacad;
 `
 
-const Results = ({ isQuizComplete, totalTime, onResetQuiz, asyncStatus }) => (
-  isQuizComplete ? (
-    <Wrap isShow={isQuizComplete}>
-      <Header>Quiz complete</Header>
-      <Row>
-        <Term>Total time</Term>
-        <Description>{totalTime} s</Description>
-      </Row>
-      <Row>
-        <Term>Score</Term>
-        <Description>8 / 10</Description>
-      </Row>
-      <Row>
-        <Button onClick={onResetQuiz} asyncStatus={asyncStatus}>Try again</Button>
-      </Row>
-    </Wrap>) : null
-)
+const Results = ({ isQuizComplete, totalTime, selectedAnswers, onResetQuiz, asyncStatus }) => {
+  const totalAnswers = selectedAnswers.length
+  const totalCorrectAnswers = selectedAnswers.filter(answer => answer.isCorrect).length
+
+  return (
+    isQuizComplete ? (
+      <Wrap isShow={isQuizComplete}>
+        <Header>Quiz complete</Header>
+        <Row>
+          <Term>Total time</Term>
+          <Description>{totalTime} s</Description>
+        </Row>
+        <Row>
+          <Term>Score</Term>
+          <Description>{totalCorrectAnswers} / {totalAnswers}</Description>
+        </Row>
+        <Row>
+          <Button onClick={onResetQuiz} asyncStatus={asyncStatus}>Try again</Button>
+        </Row>
+      </Wrap>) : null
+  )
+}
+
+Results.propTypes = {
+  isQuizComplete: bool.isRequired,
+  totalTime: number.isRequired,
+  selectedAnswers: arrayOf(shape(SHAPE_SELECTED_ANSWER)).isRequired,
+  onResetQuiz: func.isRequired,
+  asyncStatus: shape(PROP_ASYNC_STATUS).isRequired,
+}
 
 export default Results

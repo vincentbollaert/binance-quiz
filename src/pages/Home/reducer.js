@@ -19,9 +19,9 @@ export const getDataSucceeded = ({ payload }) => ({
 })
 
 export const GET_DATA_FAILED = 'GET_DATA_FAILED'
-export const getDataFailed = (error) => ({
+export const getDataFailed = ({ payload }) => ({
   type: GET_DATA_FAILED,
-  error,
+  payload,
 })
 
 // select choice
@@ -53,20 +53,19 @@ export const showNextQuestion = ({ activeQuestionId }) => ({
   },
 })
 
+const MOCK_QUESTION = {
+  id: 0,
+  answers: [],
+}
 export const init = () => ({
   isQuizComplete: false,
-  questions: [],
+  questions: [MOCK_QUESTION],
   allQuestions: [],
-  activeQuestion: {
-    answers: [],
-  },
+  activeQuestion: MOCK_QUESTION,
   selectedAnswers: [],
   totalTime: 0,
   asyncStatus: SHAPE_ASYNC_STATUS_INITIAL,
 })
-
-const NUMBER_OF_QUESTIONS = 10
-
 
 export default function reducer(state, action) {
   switch (action.type) {
@@ -80,21 +79,24 @@ export default function reducer(state, action) {
 
     case GET_DATA_SUCCEEDED: {
       const { payload } = action
-      const NUMBER_OF_CHOICES = 3
+      const NUMBER_OF_QUESTIONS = 10
+      const NUMBER_OF_ANSWERS = 3
 
-      const termsByRandom = [...payload]
-      randomiseArray(termsByRandom)
+      const questionsByRandom = randomiseArray(payload)
+      const incorrectAnswers = questionsByRandom
+        .map(({ title }) => title)
+        .filter((item, index) => index >= NUMBER_OF_QUESTIONS)
 
-      const answers = termsByRandom.map(({ title }) => title)
-      const incorrectAnswers = answers.filter((item, index) => index >= NUMBER_OF_QUESTIONS)
-
-      const termsForQuiz = termsByRandom
+      const questionsForQuiz = questionsByRandom
         .filter((item, index) => index < NUMBER_OF_QUESTIONS)
-        .map((term, index) => {
-          const incorrectAnswersForTerm = incorrectAnswers.slice(index * NUMBER_OF_CHOICES, (index * NUMBER_OF_CHOICES) + NUMBER_OF_CHOICES)
+        .map((question, index) => {
+          const answers = [
+            question.title,
+            ...incorrectAnswers.slice(index * NUMBER_OF_ANSWERS, (index * NUMBER_OF_ANSWERS) + NUMBER_OF_ANSWERS)
+          ]
           return ({
-            ...term,
-            answers: [term.title, ...incorrectAnswersForTerm],
+            ...question,
+            answers: randomiseArray(answers),
             isFinalQuestion: index === NUMBER_OF_QUESTIONS - 1
           })
         })
@@ -103,17 +105,18 @@ export default function reducer(state, action) {
         isQuizComplete: false,
         selectedAnswers: [],
         totalTime: 0,
-        questions: termsForQuiz,
-        allQuestions: termsByRandom,
-        activeQuestion: termsForQuiz[0],
+        questions: questionsForQuiz,
+        allQuestions: questionsByRandom,
+        activeQuestion: questionsForQuiz[0],
         asyncStatus: SHAPE_ASYNC_STATUS_SUCCEEDED,
       }
     }
 
     case GET_DATA_FAILED: {
+      const error = `The following error occured: ${action.payload ? action.payload : 'could not get glossary'}`
       return {
         ...state,
-        asyncStatus: SHAPE_ASYNC_STATUS_FAILED(action.payload || 'could not get glossary'),
+        asyncStatus: SHAPE_ASYNC_STATUS_FAILED(error),
       }
     }
 

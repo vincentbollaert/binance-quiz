@@ -1,11 +1,11 @@
 import React from 'react'
 import { bool, string, number } from 'prop-types'
 import styled from 'styled-components'
-import { UNIT_LG, SELECTIVE_YELLOW } from '../../styles'
+import { UNIT_LG, SELECTIVE_YELLOW, TRANSITION, GRANITE_GRAY } from '../../styles'
+import { CN_ANSWER } from '../../pages/Home/shared'
 
-const SIZE = 24
-const BG = '#636363'
-export const RADIO_STYLED_CLASSNAME = 'radio-styled'
+export const STYLE_RADIO_SIZE_PX = 24
+export const CN_RADIO = 'radio'
 
 export const Wrap = styled.div`
   display: flex;
@@ -15,38 +15,38 @@ export const Wrap = styled.div`
 
 export const RadioWrap = styled.div`
   position: relative;
-  width: ${SIZE}px;
-  height: ${SIZE}px;
+  width: ${STYLE_RADIO_SIZE_PX}px;
+  height: ${STYLE_RADIO_SIZE_PX}px;
 
   ${props => !props.isDisabled && `
-    .sdsds:hover & {
-      .${RADIO_STYLED_CLASSNAME} {
+    .${CN_ANSWER}:hover & {
+      .${CN_RADIO} {
         border-color: ${props.accentColor};
 
         &::before {
           visibility: visible;
           background-color: ${props.accentColor};
-        }
-      }
-    }
-  `}
+        };
+      };
+    };
+  `};
 `
 
 export const RadioField = styled.input`
   display: none;
 
   &:checked ~ {
-    .${RADIO_STYLED_CLASSNAME} {
+    .${CN_RADIO} {
       border-color: ${props => props.accentColor};
 
       &::before {
         visibility: visible;
-        width: ${SIZE / 2}px;
-        height: ${SIZE / 2}px;
+        width: ${STYLE_RADIO_SIZE_PX / 2}px;
+        height: ${STYLE_RADIO_SIZE_PX / 2}px;
         background-color: ${props => props.accentColor};
-      }
-    }
-  }
+      };
+    };
+  };
 `
 
 export const RadioLabel = styled.label`
@@ -61,7 +61,7 @@ export const RadioStyled = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid ${BG};
+  border: 2px solid ${GRANITE_GRAY};
   width: 100%;
   height: 100%;
   border-radius: 50%;
@@ -70,38 +70,27 @@ export const RadioStyled = styled.div`
     content: '';
     position: absolute;
     visibility: hidden;
-    height: ${SIZE / 4}px;
-    width: ${SIZE / 4}px;
+    height: ${STYLE_RADIO_SIZE_PX / 4}px;
+    width: ${STYLE_RADIO_SIZE_PX / 4}px;
     border-radius: 50%;
-    background-color: ${BG};
-    transition: width 0.1s ease-out, height 0.1s ease-out, background-color 0.1s ease-out;
+    background-color: ${GRANITE_GRAY};
+    transition: width ${TRANSITION}, height ${TRANSITION}, background-color ${TRANSITION};
     pointer-events: none;
   }
 `
 
-class Radio extends React.PureComponent {
-  render() {
-    const {
-      isQuizComplete,
-      isDisabled,
-      checked,
-      accentColor,
-      id,
-      name,
-      className,
-    } = this.props
-    const accentColorConditional = isQuizComplete ? accentColor : SELECTIVE_YELLOW
+const Radio = ({ isQuizComplete, isDisabled, checked, accentColor, id, className }) => {
+  const accentColorConditional = isQuizComplete ? accentColor : SELECTIVE_YELLOW
 
-    return (
-      <Wrap className={className}>
-        <RadioWrap accentColor={accentColorConditional} isDisabled={isDisabled}>
-          <RadioField accentColor={accentColorConditional} checked={checked} type="radio" id={id} name={name} readOnly />
-          <RadioLabel htmlFor={id} />
-          <RadioStyled className={RADIO_STYLED_CLASSNAME} />
-        </RadioWrap>
-      </Wrap>
-    )
-  }
+  return (
+    <Wrap className={className}>
+      <RadioWrap accentColor={accentColorConditional} isDisabled={isDisabled}>
+        <RadioField accentColor={accentColorConditional} checked={checked} type="radio" id={id} name={id} readOnly />
+        <RadioLabel htmlFor={id} />
+        <RadioStyled className={CN_RADIO} />
+      </RadioWrap>
+    </Wrap>
+  )
 }
 
 Radio.propTypes = {
@@ -110,14 +99,12 @@ Radio.propTypes = {
   checked: bool,
   accentColor: string.isRequired,
   id: number.isRequired,
-  name: number,
   className: string,
 }
 
 Radio.defaultProps = {
   isDisabled: false,
   checked: undefined,
-  name: undefined,
   className: '',
 }
 
