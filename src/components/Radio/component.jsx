@@ -1,7 +1,7 @@
 import React from 'react'
 import { bool, string, number } from 'prop-types'
 import styled from 'styled-components'
-import { UNIT_LG, SELECTIVE_YELLOW } from '../../styles'
+import { UNIT_LG, SELECTIVE_YELLOW, TRANSITION } from '../../styles'
 import { CN_ANSWER } from '../../pages/Home/shared'
 
 const SIZE = 24
@@ -75,7 +75,7 @@ export const RadioStyled = styled.div`
     width: ${SIZE / 4}px;
     border-radius: 50%;
     background-color: ${BG};
-    transition: width 0.1s ease-out, height 0.1s ease-out, background-color 0.1s ease-out;
+    transition: width ${TRANSITION}, height ${TRANSITION}, background-color ${TRANSITION};
     pointer-events: none;
   }
 `

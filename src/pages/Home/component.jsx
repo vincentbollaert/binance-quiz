@@ -2,7 +2,7 @@ import React, { useEffect, useReducer, useRef } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 
-import { media, UNIT_LG, SELECTIVE_YELLOW, MEDIUM_AQUAMARINE, SUNSET_ORANGE } from '../../styles'
+import { media, UNIT_LG, SELECTIVE_YELLOW, MEDIUM_AQUAMARINE, SUNSET_ORANGE, TRANSITION } from '../../styles'
 import reducer, {
   init, getDataRequested, getDataSucceeded, getDataFailed, selectAnswer, completeQuiz, showNextQuestion,
 } from './reducer'
@@ -19,7 +19,7 @@ const QuizWrap = styled.div`
   margin: 0 auto;
   display: flex;
   flex-direction: ${props => props.isQuizComplete ? 'column-reverse' : 'column'};
-  transition: width 0.1s ease-out;
+  transition: width ${TRANSITION};
 
   ${media.sm`
     flex-direction: row;
@@ -42,7 +42,7 @@ const Question = styled.div`
   padding-top: 2.4rem;
   padding-bottom: 0.8rem;
   background-color: #353535;
-  transition: padding 0.1s ease-out;
+  transition: padding ${TRANSITION};
 
   ${media.xsm`
     padding-top: 46px;

@@ -21,6 +21,9 @@ export const UNIT_MD = `${UNIT_MD_INT}rem`
 export const UNIT_LG = `${UNIT_LG_INT}rem`
 export const UNIT_XLG = `${UNIT_XLG_INT}rem`
 
+// transition
+export const TRANSITION = '0.1s ease-out'
+
 
 // media queries
 export const sizes = {

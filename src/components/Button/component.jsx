@@ -1,7 +1,7 @@
 import React from 'react'
 import { string, func, node, shape } from 'prop-types'
 import styled from 'styled-components'
-import { UNIT_XLG, SELECTIVE_YELLOW, UNIT_LG } from '../../styles'
+import { UNIT_XLG, UNIT_LG, SELECTIVE_YELLOW, TRANSITION } from '../../styles'
 import { PROP_ASYNC_STATUS } from '../../constants'
 import { ButtonLoader } from '../Loader'
 
@@ -20,7 +20,7 @@ const Wrap = styled.button`
   font-size: 14px;
   background: ${SELECTIVE_YELLOW};
   cursor: pointer;
-  transition: transform 0.1s ease-out;
+  transition: transform ${TRANSITION};
 
   &:hover {
     transform: scale(1.2);
