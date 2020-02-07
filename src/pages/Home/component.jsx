@@ -95,18 +95,16 @@ const Home = () => {
 
   useEffect(() => { getData() }, [])
 
-  function getData() {
+  async function getData() {
     dispatch(getDataRequested())
-    axios.get(API_BINANCE_PROXIED)
-      .then(({ data }) => {
-        if (data.length !== undefined) {
-          dispatch(getDataSucceeded({ payload: data }))
-          onSetTimer({ isRestart: true })
-        } else {
-          dispatch(getDataFailed({ payload: data.status.error.code }))
-        }
-      })
-      .catch(error => dispatch(getDataFailed({ payload: error })))
+    const { data } = await axios.get(API_BINANCE_PROXIED)
+
+    if (data.length !== undefined) {
+      dispatch(getDataSucceeded({ payload: data }))
+      onSetTimer({ isRestart: true })
+    } else {
+      dispatch(getDataFailed({ payload: data.status.error.code }))
+    }
   }
 
   function onSelectAnswer(params) {
