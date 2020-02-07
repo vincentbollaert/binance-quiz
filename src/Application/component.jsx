@@ -1,14 +1,11 @@
 import React from 'react'
-import { Router, Route, Switch } from 'react-router-dom'
-import { createBrowserHistory } from 'history'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import styled, { createGlobalStyle } from 'styled-components'
 
 import { media, UNIT_LG, RAISIN_BLACK } from '../styles'
 import reset from '../styles/reset'
 import logoImage from '../assets/logo.png'
 import Home from '../pages/Home/component'
-
-const history = createBrowserHistory()
 
 const GlobalStyle = createGlobalStyle`
   ${reset};
@@ -61,16 +58,14 @@ const PageWrap = styled.div`
 
 const Application = () => {
   return (
-    <Router history={history}>
+    <Router>
       <GlobalStyle />
       <AppContainer>
         <Header>
           <Logo src={logoImage} />
         </Header>
         <PageWrap>
-          <Switch>
-            <Route path="/" component={Home} />
-          </Switch>
+          <Route path="/" component={Home} />
         </PageWrap>
         <Footer />
       </AppContainer>
