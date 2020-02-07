@@ -65,9 +65,6 @@ export const init = () => ({
   asyncStatus: SHAPE_ASYNC_STATUS_INITIAL,
 })
 
-const NUMBER_OF_QUESTIONS = 10
-
-
 export default function reducer(state, action) {
   switch (action.type) {
     // get data
@@ -80,21 +77,27 @@ export default function reducer(state, action) {
 
     case GET_DATA_SUCCEEDED: {
       const { payload } = action
-      const NUMBER_OF_CHOICES = 3
+      const NUMBER_OF_QUESTIONS = 10
+      const NUMBER_OF_ANSWERS = 3
 
-      const termsByRandom = [...payload]
-      randomiseArray(termsByRandom)
+      const questionsByRandom = [...payload]
+      randomiseArray(questionsByRandom)
 
-      const answers = termsByRandom.map(({ title }) => title)
-      const incorrectAnswers = answers.filter((item, index) => index >= NUMBER_OF_QUESTIONS)
+      const incorrectAnswers = questionsByRandom
+        .map(({ title }) => title)
+        .filter((item, index) => index >= NUMBER_OF_QUESTIONS)
 
-      const termsForQuiz = termsByRandom
+      const questionsForQuiz = questionsByRandom
         .filter((item, index) => index < NUMBER_OF_QUESTIONS)
-        .map((term, index) => {
-          const incorrectAnswersForTerm = incorrectAnswers.slice(index * NUMBER_OF_CHOICES, (index * NUMBER_OF_CHOICES) + NUMBER_OF_CHOICES)
+        .map((question, index) => {
+          const answers = [
+            question.title,
+            ...incorrectAnswers.slice(index * NUMBER_OF_ANSWERS, (index * NUMBER_OF_ANSWERS) + NUMBER_OF_ANSWERS)
+          ]
+          randomiseArray(answers)
           return ({
-            ...term,
-            answers: [term.title, ...incorrectAnswersForTerm],
+            ...question,
+            answers,
             isFinalQuestion: index === NUMBER_OF_QUESTIONS - 1
           })
         })
@@ -103,9 +106,9 @@ export default function reducer(state, action) {
         isQuizComplete: false,
         selectedAnswers: [],
         totalTime: 0,
-        questions: termsForQuiz,
-        allQuestions: termsByRandom,
-        activeQuestion: termsForQuiz[0],
+        questions: questionsForQuiz,
+        allQuestions: questionsByRandom,
+        activeQuestion: questionsForQuiz[0],
         asyncStatus: SHAPE_ASYNC_STATUS_SUCCEEDED,
       }
     }
