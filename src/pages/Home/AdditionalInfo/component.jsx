@@ -42,16 +42,17 @@ const AdditionalInfo = ({
   dummyRandomNumber,
 }) => {
   const GLOSSARY_URL = `https://www.binance.vision/glossary/${questionMatchingAnswer.slug}`
+  const isSelectedAnswerQuizIncomplete = isSelectedAnswerOption && !isQuizComplete
 
   return (
-    <Wrap accentColor={!isQuizComplete && isSelectedAnswerOption && SELECTIVE_YELLOW} isTimeout={isTimeout}>
+    <Wrap accentColor={isSelectedAnswerQuizIncomplete && SELECTIVE_YELLOW} isTimeout={isTimeout}>
       {isTimeout && <TimeoutText>No time remaining</TimeoutText>}
       {isQuizComplete && isSelectedAnswerOption && (
         isCorrect
           ? `${dummyRandomNumber}% of users got this right`
           : <Link href={GLOSSARY_URL} target="_blank">{questionMatchingAnswer.excerpt}</Link>
       )}
-      {!isQuizComplete && isSelectedAnswerOption && `${dummyRandomNumber}% of users chose this option`}
+      {isSelectedAnswerQuizIncomplete && `${dummyRandomNumber}% of users chose this option`}
     </Wrap>
   )
 }
@@ -63,10 +64,6 @@ AdditionalInfo.propTypes = {
   isSelectedAnswerOption: bool.isRequired,
   questionMatchingAnswer: shape({}).isRequired,
   dummyRandomNumber: number.isRequired,
-}
-
-AdditionalInfo.defaultProps = {
-
 }
 
 export default AdditionalInfo

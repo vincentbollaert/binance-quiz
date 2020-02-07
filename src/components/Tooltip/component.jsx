@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import { string } from 'prop-types'
+import { string, bool } from 'prop-types'
 import styled from 'styled-components'
 import { UNIT_LG, UNIT_MD, MEDIUM_AQUAMARINE, FONT_SIZE_SM } from '../../styles'
 
 const Wrap = styled.div`
   position: absolute;
   right: ${UNIT_LG};
+  cursor: pointer;
 `
 const Label = styled.div`
   display: flex;
@@ -56,20 +57,23 @@ const Tooltip = styled.div`
   `};
 `
 
-const TooltipWrap = ({ label, tooltip, className }) => {
+const TooltipWrap = ({ isShow, label, tooltip, className }) => {
   const [isVisible, setIsVisible] = useState(false)
 
   return (
-    <Wrap className={className} onClick={() => setIsVisible(!isVisible)}>
-      <Label>{label}</Label>
-      <Tooltip isVisible={isVisible}>
-        {tooltip}
-      </Tooltip>
-    </Wrap>
+    !isShow ? null : (
+      <Wrap className={className} onClick={() => setIsVisible(!isVisible)}>
+        <Label>{label}</Label>
+        <Tooltip isVisible={isVisible}>
+          {tooltip}
+        </Tooltip>
+      </Wrap>
+    )
   )
 }
 
 TooltipWrap.propTypes = {
+  isShow: bool.isRequired,
   label: string.isRequired,
   tooltip: string.isRequired,
   className: string,

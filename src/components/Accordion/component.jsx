@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { string, any } from 'prop-types'
+import { string, any, bool } from 'prop-types'
 import styled from 'styled-components'
 import chevronDown from '../../assets/svg/chevron-down.svg'
 import { UNIT_XSM, UNIT_SM, ISABELLINE } from '../../styles'
@@ -21,26 +21,29 @@ const Body = styled.div`
   margin-left: 40px;
 `
 
-const Accordion = ({ children, className }) => {
+const Accordion = ({ isShow, children, className }) => {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <>
-      <AccordionToggle
-        isOpen={isOpen}
-        svg={chevronDown}
-        size={2.4}
-        onClick={() => setIsOpen(!isOpen)}
-        className={className}
-      />
-      <Body isOpen={isOpen}>
-        {children}
-      </Body>
-    </>
+    !isShow ? null : (
+      <>
+        <AccordionToggle
+          isOpen={isOpen}
+          svg={chevronDown}
+          size={2.4}
+          onClick={() => setIsOpen(!isOpen)}
+          className={className}
+        />
+        <Body isOpen={isOpen}>
+          {children}
+        </Body>
+      </>
+    )
   )
 }
 
 Accordion.propTypes = {
+  isShow: bool.isRequired,
   children: any.isRequired,
   className: string,
 }

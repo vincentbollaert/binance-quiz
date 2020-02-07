@@ -80,13 +80,13 @@ export const RadioStyled = styled.div`
   }
 `
 
-const Radio = ({ isQuizComplete, isDisabled, checked, accentColor, id, name, className }) => {
+const Radio = ({ isQuizComplete, isDisabled, checked, accentColor, id, className }) => {
   const accentColorConditional = isQuizComplete ? accentColor : SELECTIVE_YELLOW
 
   return (
     <Wrap className={className}>
       <RadioWrap accentColor={accentColorConditional} isDisabled={isDisabled}>
-        <RadioField accentColor={accentColorConditional} checked={checked} type="radio" id={id} name={name} readOnly />
+        <RadioField accentColor={accentColorConditional} checked={checked} type="radio" id={id} name={id} readOnly />
         <RadioLabel htmlFor={id} />
         <RadioStyled className={CN_RADIO} />
       </RadioWrap>
@@ -100,14 +100,12 @@ Radio.propTypes = {
   checked: bool,
   accentColor: string.isRequired,
   id: number.isRequired,
-  name: number,
   className: string,
 }
 
 Radio.defaultProps = {
   isDisabled: false,
   checked: undefined,
-  name: undefined,
   className: '',
 }
 
