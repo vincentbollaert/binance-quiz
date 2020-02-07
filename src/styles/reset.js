@@ -1,7 +1,9 @@
+import { CHARLESTON_GREEN } from './variables'
+
 export default `
   html {
     height: 100%;
-    background-color: #2e2e2e;
+    background-color: ${CHARLESTON_GREEN};
     color: #d1d1d1;
     font-family: 'Open Sans', sans-serif;
     box-sizing: border-box;

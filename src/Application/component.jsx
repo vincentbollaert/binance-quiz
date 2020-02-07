@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import styled, { createGlobalStyle } from 'styled-components'
 
-import { media, UNIT_LG } from '../styles'
+import { media, UNIT_LG, RAISIN_BLACK } from '../styles'
 import reset from '../styles/reset'
 import logoImage from '../assets/logo.png'
 import Home from '../pages/Home/component'
@@ -29,7 +29,7 @@ const Header = styled.div`
   display: flex;
   align-items: center;
   padding: 0 ${UNIT_LG};
-  background-color: #202020;
+  background-color: ${RAISIN_BLACK};
 `
 const Logo = styled.img`
   background: red;
@@ -37,7 +37,7 @@ const Logo = styled.img`
 
 const Footer = styled.div`
   grid-area: footer;
-  background-color: #202020;
+  background-color: ${RAISIN_BLACK};
 `
 const PageWrap = styled.div`
   grid-area: body;

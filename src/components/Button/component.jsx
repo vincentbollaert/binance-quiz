@@ -1,7 +1,7 @@
 import React from 'react'
 import { string, func, node, shape } from 'prop-types'
 import styled from 'styled-components'
-import { UNIT_XLG, UNIT_LG, SELECTIVE_YELLOW, TRANSITION, FONT_SIZE_LG } from '../../styles'
+import { UNIT_XLG, UNIT_LG, FONT_SIZE_LG, TRANSITION, SELECTIVE_YELLOW, RAISIN_BLACK } from '../../styles'
 import { PROP_ASYNC_STATUS } from '../../constants'
 import { ButtonLoader } from '../Loader'
 
@@ -15,7 +15,7 @@ const Wrap = styled.button`
   white-space: nowrap;
   text-transform: uppercase;
   border-radius: 1.8rem;
-  color: #202020;
+  color: ${RAISIN_BLACK};
   font-weight: bold;
   font-size: ${FONT_SIZE_LG};
   background: ${SELECTIVE_YELLOW};

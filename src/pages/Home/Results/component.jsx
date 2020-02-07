@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { bool, number, func, shape } from 'prop-types'
-import { media, UNIT_XXLG, UNIT_LG, UNIT_XSM, FONT_SIZE_MD, FONT_SIZE_LG } from '../../../styles'
+import { media, UNIT_XXLG, UNIT_LG, UNIT_XSM, FONT_SIZE_LG, FONT_SIZE_MD, RAISIN_BLACK } from '../../../styles'
 import { PROP_ASYNC_STATUS } from '../../../constants'
 import { STYLE_RESULTS_WIDTH, STYLE_QUIZ_WIDTH_IS_COMPLETE } from '../shared'
 import Button from '../../../components/Button/component'
@@ -12,7 +12,7 @@ const Wrap = styled.div`
   padding: ${UNIT_XXLG};
   width: ${STYLE_RESULTS_WIDTH}rem;
   font-size: ${FONT_SIZE_MD};
-  background: #202020;
+  background: ${RAISIN_BLACK};
   line-height: 1.4;
 
   ${media.xsm`

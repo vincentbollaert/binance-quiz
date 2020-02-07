@@ -9,6 +9,10 @@ export const SUNSET_ORANGE = '#F25C5C'
 export const ISABELLINE = '#eee'
 export const JET = '#353535'
 export const JET_LIGHTER = '#363636'
+export const RAISIN_BLACK = '#202020'
+export const CHARLESTON_GREEN = '#2e2e2e'
+export const CHARLESTON_GREEN_DARKER = '#292929'
+export const GRANITE_GRAY = '#636363'
 
 // units
 export const UNIT_XSM_INT = 0.4

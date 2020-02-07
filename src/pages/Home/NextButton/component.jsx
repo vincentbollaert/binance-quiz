@@ -2,13 +2,13 @@ import React from 'react'
 import { bool, shape, arrayOf, func } from 'prop-types'
 import styled from 'styled-components'
 
-import { FONT_SIZE_LG, FONT_SIZE_XLG, SELECTIVE_YELLOW } from '../../../styles'
+import { FONT_SIZE_LG, FONT_SIZE_XLG, SELECTIVE_YELLOW, CHARLESTON_GREEN_DARKER } from '../../../styles'
 
 const Wrap = styled.button`
   display: ${props => props.isShow ? 'flex' : 'none'};
   margin-left: auto;
   justify-content: center;
-  background-color: #444;
+  background-color: ${CHARLESTON_GREEN_DARKER};
   width: 11.4rem;
   height: 11.4rem;
   flex-shrink: 0;

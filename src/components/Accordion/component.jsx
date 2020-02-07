@@ -2,13 +2,13 @@ import React, { useState } from 'react'
 import { string, bool } from 'prop-types'
 import styled from 'styled-components'
 import chevronDown from '../../assets/svg/chevron-down.svg'
-import { UNIT_XSM, UNIT_SM, ISABELLINE } from '../../styles'
+import { UNIT_XSM, UNIT_SM, ISABELLINE, GRANITE_GRAY } from '../../styles'
 import Svg from '../Svg/component'
 
 const AccordionToggle = styled(Svg)`
   margin-left: auto;
   padding: ${UNIT_XSM};
-  fill: ${props => props.isOpen ? ISABELLINE : '#5e5e5e'};
+  fill: ${props => props.isOpen ? ISABELLINE : GRANITE_GRAY};
   cursor: pointer;
 
   &:hover {

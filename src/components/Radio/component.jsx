@@ -1,11 +1,10 @@
 import React from 'react'
 import { bool, string, number } from 'prop-types'
 import styled from 'styled-components'
-import { UNIT_LG, SELECTIVE_YELLOW, TRANSITION } from '../../styles'
+import { UNIT_LG, SELECTIVE_YELLOW, TRANSITION, GRANITE_GRAY } from '../../styles'
 import { CN_ANSWER } from '../../pages/Home/shared'
 
 const SIZE = 24
-const BG = '#636363'
 export const CN_RADIO = 'radio'
 
 export const Wrap = styled.div`
@@ -62,7 +61,7 @@ export const RadioStyled = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid ${BG};
+  border: 2px solid ${GRANITE_GRAY};
   width: 100%;
   height: 100%;
   border-radius: 50%;
@@ -74,7 +73,7 @@ export const RadioStyled = styled.div`
     height: ${SIZE / 4}px;
     width: ${SIZE / 4}px;
     border-radius: 50%;
-    background-color: ${BG};
+    background-color: ${GRANITE_GRAY};
     transition: width ${TRANSITION}, height ${TRANSITION}, background-color ${TRANSITION};
     pointer-events: none;
   }
