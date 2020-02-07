@@ -17,6 +17,7 @@ import { API_BINANCE_PROXIED } from '../../api'
 import reducer, {
   init, getDataRequested, getDataSucceeded, getDataFailed, selectAnswer, completeQuiz, showNextQuestion,
 } from './reducer'
+import Error from '../../components/Error/component'
 import { LineLoader } from '../../components/Loader'
 import { TIMER_LENGTH, STYLE_QUIZ_WIDTH, STYLE_RESULTS_WIDTH, STYLE_QUIZ_WIDTH_IS_COMPLETE } from './shared'
 import Timer from './Timer/component'
@@ -98,8 +99,12 @@ const Home = () => {
     dispatch(getDataRequested())
     axios.get(API_BINANCE_PROXIED)
       .then(({ data }) => {
-        dispatch(getDataSucceeded({ payload: data }))
-        onStopTimer({ isRestart: true })
+        if (data.length !== undefined) {
+          dispatch(getDataSucceeded({ payload: data }))
+          onStopTimer({ isRestart: true })
+        } else {
+          dispatch(getDataFailed({ payload: data.status.error.code }))
+        }
       })
       .catch(error => dispatch(getDataFailed({ payload: error })))
   }
@@ -138,9 +143,15 @@ const Home = () => {
   return (
     <div>
       <LineLoader asyncStatus={asyncStatus} />
+      <Error asyncStatus={asyncStatus} />
       <QuizWrap isQuizComplete={isQuizComplete}>
         <Questions>
-          <Timer isQuizComplete={isQuizComplete} ref={childRef} setTimeFinished={onTimeFinished} />
+          <Timer
+            isQuizComplete={isQuizComplete}
+            ref={childRef}
+            setTimeFinished={onTimeFinished}
+            asyncStatus={asyncStatus}
+          />
           {questions.map((question) => {
             const { id, excerpt } = question
 
