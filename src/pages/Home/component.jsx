@@ -101,7 +101,7 @@ const Home = () => {
       .then(({ data }) => {
         if (data.length !== undefined) {
           dispatch(getDataSucceeded({ payload: data }))
-          onStopTimer({ isRestart: true })
+          onSetTimer({ isRestart: true })
         } else {
           dispatch(getDataFailed({ payload: data.status.error.code }))
         }
@@ -111,21 +111,21 @@ const Home = () => {
 
   function onSelectAnswer(params) {
     dispatch(selectAnswer({ ...params, isCorrect: params.selectedAnswer === params.correctAnswer }))
-    onStopTimer()
+    onSetTimer()
   }
 
   function onNextClick({ activeQuestionId, isFinalQuestion }) {
     dispatch(showNextQuestion({ activeQuestionId }))
     if (isFinalQuestion) {
       dispatch(completeQuiz())
-      onStopTimer({ isReset: true })
+      onSetTimer({ isReset: true })
     } else {
-      onStopTimer({ isRestart: true })
+      onSetTimer({ isRestart: true })
     }
   }
 
-  function onStopTimer({ isReset, isRestart } = {}) {
-    childRef.current.onStopTimer({ isReset, isRestart })
+  function onSetTimer({ isReset, isRestart } = {}) {
+    childRef.current.onSetTimer({ isReset, isRestart })
   }
   function onGetTimeToChoose() {
     return childRef.current ? childRef.current.onGetTimeToChoose() : TIMER_LENGTH

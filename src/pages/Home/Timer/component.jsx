@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { bool, func } from 'prop-types'
+import { bool, func, shape } from 'prop-types'
 import styled from 'styled-components'
 import { TIMER_LENGTH } from '../shared'
+import { PROP_ASYNC_STATUS } from '../../../constants'
 
 const Progress = styled.div`
   position: absolute;
@@ -26,6 +27,9 @@ class Timer extends Component {
   }
 
   onUpdateTimer = () => {
+    const { asyncStatus: { isSuccessful } } = this.props
+    if (!isSuccessful) return false
+
     this.setState(prevState => ({ timeRemaining: prevState.timeRemaining - 1 }))
 
     if (this.state.timeRemaining === 0) {
@@ -35,7 +39,7 @@ class Timer extends Component {
     return this.state.timeRemaining
   }
 
-  onStopTimer = ({ isReset, isRestart }) => {
+  onSetTimer = ({ isReset, isRestart }) => {
     clearTimeout(this.timeoutId)
 
     if (isReset) {
@@ -64,6 +68,7 @@ class Timer extends Component {
 Timer.propTypes = {
   isQuizComplete: bool.isRequired,
   setTimeFinished: func.isRequired,
+  asyncStatus: shape(PROP_ASYNC_STATUS).isRequired,
 }
 
 export default Timer
