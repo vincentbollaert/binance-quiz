@@ -7,6 +7,8 @@ export const SUNSET_ORANGE = '#F25C5C'
 
 // colors - gray
 export const ISABELLINE = '#eee'
+export const JET = '#353535'
+export const JET_LIGHTER = '#363636'
 
 // units
 export const UNIT_XSM_INT = 0.4
