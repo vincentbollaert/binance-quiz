@@ -82,9 +82,7 @@ export default function reducer(state, action) {
       const NUMBER_OF_QUESTIONS = 10
       const NUMBER_OF_ANSWERS = 3
 
-      const questionsByRandom = [...payload]
-      randomiseArray(questionsByRandom)
-
+      const questionsByRandom = randomiseArray(payload)
       const incorrectAnswers = questionsByRandom
         .map(({ title }) => title)
         .filter((item, index) => index >= NUMBER_OF_QUESTIONS)
@@ -96,10 +94,9 @@ export default function reducer(state, action) {
             question.title,
             ...incorrectAnswers.slice(index * NUMBER_OF_ANSWERS, (index * NUMBER_OF_ANSWERS) + NUMBER_OF_ANSWERS)
           ]
-          randomiseArray(answers)
           return ({
             ...question,
-            answers,
+            answers: randomiseArray(answers),
             isFinalQuestion: index === NUMBER_OF_QUESTIONS - 1
           })
         })
