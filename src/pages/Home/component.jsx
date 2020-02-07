@@ -133,7 +133,7 @@ const Home = () => {
     })
   }
   const isActiveQuestionFinished = (selectedAnswers[selectedAnswers.length - 1] || {}).id === activeQuestion.id
-  const isLastQuestion = selectedAnswers.length && selectedAnswers.length === questions.length
+  const isLastQuestion = selectedAnswers.length ? selectedAnswers.length === questions.length : false
   // const isQuizComplete = true
 
   return (
@@ -146,7 +146,7 @@ const Home = () => {
             const { id, excerpt } = question
 
             return (
-              <Question isQuizComplete={isQuizComplete} isActiveQuestion={id === activeQuestion.id}>
+              <Question key={id} isQuizComplete={isQuizComplete} isActiveQuestion={id === activeQuestion.id}>
                 <Description>{excerpt}</Description>
                 <Answers
                   isQuizComplete={isQuizComplete}

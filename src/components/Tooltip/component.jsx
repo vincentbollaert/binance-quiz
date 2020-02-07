@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { string, bool } from 'prop-types'
+import { string, bool, number, oneOfType } from 'prop-types'
 import styled from 'styled-components'
 import { UNIT_LG, UNIT_MD, MEDIUM_AQUAMARINE, FONT_SIZE_SM } from '../../styles'
 
@@ -74,7 +74,7 @@ const TooltipWrap = ({ isShow, label, tooltip, className }) => {
 
 TooltipWrap.propTypes = {
   isShow: bool.isRequired,
-  label: string.isRequired,
+  label: oneOfType([string, number]).isRequired,
   tooltip: string.isRequired,
   className: string,
 }

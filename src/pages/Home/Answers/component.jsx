@@ -79,7 +79,7 @@ const Answers = ({
 }) => {
   const { selectedAnswer, isTimeout } = (selectedAnswers.find(({ id: answerId }) => answerId === id) || {})
   const isCorrect = selectedAnswer === title
-  const isQuestionFinished = selectedAnswer || isTimeout
+  const isQuestionFinished = selectedAnswer !== undefined || isTimeout
 
   return (
     <Wrap>
@@ -143,7 +143,7 @@ Answers.propTypes = {
     id: number.isRequired,
     title: string.isRequired,
     excerpt: string.isRequired,
-    answers: arrayOf(shape({})).isRequired,
+    answers: arrayOf(string).isRequired,
   }).isRequired,
   allQuestions: arrayOf(shape({})).isRequired,
   onSelectAnswer: func.isRequired,

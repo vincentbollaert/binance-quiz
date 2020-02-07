@@ -61,12 +61,16 @@ const AdditionalInfo = ({
 }
 
 AdditionalInfo.propTypes = {
-  isTimeout: bool.isRequired,
+  isTimeout: bool,
   isCorrect: bool.isRequired,
   isQuizComplete: bool.isRequired,
   isSelectedAnswerOption: bool.isRequired,
   questionMatchingAnswer: shape({}).isRequired,
   dummyRandomNumber: number.isRequired,
+}
+
+AdditionalInfo.defaultProps = {
+  isTimeout: false,
 }
 
 export default AdditionalInfo
