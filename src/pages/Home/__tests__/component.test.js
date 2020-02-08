@@ -13,9 +13,9 @@ test('loads data', async () => {
     })
   ))
 
-  const { queryByTestId } = render(<Home />)
-  const loadingNode = queryByTestId('component-line-loader')
+  const { queryByTestId } = await render(<Home />)
+  const loadingNode = await queryByTestId('component-line-loader')
 
   expect(axiosMock.get).toHaveBeenCalledTimes(1)
-  expect(loadingNode).toBeTruthy()
+  expect(loadingNode).toBeFalsy()
 })
