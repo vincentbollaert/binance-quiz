@@ -14,13 +14,14 @@ const Wrap = styled.span`
   };
 `
 
-const Svg = ({ svg, width, size, className, onClick }) => (
+const Svg = ({ svg, width, size, className, onClick, testId }) => (
   <Wrap
     width={width}
     size={size}
     className={className}
     onClick={onClick}
     dangerouslySetInnerHTML={{ __html: svg }}
+    data-testid={testId}
   />
 )
 
@@ -30,6 +31,7 @@ Svg.propTypes = {
   size: number,
   onClick: func,
   className: string,
+  testId: string,
 }
 
 Svg.defaultProps = {
@@ -37,6 +39,7 @@ Svg.defaultProps = {
   size: undefined,
   onClick() {},
   className: undefined,
+  testId: undefined,
 }
 
 export default Svg

@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button matches snapshot 1`] = `
+<button
+  class="sc-AxhCb jfGXVI"
+>
+  <span
+    data-testid="button-children"
+  >
+    child
+  </span>
+  <span
+    class="sc-AxjAm inReEw sc-AxirZ ZJjpM"
+    data-testid="button-loader"
+    size="2"
+  >
+    test-file-stub
+  </span>
+</button>
+`;

@@ -15,7 +15,8 @@
   "homepage": "https://github.com/vincentbollaert/binance-test-react#readme",
   "scripts": {
     "develop": "webpack-dev-server --progress --watch",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "axios": "^0.19.2",
