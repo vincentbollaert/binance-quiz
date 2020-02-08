@@ -62,7 +62,7 @@ const TooltipWrap = ({ isShow, label, tooltip, className }) => {
 
   return (
     !isShow ? null : (
-      <Wrap className={className} onClick={() => setIsVisible(!isVisible)}>
+      <Wrap className={className} onClick={() => setIsVisible(!isVisible)} data-testid="component-tooltip">
         <Label>{label}</Label>
         <Tooltip isVisible={isVisible}>
           {tooltip}
