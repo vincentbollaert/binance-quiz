@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
-import { shape, string } from 'prop-types'
+import { shape } from 'prop-types'
 import { PROP_ASYNC_STATUS } from '../../../constants'
 import loaderSvg from '../../../assets/svg/loader.svg'
 import Svg from '../../Svg/component'
 
 const LoaderStyledButton = styled(Svg)`
-  display: ${props => props.isBusy ? 'inline-flex' : 'none'};
+  display: 'inline-flex';
   margin: 0 auto;
 
   svg {
@@ -25,17 +25,12 @@ const LoaderStyledButton = styled(Svg)`
   }
 `
 
-const ButtonLoader = ({ asyncStatus: { isBusy }, testId }) => (
-  <LoaderStyledButton isBusy={isBusy} svg={loaderSvg} size={2} testId={testId} />
+const ButtonLoader = ({ asyncStatus: { isBusy } }) => (
+  !isBusy ? null : <LoaderStyledButton svg={loaderSvg} size={2} />
 )
 
 ButtonLoader.propTypes = {
   asyncStatus: shape(PROP_ASYNC_STATUS).isRequired,
-  testId: string,
-}
-
-ButtonLoader.defaultProps = {
-  testId: undefined,
 }
 
 export default ButtonLoader

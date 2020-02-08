@@ -32,8 +32,8 @@ const Button = ({ onClick, children, asyncStatus, className }) => {
 
   return (
     <Wrap onClick={onClick} className={className}>
-      <span data-testid="button-children">{!isBusy && children}</span>
-      <ButtonLoader asyncStatus={asyncStatus} testId="button-loader" />
+      {!isBusy && children}
+      <ButtonLoader asyncStatus={asyncStatus} />
     </Wrap>
   )
 }
