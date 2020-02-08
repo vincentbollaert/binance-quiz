@@ -18,7 +18,8 @@
     "test": {
       "plugins": [
         "transform-es2015-modules-commonjs",
-        "dynamic-import-node"
+        "dynamic-import-node",
+        "@babel/transform-runtime"
       ]
     }
   }
