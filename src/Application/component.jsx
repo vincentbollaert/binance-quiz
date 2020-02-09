@@ -20,7 +20,7 @@ const AppContainer = styled.div`
   display: grid;
   grid-template: "header" ${STYLE_HEADER_HEIGHT} "body" auto "footer" ${STYLE_FOOTER_HEIGHT};
 
-  ${media.sm`
+  ${media.md`
     grid-template: "header" ${STYLE_HEADER_HEIGHT_SM} "body" auto "footer" ${STYLE_FOOTER_HEIGHT};
   `};
 `
@@ -52,13 +52,17 @@ const PageWrap = styled.div`
   position: relative;
   grid-area: body;
   margin: auto;
+  width: 100%;
   max-width: 114rem;
 
-  ${media.xsm`
+  ${media.sm`
     padding: ${UNIT_LG};
   `};
-  ${media.sm`
+  ${media.md`
     padding: 3.2rem;
+  `};
+  ${media.lg`
+    width: auto;
   `};
 `
 

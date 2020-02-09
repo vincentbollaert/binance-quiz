@@ -1,15 +1,15 @@
 import React from 'react'
-import { bool, shape, number } from 'prop-types'
+import { bool, shape, number, string } from 'prop-types'
 import styled from 'styled-components'
-import { media, FONT_SIZE_MD, SELECTIVE_YELLOW, SUNSET_ORANGE, UNIT_LG, UNIT_SM, JET } from '../../../styles'
+import { media, UNIT_LG, FONT_SIZE_MD, SUNSET_ORANGE, UNIT_SM, JET } from '../../../styles'
 import { SHAPE_QUIZ_QUESTION } from '../shapePropTypes'
 
 const Wrap = styled.div`
-  display: ${props => props.isTimeout ? 'block' : 'none'};
+  display: ${props => props.isShow ? 'block' : 'none'};
   position: absolute;
   right: ${UNIT_LG};
-  right: 3.4rem;
   margin-left: auto;
+  ${props => props.isShowLink && 'margin-right: -0.4rem'}; // ellipsis added spacing
   padding: ${UNIT_SM};
   padding-right: 0;
   max-width: 28rem;
@@ -20,7 +20,8 @@ const Wrap = styled.div`
   box-shadow: -22px 0px 17px -4px ${JET};
   color: ${props => props.accentColor || 'inherit'};
 
-  ${media.xsm`
+  ${media.sm`
+    right: 3.4rem;
     display: block;
     font-size: ${FONT_SIZE_MD};
   `};
@@ -30,7 +31,7 @@ const TimeoutText = styled.div`
   font-weight: bold;
 `
 const Link = styled.a`
-  color: inherit;
+  color: ${SUNSET_ORANGE};
 
   &:hover {
     text-decoration: underline;
@@ -41,22 +42,25 @@ const AdditionalInfo = ({
   isTimeout,
   isCorrect,
   isQuizComplete,
-  isSelectedAnswerOption,
-  questionMatchingAnswer,
+  accentColor,
+  answer,
+  correctAnswer,
+  questionMatchingAnswer: { slug, excerpt },
   dummyRandomNumber,
 }) => {
-  const GLOSSARY_URL = `https://www.binance.vision/glossary/${questionMatchingAnswer.slug}`
-  const isSelectedAnswerQuizIncomplete = isSelectedAnswerOption && !isQuizComplete
+  const GLOSSARY_URL = `https://www.binance.vision/glossary/${slug}`
+  const isShowLink = !isTimeout && isQuizComplete && answer !== correctAnswer && !isCorrect
 
   return (
-    <Wrap accentColor={isSelectedAnswerQuizIncomplete && SELECTIVE_YELLOW} isTimeout={isTimeout}>
+    <Wrap isShow={!isQuizComplete || isTimeout} isShowLink={isShowLink} accentColor={accentColor}>
       {isTimeout && <TimeoutText>No time remaining</TimeoutText>}
-      {isQuizComplete && isSelectedAnswerOption && (
-        isCorrect
-          ? `${dummyRandomNumber}% of users got this right`
-          : <Link href={GLOSSARY_URL} target="_blank">{questionMatchingAnswer.excerpt}</Link>
+      {accentColor !== undefined && (
+        <>
+          {isShowLink && <Link href={GLOSSARY_URL} target="_blank">{excerpt}</Link>}
+          {!isTimeout && isQuizComplete && answer === correctAnswer && `${dummyRandomNumber}% of users got this right`}
+          {!isQuizComplete && `${dummyRandomNumber}% chose this option`}
+        </>
       )}
-      {isSelectedAnswerQuizIncomplete && `${dummyRandomNumber}% of users chose this option`}
     </Wrap>
   )
 }
@@ -65,13 +69,16 @@ AdditionalInfo.propTypes = {
   isTimeout: bool,
   isCorrect: bool.isRequired,
   isQuizComplete: bool.isRequired,
-  isSelectedAnswerOption: bool.isRequired,
+  accentColor: string,
+  answer: string.isRequired,
+  correctAnswer: string.isRequired,
   questionMatchingAnswer: shape(SHAPE_QUIZ_QUESTION).isRequired,
   dummyRandomNumber: number.isRequired,
 }
 
 AdditionalInfo.defaultProps = {
   isTimeout: false,
+  accentColor: undefined,
 }
 
 export default AdditionalInfo

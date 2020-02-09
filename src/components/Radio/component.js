@@ -21,11 +21,11 @@ export const RadioWrap = styled.div`
   ${props => !props.isDisabled && `
     .${CN_ANSWER}:hover & {
       .${CN_RADIO} {
-        border-color: ${props.accentColor};
+        border-color: ${SELECTIVE_YELLOW};
 
         &::before {
           visibility: visible;
-          background-color: ${props.accentColor};
+          background-color: ${SELECTIVE_YELLOW};
         };
       };
     };
@@ -79,32 +79,33 @@ export const RadioStyled = styled.div`
   }
 `
 
-const Radio = ({ isQuizComplete, isDisabled, checked, accentColor, id, className }) => {
-  const accentColorConditional = isQuizComplete ? accentColor : SELECTIVE_YELLOW
-
-  return (
-    <Wrap className={className}>
-      <RadioWrap accentColor={accentColorConditional} isDisabled={isDisabled}>
-        <RadioField accentColor={accentColorConditional} checked={checked} type="radio" id={id} name={id} readOnly />
-        <RadioLabel htmlFor={id} />
-        <RadioStyled className={CN_RADIO} />
-      </RadioWrap>
-    </Wrap>
-  )
-}
+const Radio = ({ isQuestionFinished, accentColor, id, className }) => (
+  <Wrap className={className}>
+    <RadioWrap accentColor={accentColor} isDisabled={isQuestionFinished}>
+      <RadioField
+        accentColor={accentColor}
+        checked={accentColor !== undefined}
+        type="radio"
+        id={id}
+        name={id}
+        readOnly
+      />
+      <RadioLabel htmlFor={id} />
+      <RadioStyled className={CN_RADIO} />
+    </RadioWrap>
+  </Wrap>
+)
 
 Radio.propTypes = {
-  isQuizComplete: bool.isRequired,
-  isDisabled: bool,
-  checked: bool,
-  accentColor: string.isRequired,
+  isQuestionFinished: bool,
+  accentColor: string,
   id: number.isRequired,
   className: string,
 }
 
 Radio.defaultProps = {
-  isDisabled: false,
-  checked: undefined,
+  isQuestionFinished: false,
+  accentColor: undefined,
   className: '',
 }
 

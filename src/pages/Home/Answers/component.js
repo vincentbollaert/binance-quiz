@@ -13,6 +13,8 @@ import {
   FONT_SIZE_LG,
   UNIT_XLG,
   JET_LIGHTER,
+  TRANSITION,
+  TRANSITION_SLOW,
 } from '../../../styles'
 import { SHAPE_QUIZ_QUESTION, SHAPE_QUESTION, SHAPE_SELECTED_ANSWER } from '../shapePropTypes'
 import { CN_ANSWER } from '../shared'
@@ -21,10 +23,15 @@ import Tooltip from '../../../components/Tooltip/component'
 import Accordion from '../../../components/Accordion/component'
 import AdditionalInfo from '../AdditionalInfo/component'
 
+const STYLE_BOX_SHADOW_COLOR = '#414141'
+const STYLE_BIX_SHADOW_TOP = `inset 0 1px 0 0 ${STYLE_BOX_SHADOW_COLOR}`
+const STYLE_BOX_SHADOW_BOTTOM = `inset 0 -1px 0 0 ${STYLE_BOX_SHADOW_COLOR}`
+const STYLE_BOX_SHADOW = `${STYLE_BIX_SHADOW_TOP}, ${STYLE_BOX_SHADOW_BOTTOM}`
+
 const Wrap = styled.div`
   font-size: ${FONT_SIZE_MD};
 
-  ${media.xsm`
+  ${media.sm`
     font-size: ${FONT_SIZE_LG};
   `};
 `
@@ -36,36 +43,39 @@ const Answer = styled.div`
   align-items: center;
   position: relative;
   cursor: pointer;
-  border-bottom: 1px solid #5d5d5d66;
+  transition: padding-top ${TRANSITION}, padding-bottom ${TRANSITION}, opacity ${TRANSITION_SLOW};
 
-  &:last-child {
-    border-bottom: none;
+  &:hover {
+    ${props => !props.isQuestionFinished && `
+      background-color: ${JET_LIGHTER};
+      box-shadow: ${STYLE_BOX_SHADOW};
+    `};
   };
 
-  ${props => props.isSelectedAnswerQuizIncomplete && `border-bottom-color: ${SELECTIVE_YELLOW};`};
   ${props => props.isQuestionFinished && `
-    opacity: 0.4;
+    opacity: ${props.accentColor ? 1 : '0.4'};
     cursor: default;
-    ${(props.isCorrect || props.isIncorrect) && `
-      opacity: 1;
-      color: ${props.isQuizComplete ? props.accentColor : 'inherit'};
-      background-color: ${JET_LIGHTER};
+    color: ${props.accentColor || 'inherit'};
+    background-color: ${props.isSelectedAnswerOption ? JET_LIGHTER : 'transparent'};
+    ${props.isQuizComplete && props.isSelectedAnswerOption && `box-shadow: ${STYLE_BOX_SHADOW}`};
+    ${!props.isQuizComplete && props.isSelectedAnswerOption && `
+      box-shadow: ${STYLE_BIX_SHADOW_TOP}, inset 0 -1px 0 0 ${props.accentColor}
     `};
   `};
 
-  ${media.xsm`
+  ${media.sm`
     padding: ${UNIT_XLG};
     padding-left: ${UNIT_XXLG};
   `};
 `
 
 const TooltipStyled = styled(Tooltip)`
-  ${media.xsm`
+  ${media.sm`
     display: none;
   `};
 `
 const AccordionStyled = styled(Accordion)`
-  ${media.xsm`
+  ${media.sm`
     display: none;
   `};
 `
@@ -80,8 +90,9 @@ const Answers = ({
 }) => {
   const { id, title, answers } = activeQuestion
   const { selectedAnswer, isTimeout } = (selectedAnswers.find(({ id: answerId }) => answerId === id) || {})
-  const isCorrect = selectedAnswer === title
+  const isCorrectSelected = selectedAnswer === title
   const isQuestionFinished = selectedAnswer !== undefined || isTimeout
+  // const isQuizComplete = true
 
   return (
     <Wrap>
@@ -89,16 +100,20 @@ const Answers = ({
         const isSelectedAnswerOption = answer === selectedAnswer
         const questionMatchingAnswer = allQuestions.find(question => question.title === answer)
         const dummyRandomNumber = Math.round(Math.random() * 100)
+        const isCorrectAnswer = answer === title
+        const isIncorrectSelected = isSelectedAnswerOption && !isCorrectSelected
+        const accentColor =
+          (!isQuizComplete && isSelectedAnswerOption ? SELECTIVE_YELLOW : undefined) ||
+          (isQuizComplete && isCorrectAnswer ? MEDIUM_AQUAMARINE : isIncorrectSelected ? SUNSET_ORANGE : undefined)
+
         return (
           <Answer
             key={answer}
             className={CN_ANSWER}
             isQuestionFinished={isQuestionFinished}
-            isCorrect={isCorrect && isSelectedAnswerOption}
-            isIncorrect={!isCorrect && isSelectedAnswerOption}
-            isSelectedAnswerQuizIncomplete={isSelectedAnswerOption && !isQuizComplete}
-            accentColor={isCorrect ? MEDIUM_AQUAMARINE : SUNSET_ORANGE}
             isQuizComplete={isQuizComplete}
+            isSelectedAnswerOption={isSelectedAnswerOption}
+            accentColor={accentColor}
             onClick={() => !isQuestionFinished && onSelectAnswer({
               id,
               selectedAnswer: answer,
@@ -107,28 +122,28 @@ const Answers = ({
             })}
           >
             <Radio
-              isQuizComplete={isQuizComplete}
-              isDisabled={isQuestionFinished}
-              checked={isSelectedAnswerOption}
-              id={id}
-              accentColor={isCorrect ? MEDIUM_AQUAMARINE : SUNSET_ORANGE}
+              isQuestionFinished={isQuestionFinished}
+              accentColor={accentColor}
+              id={answer}
             />
             {answer}
             <AdditionalInfo
-              isTimeout={isTimeout}
-              isCorrect={isCorrect}
               isQuizComplete={isQuizComplete}
-              isSelectedAnswerOption={isSelectedAnswerOption}
+              isTimeout={isTimeout}
+              isCorrect={isCorrectSelected}
+              accentColor={accentColor}
+              answer={answer}
+              correctAnswer={title}
               questionMatchingAnswer={questionMatchingAnswer}
               dummyRandomNumber={dummyRandomNumber}
             />
             <TooltipStyled
-              isShow={isQuizComplete && isSelectedAnswerOption && isCorrect}
+              isShow={isQuizComplete && isCorrectAnswer && !isTimeout}
               label={dummyRandomNumber}
               tooltip={`${dummyRandomNumber}% of users got this right`}
             />
             <AccordionStyled
-              isShow={isQuizComplete && isSelectedAnswerOption && !isCorrect}
+              isShow={isQuizComplete && isSelectedAnswerOption && !isCorrectSelected}
               content={`Definition: ${questionMatchingAnswer.excerpt}`}
             />
           </Answer>

@@ -17,11 +17,11 @@ const Wrap = styled.div`
   background: ${RAISIN_BLACK};
   line-height: 1.4;
 
-  ${media.xsm`
+  ${media.sm`
     margin-top: 0;
   `};
 
-  ${media.sm`
+  ${media.md`
     position: fixed;
     right: 0;
     margin: 0;
