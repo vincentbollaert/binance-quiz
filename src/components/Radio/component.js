@@ -99,7 +99,7 @@ const Radio = ({ isQuestionFinished, accentColor, id, className }) => (
 Radio.propTypes = {
   isQuestionFinished: bool,
   accentColor: string,
-  id: number.isRequired,
+  id: string.isRequired,
   className: string,
 }
 

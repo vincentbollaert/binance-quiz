@@ -1,0 +1,25 @@
+test.skip('skip', () => {})
+
+export default [
+  {id: 235, title: "Sharpe Ratio", slug: "sharpe-ratio", excerpt: "A ratio created in 1966 that investors and economi… assess the potential return of investment (ROI)."},
+  {id: 217, title: "Staking Pool", slug: "staking-pool", excerpt: "A pool where stakeholders combine their staking po…ir chance of successfully validating a new block."},
+  {id: 166, title: "Mainnet Swap", slug: "mainnet-swap", excerpt: "When a coin migrates from a third party platform s…oken to a native on-chain token on their mainnet."},
+  {id: 247, title: "InterPlanetary File System (IPFS)", slug: "interplanetary-file-system-ipfs", excerpt: "An open-source project building a protocol for distributed content storage and access."},
+  {id: 41, title: "Zero-Knowledge Proofs", slug: "zero-knowledge-proofs", excerpt: "Proofs to verify that transactions are valid witho…the transaction while maintaining its legitimacy."},
+  {id: 164, title: "Commodity Futures Trading Commission (CFTC)", slug: "commodity-futures-trading-commission", excerpt: "US-based agency responsible for regulating the der…h includes options, swaps, and futures contracts."},
+  {id: 37, title: "Arbitrage", slug: "arbitrage", excerpt: "Buying and selling of assets over different market… advantage of differing prices on the same asset."},
+  {id: 196, title: "Block Reward", slug: "block-reward", excerpt: "The sum of coins awarded by the blockchain protoco… for each successfully mined and validated block."},
+  {id: 55, title: "Bitcoin", slug: "bitcoin", excerpt: "A cryptocurrency created by the pseudonymous devel…, initially described as a 'Peer-to-Peer e-cash.'"},
+  {id: 263, title: "Seed Phrase", slug: "seed-phrase", excerpt: "A seed phrase or menmonic seed is a collection of …can be used to access your cryptocurrency wallet."},
+  {id: 190, title: "Orphan Block", slug: "orphan-block", excerpt: "A block whose parent block is unknown, formed in o…itcoin Core, where ancestry data wasn't required."},
+  {id: 8, title: "GitHub", slug: "github", excerpt: "A site/system/folder/repository where a team can s…e, and save their open source or propietary code."},
+  {id: 149, title: "Delisting", slug: "delisting", excerpt: "The removal of an asset from an exchange either as…oject team or as a decision made by the exchange."},
+  {id: 31, title: "Eclipse Attack", slug: "eclipse-attack", excerpt: "When the majority of peers on the network are mali…des from receiving information from honest nodes."},
+  {id: 122, title: "Private Sale", slug: "private-sale", excerpt: "An early stage investment round for strategic inve…s with a considerable amount of investible funds."},
+  {id: 219, title: "Diversification", slug: "diversification", excerpt: "The allocation of funds across different types of …risdictions in order to reduce the overall risks."},
+  {id: 168, title: "Issuance", slug: "issuance", excerpt: "Generation of a new cryptocurrency which occurs in…epending on parameters specified by the creators."},
+  {id: 77, title: "Attack surface", slug: "attack-surface", excerpt: "Points in a software environment where an attacker…attempt to enter or extract data from the system."},
+  {id: 150, title: "Initial Public Offering (IPO)", slug: "initial-public-offering", excerpt: "Refers to the moment a private company starts offering its shares to the public for the first time."},
+  {id: 246, title: "Prisoner's Dilemma", slug: "prisoners-dilemma", excerpt: "An example that shows why two individuals might no…en if it may appear to be in their best interest."},
+  {id: 221, title: "Progressive Web application (PWA)", slug: "progressive-web-application", excerpt: "An application that is created through the use of …web technologies and follows basic web standards."},
+]
