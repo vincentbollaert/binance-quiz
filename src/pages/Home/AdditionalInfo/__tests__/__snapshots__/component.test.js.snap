@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AdditionalInfo matches snapshot 1`] = `
+<div
+  class="sc-AxjAm ftilOS"
+  data-testid="component-additional-info"
+/>
+`;
