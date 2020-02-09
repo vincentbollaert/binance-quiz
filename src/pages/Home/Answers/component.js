@@ -40,6 +40,10 @@ const Answer = styled.div`
   border-bottom: 1px solid #5d5d5d66;
   transition: padding-top ${TRANSITION}, padding-bottom ${TRANSITION};
 
+  &:hover {
+    ${props => !props.isQuestionFinished && `background-color: ${JET_LIGHTER}`};
+  };
+
   &:last-child {
     border-bottom: none;
   };
@@ -48,7 +52,7 @@ const Answer = styled.div`
     opacity: ${props.accentColor ? 1 : '0.4'};
     cursor: default;
     color: ${props.accentColor || 'inherit'};
-    background-color: ${props.isSelectedAnswerOption ? JET_LIGHTER : 'none'};
+    background-color: ${props.isSelectedAnswerOption ? JET_LIGHTER : 'transparent'};
     border-bottom-color: ${!props.isQuizComplete && props.accentColor ? props.accentColor : '#5d5d5d66'};
   `};
 
