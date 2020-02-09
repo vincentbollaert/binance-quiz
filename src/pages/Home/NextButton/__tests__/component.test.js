@@ -1,16 +1,10 @@
 import '@testing-library/jest-dom'
 import React from 'react'
 import { render } from '@testing-library/react'
+import { answerCorrect } from '../../../../constants'
 import NextButton from '../component'
 
 describe('NextButton', () => {
-  const answer = {
-    id: 1,
-    selectedAnswer: 'answer',
-    correctAnswer: 'answer',
-    timeToChoose: 10,
-    isCorrect: true,
-  }
   const props = {
     isQuizComplete: false,
     activeQuestion: { id: 1, isFinalQuestion: false },
@@ -28,10 +22,10 @@ describe('NextButton', () => {
     expect(queryByTestId('current-question')).toHaveTextContent('1')
   })
   test('renders correct activeQuestion number', () => {
-    const { queryByTestId, rerender } = render(<NextButton {...props} selectedAnswers={[answer]} />)
+    const { queryByTestId, rerender } = render(<NextButton {...props} selectedAnswers={[answerCorrect]} />)
     expect(queryByTestId('current-question')).toHaveTextContent('2')
 
-    rerender(<NextButton {...props} selectedAnswers={[answer, answer]} />)
+    rerender(<NextButton {...props} selectedAnswers={[answerCorrect, answerCorrect]} />)
     expect(queryByTestId('current-question')).toHaveTextContent('3')
   })
   test('renders finish  if on last question', () => {

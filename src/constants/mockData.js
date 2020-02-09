@@ -1,6 +1,4 @@
-test.skip('skip', () => {},)
-
-export default [
+export const questions = [
   {
     id:
     60,
@@ -429,3 +427,18 @@ export default [
     excerpt: "Buying and selling of assets over different market… advantage of differing prices on the same asset."
   },
 ]
+
+export const answerCorrect = {
+  id: 1,
+  selectedAnswer: 'answer',
+  correctAnswer: 'answer',
+  timeToChoose: 10,
+  isCorrect: true,
+}
+export const answerIncorrect = {
+  id: 2,
+  selectedAnswer: 'answer incorrect',
+  correctAnswer: 'answer',
+  timeToChoose: 10,
+  isCorrect: false,
+}

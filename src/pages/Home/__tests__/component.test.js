@@ -4,32 +4,32 @@ import { render, act } from '@testing-library/react'
 import axiosMock from 'axios'
 import '@testing-library/jest-dom/extend-expect'
 
-import mockData from './mockData'
+import { questions } from '../../../constants'
 import Home from '../component'
 
 describe('home', () => {
   test('loads data', async () => {
     axiosMock.get.mockImplementationOnce(() => (
       Promise.resolve({
-        data: mockData
+        data: questions
       })
     ))
 
-    let test
+    let component
     await act(async () => {
-      test = await render(<Home />)
+      component = await render(<Home />)
     })
-    const loadingNode = await test.queryByTestId('component-line-loader')
+    const loadingNode = await component.queryByTestId('component-line-loader')
 
     expect(axiosMock.get).toHaveBeenCalledTimes(1)
     expect(loadingNode).toBeFalsy()
-    expect(test.queryByTestId('component-error')).toBeFalsy()
-    expect(test.queryByTestId('component-next-button')).toBeTruthy()
-    expect(test.queryByTestId('component-results')).toBeFalsy()
-    expect(test.queryByTestId('component-timer')).toBeTruthy()
+    expect(component.queryByTestId('component-error')).toBeFalsy()
+    expect(component.queryByTestId('component-next-button')).toBeTruthy()
+    expect(component.queryByTestId('component-results')).toBeFalsy()
+    expect(component.queryByTestId('component-timer')).toBeTruthy()
 
-    expect(test.queryAllByTestId('component-question')).toHaveLength(10)
-    expect(test.queryAllByTestId('component-answers')).toHaveLength(10)
-    expect(test.queryAllByTestId('component-answer')).toHaveLength(40)
+    expect(component.queryAllByTestId('component-question')).toHaveLength(10)
+    expect(component.queryAllByTestId('component-answers')).toHaveLength(10)
+    expect(component.queryAllByTestId('component-answer')).toHaveLength(40)
   })
 })
