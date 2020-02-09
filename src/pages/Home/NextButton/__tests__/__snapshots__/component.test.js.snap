@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NextButton matches snapshot 1`] = `
+<button
+  class="sc-AxjAm crptTO"
+  data-testid="component-next-button"
+>
+  <div
+    class="sc-AxirZ jqGPYj"
+  >
+    <div
+      class="sc-AxiKw kogpRt"
+      data-testid="current-question"
+    >
+      1
+    </div>
+    <div
+      class="sc-AxhCb iNFifs"
+    />
+    <div
+      class="sc-AxhUy lahxHt"
+    >
+      10
+    </div>
+  </div>
+</button>
+`;
