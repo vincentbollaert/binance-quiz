@@ -1,13 +1,13 @@
 import React from 'react'
 import { bool, shape, number, string } from 'prop-types'
 import styled from 'styled-components'
-import { media, FONT_SIZE_MD, SUNSET_ORANGE, UNIT_SM, JET } from '../../../styles'
+import { media, UNIT_LG, FONT_SIZE_MD, SUNSET_ORANGE, UNIT_SM, JET } from '../../../styles'
 import { SHAPE_QUIZ_QUESTION } from '../shapePropTypes'
 
 const Wrap = styled.div`
   display: ${props => props.isShow ? 'block' : 'none'};
   position: absolute;
-  right: 3.4rem;
+  right: ${UNIT_LG};
   margin-left: auto;
   ${props => props.isShowLink && 'margin-right: -0.4rem'}; // ellipsis added spacing
   padding: ${UNIT_SM};
@@ -21,6 +21,7 @@ const Wrap = styled.div`
   color: ${props => props.accentColor || 'inherit'};
 
   ${media.sm`
+    right: 3.4rem;
     display: block;
     font-size: ${FONT_SIZE_MD};
   `};
@@ -48,7 +49,7 @@ const AdditionalInfo = ({
   dummyRandomNumber,
 }) => {
   const GLOSSARY_URL = `https://www.binance.vision/glossary/${slug}`
-  const isShowLink = isQuizComplete && answer !== correctAnswer && !isCorrect
+  const isShowLink = !isTimeout && isQuizComplete && answer !== correctAnswer && !isCorrect
 
   return (
     <Wrap isShow={!isQuizComplete || isTimeout} isShowLink={isShowLink} accentColor={accentColor}>
@@ -56,7 +57,7 @@ const AdditionalInfo = ({
       {accentColor !== undefined && (
         <>
           {isShowLink && <Link href={GLOSSARY_URL} target="_blank">{excerpt}</Link>}
-          {isQuizComplete && answer === correctAnswer && `${dummyRandomNumber}% of users got this right`}
+          {!isTimeout && isQuizComplete && answer === correctAnswer && `${dummyRandomNumber}% of users got this right`}
           {!isQuizComplete && `${dummyRandomNumber}% chose this option`}
         </>
       )}

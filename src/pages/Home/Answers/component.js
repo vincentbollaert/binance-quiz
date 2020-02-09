@@ -13,6 +13,7 @@ import {
   FONT_SIZE_LG,
   UNIT_XLG,
   JET_LIGHTER,
+  TRANSITION,
 } from '../../../styles'
 import { SHAPE_QUIZ_QUESTION, SHAPE_QUESTION, SHAPE_SELECTED_ANSWER } from '../shapePropTypes'
 import { CN_ANSWER } from '../shared'
@@ -37,6 +38,7 @@ const Answer = styled.div`
   position: relative;
   cursor: pointer;
   border-bottom: 1px solid #5d5d5d66;
+  transition: padding-top ${TRANSITION}, padding-bottom ${TRANSITION};
 
   &:last-child {
     border-bottom: none;
@@ -45,6 +47,7 @@ const Answer = styled.div`
   ${props => props.isQuestionFinished && `
     opacity: ${props.accentColor ? 1 : '0.4'};
     cursor: default;
+    color: ${props.accentColor || 'inherit'};
     background-color: ${props.accentColor ? JET_LIGHTER : 'none'};
     border-bottom-color: ${!props.isQuizComplete && props.accentColor ? props.accentColor : '#5d5d5d66'};
   `};
@@ -113,7 +116,6 @@ const Answers = ({
             />
             {answer}
             <AdditionalInfo
-              isQuestionFinished={isQuestionFinished}
               isQuizComplete={isQuizComplete}
               isTimeout={isTimeout}
               isCorrect={isCorrectSelected}
@@ -124,7 +126,7 @@ const Answers = ({
               dummyRandomNumber={dummyRandomNumber}
             />
             <TooltipStyled
-              isShow={isQuizComplete && isSelectedAnswerOption && isCorrectSelected}
+              isShow={isQuizComplete && isCorrectAnswer && !isTimeout}
               label={dummyRandomNumber}
               tooltip={`${dummyRandomNumber}% of users got this right`}
             />
