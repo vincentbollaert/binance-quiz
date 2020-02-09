@@ -2,7 +2,7 @@
 
 exports[`AdditionalInfo matches snapshot 1`] = `
 <div
-  class="sc-AxjAm bGCVHy additional-info"
+  class="sc-AxjAm dMmAWF additional-info"
   data-testid="component-additional-info"
 />
 `;

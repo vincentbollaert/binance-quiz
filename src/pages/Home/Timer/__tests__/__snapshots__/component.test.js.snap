@@ -2,7 +2,7 @@
 
 exports[`Timer matches snapshot 1`] = `
 <div
-  class="sc-AxjAm fNVAia"
+  class="sc-AxjAm ihXlzk"
   data-testid="component-timer"
 />
 `;
