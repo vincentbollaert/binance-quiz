@@ -52,7 +52,12 @@ const AdditionalInfo = ({
   const isShowLink = !isTimeout && isQuizComplete && answer !== correctAnswer && !isCorrect
 
   return (
-    <Wrap isShow={!isQuizComplete || isTimeout} isShowLink={isShowLink} accentColor={accentColor}>
+    <Wrap
+      isShow={!isQuizComplete || isTimeout}
+      isShowLink={isShowLink}
+      accentColor={accentColor}
+      data-testid="component-additional-info"
+    >
       {isTimeout && <TimeoutText>No time remaining</TimeoutText>}
       {accentColor !== undefined && (
         <>

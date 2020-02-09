@@ -92,7 +92,6 @@ const Answers = ({
   const { selectedAnswer, isTimeout } = (selectedAnswers.find(({ id: answerId }) => answerId === id) || {})
   const isCorrectSelected = selectedAnswer === title
   const isQuestionFinished = selectedAnswer !== undefined || isTimeout
-  // const isQuizComplete = true
   return (
     <Wrap data-testid="component-answers">
       {answers.map(answer => {
