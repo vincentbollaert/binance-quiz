@@ -1,20 +1,11 @@
 import React from 'react'
 import { bool, shape, number, string } from 'prop-types'
 import styled from 'styled-components'
-import {
-  media,
-  FONT_SIZE_MD,
-  SELECTIVE_YELLOW,
-  SUNSET_ORANGE,
-  UNIT_LG,
-  UNIT_SM,
-  JET,
-  MEDIUM_AQUAMARINE,
-} from '../../../styles'
+import { media, FONT_SIZE_MD, SUNSET_ORANGE, UNIT_SM, JET } from '../../../styles'
 import { SHAPE_QUIZ_QUESTION } from '../shapePropTypes'
 
 const Wrap = styled.div`
-  display: ${props => props.isTimeout ? 'block' : 'none'};
+  display: ${props => props.isShow ? 'block' : 'none'};
   position: absolute;
   right: 3.4rem;
   margin-left: auto;
@@ -60,7 +51,7 @@ const AdditionalInfo = ({
   const isShowLink = isQuizComplete && answer !== correctAnswer && !isCorrect
 
   return (
-    <Wrap isShowLink={isShowLink} accentColor={accentColor} isTimeout={isTimeout}>
+    <Wrap isShow={!isQuizComplete || isTimeout} isShowLink={isShowLink} accentColor={accentColor}>
       {isTimeout && <TimeoutText>No time remaining</TimeoutText>}
       {accentColor !== undefined && (
         <>
