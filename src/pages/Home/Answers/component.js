@@ -42,15 +42,11 @@ const Answer = styled.div`
     border-bottom: none;
   };
 
-  ${props => props.isSelectedAnswerQuizIncomplete && `border-bottom-color: ${SELECTIVE_YELLOW};`};
   ${props => props.isQuestionFinished && `
-    opacity: 0.4;
+    opacity: ${props.accentColor ? 1 : '0.4'};
     cursor: default;
-    ${(props.isCorrect || props.isIncorrect) && `
-      opacity: 1;
-      color: ${props.isQuizComplete ? props.accentColor : 'inherit'};
-      background-color: ${JET_LIGHTER};
-    `};
+    background-color: ${props.accentColor ? JET_LIGHTER : 'none'};
+    border-bottom-color: ${!props.isQuizComplete && props.accentColor ? props.accentColor : '#5d5d5d66'};
   `};
 
   ${media.xsm`
@@ -80,7 +76,7 @@ const Answers = ({
 }) => {
   const { id, title, answers } = activeQuestion
   const { selectedAnswer, isTimeout } = (selectedAnswers.find(({ id: answerId }) => answerId === id) || {})
-  const isCorrect = selectedAnswer === title
+  const isCorrectSelected = selectedAnswer === title
   const isQuestionFinished = selectedAnswer !== undefined || isTimeout
 
   return (
@@ -89,16 +85,19 @@ const Answers = ({
         const isSelectedAnswerOption = answer === selectedAnswer
         const questionMatchingAnswer = allQuestions.find(question => question.title === answer)
         const dummyRandomNumber = Math.round(Math.random() * 100)
+        const isCorrectAnswer = answer === title
+        const isIncorrectSelected = isSelectedAnswerOption && !isCorrectSelected
+        const accentColor =
+          (!isQuizComplete && isSelectedAnswerOption ? SELECTIVE_YELLOW : false) ||
+          (isQuizComplete && isCorrectAnswer ? MEDIUM_AQUAMARINE : isIncorrectSelected ? SUNSET_ORANGE : false)
+
         return (
           <Answer
             key={answer}
             className={CN_ANSWER}
             isQuestionFinished={isQuestionFinished}
-            isCorrect={isCorrect && isSelectedAnswerOption}
-            isIncorrect={!isCorrect && isSelectedAnswerOption}
-            isSelectedAnswerQuizIncomplete={isSelectedAnswerOption && !isQuizComplete}
-            accentColor={isCorrect ? MEDIUM_AQUAMARINE : SUNSET_ORANGE}
             isQuizComplete={isQuizComplete}
+            accentColor={accentColor}
             onClick={() => !isQuestionFinished && onSelectAnswer({
               id,
               selectedAnswer: answer,
@@ -107,28 +106,28 @@ const Answers = ({
             })}
           >
             <Radio
-              isQuizComplete={isQuizComplete}
-              isDisabled={isQuestionFinished}
-              checked={isSelectedAnswerOption}
-              id={id}
-              accentColor={isCorrect ? MEDIUM_AQUAMARINE : SUNSET_ORANGE}
+              isQuestionFinished={isQuestionFinished}
+              accentColor={accentColor}
+              id={answer}
             />
             {answer}
             <AdditionalInfo
               isTimeout={isTimeout}
-              isCorrect={isCorrect}
+              isCorrect={isCorrectSelected}
               isQuizComplete={isQuizComplete}
               isSelectedAnswerOption={isSelectedAnswerOption}
+              answer={answer}
+              correctAnswer={title}
               questionMatchingAnswer={questionMatchingAnswer}
               dummyRandomNumber={dummyRandomNumber}
             />
             <TooltipStyled
-              isShow={isQuizComplete && isSelectedAnswerOption && isCorrect}
+              isShow={isQuizComplete && isSelectedAnswerOption && isCorrectSelected}
               label={dummyRandomNumber}
               tooltip={`${dummyRandomNumber}% of users got this right`}
             />
             <AccordionStyled
-              isShow={isQuizComplete && isSelectedAnswerOption && !isCorrect}
+              isShow={isQuizComplete && isSelectedAnswerOption && !isCorrectSelected}
               content={`Definition: ${questionMatchingAnswer.excerpt}`}
             />
           </Answer>

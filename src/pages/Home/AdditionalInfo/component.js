@@ -1,7 +1,16 @@
 import React from 'react'
-import { bool, shape, number } from 'prop-types'
+import { bool, shape, number, string } from 'prop-types'
 import styled from 'styled-components'
-import { media, FONT_SIZE_MD, SELECTIVE_YELLOW, SUNSET_ORANGE, UNIT_LG, UNIT_SM, JET } from '../../../styles'
+import {
+  media,
+  FONT_SIZE_MD,
+  SELECTIVE_YELLOW,
+  SUNSET_ORANGE,
+  UNIT_LG,
+  UNIT_SM,
+  JET,
+  MEDIUM_AQUAMARINE,
+} from '../../../styles'
 import { SHAPE_QUIZ_QUESTION } from '../shapePropTypes'
 
 const Wrap = styled.div`
@@ -30,7 +39,7 @@ const TimeoutText = styled.div`
   font-weight: bold;
 `
 const Link = styled.a`
-  color: inherit;
+  color: ${SUNSET_ORANGE};
 
   &:hover {
     text-decoration: underline;
@@ -42,6 +51,8 @@ const AdditionalInfo = ({
   isCorrect,
   isQuizComplete,
   isSelectedAnswerOption,
+  answer,
+  correctAnswer,
   questionMatchingAnswer,
   dummyRandomNumber,
 }) => {
@@ -49,12 +60,15 @@ const AdditionalInfo = ({
   const isSelectedAnswerQuizIncomplete = isSelectedAnswerOption && !isQuizComplete
 
   return (
-    <Wrap accentColor={isSelectedAnswerQuizIncomplete && SELECTIVE_YELLOW} isTimeout={isTimeout}>
+    <Wrap accentColor={isSelectedAnswerQuizIncomplete ? SELECTIVE_YELLOW : MEDIUM_AQUAMARINE} isTimeout={isTimeout}>
       {isTimeout && <TimeoutText>No time remaining</TimeoutText>}
-      {isQuizComplete && isSelectedAnswerOption && (
-        isCorrect
-          ? `${dummyRandomNumber}% of users got this right`
-          : <Link href={GLOSSARY_URL} target="_blank">{questionMatchingAnswer.excerpt}</Link>
+      {isQuizComplete && (
+        <>
+          {isSelectedAnswerOption && !isCorrect && (
+            <Link href={GLOSSARY_URL} target="_blank">{questionMatchingAnswer.excerpt}</Link>
+          )}
+          {answer === correctAnswer && `${dummyRandomNumber}% of users got this right`}
+        </>
       )}
       {isSelectedAnswerQuizIncomplete && `${dummyRandomNumber}% of users chose this option`}
     </Wrap>
@@ -66,6 +80,8 @@ AdditionalInfo.propTypes = {
   isCorrect: bool.isRequired,
   isQuizComplete: bool.isRequired,
   isSelectedAnswerOption: bool.isRequired,
+  answer: string.isRequired,
+  correctAnswer: string.isRequired,
   questionMatchingAnswer: shape(SHAPE_QUIZ_QUESTION).isRequired,
   dummyRandomNumber: number.isRequired,
 }
