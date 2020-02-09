@@ -41,8 +41,8 @@ export const TRANSITION = '0.1s ease-out'
 
 // media queries
 export const sizes = {
-  xsm: 540,
-  sm: 940,
+  sm: 540,
+  md: 940,
   lg: 1140,
 }
 

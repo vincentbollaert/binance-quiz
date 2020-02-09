@@ -32,7 +32,7 @@ const QuizWrap = styled.div`
   flex-direction: ${props => props.isQuizComplete ? 'column-reverse' : 'column'};
   transition: width ${TRANSITION};
 
-  ${media.sm`
+  ${media.md`
     flex-direction: row;
     margin-left: 0;
     width: ${props => props.isQuizComplete ? `calc(100% - ${STYLE_RESULTS_WIDTH}rem)` : '100%'};
@@ -57,7 +57,7 @@ const Question = styled.div`
   background-color: ${JET};
   transition: padding ${TRANSITION};
 
-  ${media.xsm`
+  ${media.sm`
     padding-top: ${UNIT_XXLG};
     padding-bottom: ${UNIT_LG};
     min-height: 45rem;
@@ -73,7 +73,7 @@ const Description = styled.div`
   line-height: 1.4;
   font-size: ${FONT_SIZE_LG};
 
-  ${media.xsm`
+  ${media.sm`
     margin-bottom: ${UNIT_XXLG};
     padding: 0 ${UNIT_XXLG};
     font-size: ${FONT_SIZE_XLG};

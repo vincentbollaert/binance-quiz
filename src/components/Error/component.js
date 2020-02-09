@@ -23,7 +23,7 @@ const Wrap = styled.div`
   color: rgba(255, 255, 255, 0.9);
   background-color: ${SUNSET_ORANGE};
 
-  ${media.sm`
+  ${media.md`
     height: ${STYLE_HEADER_HEIGHT_SM};
   `};
 `

@@ -24,7 +24,7 @@ import AdditionalInfo from '../AdditionalInfo/component'
 const Wrap = styled.div`
   font-size: ${FONT_SIZE_MD};
 
-  ${media.xsm`
+  ${media.sm`
     font-size: ${FONT_SIZE_LG};
   `};
 `
@@ -49,19 +49,19 @@ const Answer = styled.div`
     border-bottom-color: ${!props.isQuizComplete && props.accentColor ? props.accentColor : '#5d5d5d66'};
   `};
 
-  ${media.xsm`
+  ${media.sm`
     padding: ${UNIT_XLG};
     padding-left: ${UNIT_XXLG};
   `};
 `
 
 const TooltipStyled = styled(Tooltip)`
-  ${media.xsm`
+  ${media.sm`
     display: none;
   `};
 `
 const AccordionStyled = styled(Accordion)`
-  ${media.xsm`
+  ${media.sm`
     display: none;
   `};
 `

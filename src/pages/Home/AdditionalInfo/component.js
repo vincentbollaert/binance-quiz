@@ -20,7 +20,7 @@ const Wrap = styled.div`
   box-shadow: -22px 0px 17px -4px ${JET};
   color: ${props => props.accentColor || 'inherit'};
 
-  ${media.xsm`
+  ${media.sm`
     display: block;
     font-size: ${FONT_SIZE_MD};
   `};
