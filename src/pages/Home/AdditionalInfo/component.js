@@ -1,7 +1,8 @@
 import React from 'react'
 import { bool, shape, number, string } from 'prop-types'
 import styled from 'styled-components'
-import { media, UNIT_LG, FONT_SIZE_MD, SUNSET_ORANGE, UNIT_SM, JET_LIGHTER } from '../../../styles'
+import { media, UNIT_LG, FONT_SIZE_MD, SUNSET_ORANGE, UNIT_SM, JET } from '../../../styles'
+import { CN_ADDITIONAL_INFO, STYLE_ADDITIONAL_INFO_BOX_SHADOW } from '../shared'
 import { SHAPE_QUIZ_QUESTION } from '../shapePropTypes'
 
 const Wrap = styled.div`
@@ -16,8 +17,8 @@ const Wrap = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  background-color: ${JET_LIGHTER};
-  box-shadow: -22px 0px 17px -4px ${JET_LIGHTER};
+  background-color: ${JET};
+  box-shadow: ${STYLE_ADDITIONAL_INFO_BOX_SHADOW};
   color: ${props => props.accentColor || 'inherit'};
 
   ${media.sm`
@@ -57,6 +58,7 @@ const AdditionalInfo = ({
       isShowLink={isShowLink}
       accentColor={accentColor}
       data-testid="component-additional-info"
+      className={CN_ADDITIONAL_INFO}
     >
       {isTimeout && <TimeoutText>No time remaining</TimeoutText>}
       {accentColor !== undefined && (

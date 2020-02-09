@@ -19,16 +19,16 @@ import {
   TRANSITION_SLOW,
 } from '../../../styles'
 import { SHAPE_QUIZ_QUESTION, SHAPE_QUESTION, SHAPE_SELECTED_ANSWER } from '../shapePropTypes'
-import { CN_ANSWER } from '../shared'
+import { CN_ANSWER, CN_ADDITIONAL_INFO, STYLE_ADDITIONAL_INFO_BOX_SHADOW_HOVER } from '../shared'
 import Radio from '../../../components/Radio/component'
 import Tooltip from '../../../components/Tooltip/component'
 import Accordion from '../../../components/Accordion/component'
 import AdditionalInfo from '../AdditionalInfo/component'
 
 const STYLE_BOX_SHADOW_COLOR = '#414141'
-const STYLE_BIX_SHADOW_TOP = `inset 0 1px 0 0 ${STYLE_BOX_SHADOW_COLOR}`
+const STYLE_BOX_SHADOW_TOP = `inset 0 1px 0 0 ${STYLE_BOX_SHADOW_COLOR}`
 const STYLE_BOX_SHADOW_BOTTOM = `inset 0 -1px 0 0 ${STYLE_BOX_SHADOW_COLOR}`
-const STYLE_BOX_SHADOW = `${STYLE_BIX_SHADOW_TOP}, ${STYLE_BOX_SHADOW_BOTTOM}`
+const STYLE_BOX_SHADOW = `${STYLE_BOX_SHADOW_TOP}, ${STYLE_BOX_SHADOW_BOTTOM}`
 
 const Wrap = styled.div`
   font-size: ${FONT_SIZE_MD};
@@ -60,16 +60,26 @@ const Answer = styled.div`
       box-shadow: ${STYLE_BOX_SHADOW};
       color: ${LIGHT_GRAY};
     `};
+    .${CN_ADDITIONAL_INFO} {
+      background-color: ${JET_LIGHTER};
+    };
   };
 
   ${props => props.isQuestionFinished && `
     opacity: ${props.accentColor ? 1 : '0.4'};
     cursor: default;
     color: ${props.accentColor || 'inherit'};
-    background-color: ${props.isSelectedAnswerOption ? JET_LIGHTER : 'transparent'};
+    ${props.isSelectedAnswerOption && `
+      background-color:  ${JET_LIGHTER};
+
+      .${CN_ADDITIONAL_INFO} {
+        background-color:  ${JET_LIGHTER};
+        box-shadow: ${STYLE_ADDITIONAL_INFO_BOX_SHADOW_HOVER};
+      };
+    `};
     ${props.isQuizComplete && props.isSelectedAnswerOption && `box-shadow: ${STYLE_BOX_SHADOW}`};
     ${!props.isQuizComplete && props.isSelectedAnswerOption && `
-      box-shadow: ${STYLE_BIX_SHADOW_TOP}, inset 0 -1px 0 0 ${props.accentColor}
+      box-shadow: ${STYLE_BOX_SHADOW_TOP}, inset 0 -1px 0 0 ${props.accentColor}
     `};
   `};
 
