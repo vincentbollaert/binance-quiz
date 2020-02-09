@@ -6,7 +6,13 @@ import { UNIT_XSM, UNIT_LG_INT, UNIT_SM, ISABELLINE, GRANITE_GRAY } from '../../
 import { STYLE_RADIO_SIZE_PX } from '../Radio/component'
 import Svg from '../Svg/component'
 
+const Wrap = styled.div`
+  position: relative;
+`
 const AccordionToggle = styled(Svg)`
+  position: ${props => props.isOpen ? 'absolute' : 'static'};;
+  right: 0;
+  bottom: 100%;
   margin-left: auto;
   padding: ${UNIT_XSM};
   fill: ${props => props.isOpen ? ISABELLINE : GRANITE_GRAY};
@@ -27,7 +33,7 @@ const Accordion = ({ isShow, content, className }) => {
 
   return (
     !isShow ? null : (
-      <div data-testid="component-accordion">
+      <Wrap data-testid="component-accordion">
         <AccordionToggle
           isOpen={isOpen}
           svg={chevronDown}
@@ -38,7 +44,7 @@ const Accordion = ({ isShow, content, className }) => {
         <Body isOpen={isOpen}>
           {content}
         </Body>
-      </div>
+      </Wrap>
     )
   )
 }
