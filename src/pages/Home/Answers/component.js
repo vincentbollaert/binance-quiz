@@ -48,7 +48,7 @@ const Answer = styled.div`
     opacity: ${props.accentColor ? 1 : '0.4'};
     cursor: default;
     color: ${props.accentColor || 'inherit'};
-    background-color: ${props.accentColor ? JET_LIGHTER : 'none'};
+    background-color: ${props.isSelectedAnswerOption ? JET_LIGHTER : 'none'};
     border-bottom-color: ${!props.isQuizComplete && props.accentColor ? props.accentColor : '#5d5d5d66'};
   `};
 
@@ -101,6 +101,7 @@ const Answers = ({
             className={CN_ANSWER}
             isQuestionFinished={isQuestionFinished}
             isQuizComplete={isQuizComplete}
+            isSelectedAnswerOption={isSelectedAnswerOption}
             accentColor={accentColor}
             onClick={() => !isQuestionFinished && onSelectAnswer({
               id,
