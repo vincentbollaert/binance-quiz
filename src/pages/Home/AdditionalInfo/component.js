@@ -52,14 +52,19 @@ const AdditionalInfo = ({
   const isShowLink = !isTimeout && isQuizComplete && answer !== correctAnswer && !isCorrect
 
   return (
-    <Wrap isShow={!isQuizComplete || isTimeout} isShowLink={isShowLink} accentColor={accentColor}>
+    <Wrap
+      isShow={!isQuizComplete || isTimeout}
+      isShowLink={isShowLink}
+      accentColor={accentColor}
+      data-testid="component-additional-info"
+    >
       {isTimeout && <TimeoutText>No time remaining</TimeoutText>}
       {accentColor !== undefined && (
-        <>
+        <span>
           {isShowLink && <Link href={GLOSSARY_URL} target="_blank">{excerpt}</Link>}
           {!isTimeout && isQuizComplete && answer === correctAnswer && `${dummyRandomNumber}% of users got this right`}
           {!isQuizComplete && `${dummyRandomNumber}% chose this option`}
-        </>
+        </span>
       )}
     </Wrap>
   )

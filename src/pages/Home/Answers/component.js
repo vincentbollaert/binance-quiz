@@ -6,6 +6,8 @@ import {
   media,
   UNIT_XXLG,
   UNIT_LG,
+  LIGHT_GRAY,
+  ASH_GRAY,
   SELECTIVE_YELLOW,
   MEDIUM_AQUAMARINE,
   SUNSET_ORANGE,
@@ -42,13 +44,15 @@ const Answer = styled.div`
   flex-wrap: wrap;
   align-items: center;
   position: relative;
+  color: ${ASH_GRAY};
   cursor: pointer;
-  transition: padding-top ${TRANSITION}, padding-bottom ${TRANSITION}, opacity ${TRANSITION_SLOW};
+  transition: padding-top ${TRANSITION}, padding-bottom ${TRANSITION}, opacity ${TRANSITION_SLOW}, color ${TRANSITION};
 
   &:hover {
     ${props => !props.isQuestionFinished && `
       background-color: ${JET_LIGHTER};
       box-shadow: ${STYLE_BOX_SHADOW};
+      color: ${LIGHT_GRAY};
     `};
   };
 
@@ -92,10 +96,8 @@ const Answers = ({
   const { selectedAnswer, isTimeout } = (selectedAnswers.find(({ id: answerId }) => answerId === id) || {})
   const isCorrectSelected = selectedAnswer === title
   const isQuestionFinished = selectedAnswer !== undefined || isTimeout
-  // const isQuizComplete = true
-
   return (
-    <Wrap>
+    <Wrap data-testid="component-answers">
       {answers.map(answer => {
         const isSelectedAnswerOption = answer === selectedAnswer
         const questionMatchingAnswer = allQuestions.find(question => question.title === answer)
@@ -114,6 +116,7 @@ const Answers = ({
             isQuizComplete={isQuizComplete}
             isSelectedAnswerOption={isSelectedAnswerOption}
             accentColor={accentColor}
+            data-testid="component-answer"
             onClick={() => !isQuestionFinished && onSelectAnswer({
               id,
               selectedAnswer: answer,

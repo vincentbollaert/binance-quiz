@@ -72,10 +72,11 @@ const NextButton = ({
       isShow={!isQuizComplete}
       isQuestionFinished={isActiveQuestionFinished}
       onClick={() => onNextClick({ activeQuestionId: id, isFinalQuestion })}
+      data-testid="component-next-button"
     >
       {isFinalQuestion ? 'Finish' : (
         <InnerWrap>
-          <CurrentQuestion>{selectedAnswers.length + 1}</CurrentQuestion>
+          <CurrentQuestion data-testid="current-question">{selectedAnswers.length + 1}</CurrentQuestion>
           <Divider isQuestionFinished={isActiveQuestionFinished} />
           <NextQuestion>10</NextQuestion>
         </InnerWrap>

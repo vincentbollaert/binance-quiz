@@ -1,10 +1,10 @@
-import { CHARLESTON_GREEN } from './variables'
+import { LIGHT_GRAY, CHARLESTON_GREEN, ISABELLINE } from './variables'
 
 export default `
   html {
     height: 100%;
     background-color: ${CHARLESTON_GREEN};
-    color: #d1d1d1;
+    color: ${LIGHT_GRAY};
     font-family: 'Open Sans', sans-serif;
     box-sizing: border-box;
     font-size: 62.5%;
@@ -24,7 +24,7 @@ export default `
   }
 
   a {
-    color: #bbb;
+    color: ${ISABELLINE};
     text-decoration: none;
     cursor: pointer;
   }

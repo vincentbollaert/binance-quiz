@@ -6,6 +6,8 @@ export const MEDIUM_AQUAMARINE = '#5CF2AA'
 export const SUNSET_ORANGE = '#F25C5C'
 
 // colors - gray
+export const LIGHT_GRAY = '#d1d1d1'
+export const ASH_GRAY = '#b4b4b4'
 export const ISABELLINE = '#eee'
 export const JET = '#353535'
 export const JET_LIGHTER = '#363636'

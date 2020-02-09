@@ -1,0 +1,141 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Answers matches snapshot 1`] = `
+<div
+  class="sc-fznZeY dshvle"
+  data-testid="component-answers"
+>
+  <div
+    class="sc-fzokOt jXNYlC answer"
+    data-testid="component-answer"
+  >
+    <div
+      class="sc-AxjAm jCPDH"
+      data-testid="component-radio"
+    >
+      <div
+        class="sc-AxirZ hgttxX"
+      >
+        <input
+          class="sc-AxiKw kDaGdP"
+          id="Maker"
+          name="Maker"
+          readonly=""
+          type="radio"
+        />
+        <label
+          class="sc-AxhCb kPThuO"
+          for="Maker"
+        />
+        <div
+          class="sc-AxhUy kztugP radio"
+        />
+      </div>
+    </div>
+    Maker
+    <div
+      class="sc-fzplWN eEMepo"
+      data-testid="component-additional-info"
+    />
+  </div>
+  <div
+    class="sc-fzokOt jXNYlC answer"
+    data-testid="component-answer"
+  >
+    <div
+      class="sc-AxjAm jCPDH"
+      data-testid="component-radio"
+    >
+      <div
+        class="sc-AxirZ hgttxX"
+      >
+        <input
+          class="sc-AxiKw kDaGdP"
+          id="Bitcoin Dominance"
+          name="Bitcoin Dominance"
+          readonly=""
+          type="radio"
+        />
+        <label
+          class="sc-AxhCb kPThuO"
+          for="Bitcoin Dominance"
+        />
+        <div
+          class="sc-AxhUy kztugP radio"
+        />
+      </div>
+    </div>
+    Bitcoin Dominance
+    <div
+      class="sc-fzplWN eEMepo"
+      data-testid="component-additional-info"
+    />
+  </div>
+  <div
+    class="sc-fzokOt jXNYlC answer"
+    data-testid="component-answer"
+  >
+    <div
+      class="sc-AxjAm jCPDH"
+      data-testid="component-radio"
+    >
+      <div
+        class="sc-AxirZ hgttxX"
+      >
+        <input
+          class="sc-AxiKw kDaGdP"
+          id="Encryption"
+          name="Encryption"
+          readonly=""
+          type="radio"
+        />
+        <label
+          class="sc-AxhCb kPThuO"
+          for="Encryption"
+        />
+        <div
+          class="sc-AxhUy kztugP radio"
+        />
+      </div>
+    </div>
+    Encryption
+    <div
+      class="sc-fzplWN eEMepo"
+      data-testid="component-additional-info"
+    />
+  </div>
+  <div
+    class="sc-fzokOt jXNYlC answer"
+    data-testid="component-answer"
+  >
+    <div
+      class="sc-AxjAm jCPDH"
+      data-testid="component-radio"
+    >
+      <div
+        class="sc-AxirZ hgttxX"
+      >
+        <input
+          class="sc-AxiKw kDaGdP"
+          id="Linux"
+          name="Linux"
+          readonly=""
+          type="radio"
+        />
+        <label
+          class="sc-AxhCb kPThuO"
+          for="Linux"
+        />
+        <div
+          class="sc-AxhUy kztugP radio"
+        />
+      </div>
+    </div>
+    Linux
+    <div
+      class="sc-fzplWN eEMepo"
+      data-testid="component-additional-info"
+    />
+  </div>
+</div>
+`;

@@ -5,11 +5,9 @@ import Radio from '../component'
 
 describe('Radio', () => {
   const props = {
-    isQuizComplete: false,
-    isDisabled: false,
-    checked: false,
-    id: 1,
-    accentColor: 'red',
+    isQuestionFinished: false,
+    id: '1',
+    accentColor: undefined,
   }
   test('matches snapshot', () => {
     const { container } = render(<Radio {...props} />)
@@ -20,7 +18,7 @@ describe('Radio', () => {
     expect(container.querySelector('input')).not.toBeChecked()
   })
   test('renders elements', () => {
-    const { container } = render(<Radio {...props} isShow checked />)
+    const { container } = render(<Radio {...props} isShow accentColor="red" />)
     expect(container.querySelector('input')).toBeChecked()
   })
 })

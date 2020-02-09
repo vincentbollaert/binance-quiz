@@ -59,10 +59,9 @@ const Description = styled.div`
 const Results = ({ isQuizComplete, totalTime, selectedAnswers, onResetQuiz, asyncStatus }) => {
   const totalAnswers = selectedAnswers.length
   const totalCorrectAnswers = selectedAnswers.filter(answer => answer.isCorrect).length
-
   return (
     isQuizComplete ? (
-      <Wrap isShow={isQuizComplete}>
+      <Wrap isShow={isQuizComplete} data-testid="component-results">
         <Header>Quiz complete</Header>
         <Row>
           <Term>Total time</Term>
