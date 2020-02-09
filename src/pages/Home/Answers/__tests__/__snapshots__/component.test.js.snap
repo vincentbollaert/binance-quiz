@@ -34,7 +34,7 @@ exports[`Answers matches snapshot 1`] = `
     </div>
     Maker
     <div
-      class="sc-fzplWN eEMepo"
+      class="sc-fzplWN fmXXMs"
       data-testid="component-additional-info"
     />
   </div>
@@ -67,7 +67,7 @@ exports[`Answers matches snapshot 1`] = `
     </div>
     Bitcoin Dominance
     <div
-      class="sc-fzplWN eEMepo"
+      class="sc-fzplWN fmXXMs"
       data-testid="component-additional-info"
     />
   </div>
@@ -100,7 +100,7 @@ exports[`Answers matches snapshot 1`] = `
     </div>
     Encryption
     <div
-      class="sc-fzplWN eEMepo"
+      class="sc-fzplWN fmXXMs"
       data-testid="component-additional-info"
     />
   </div>
@@ -133,7 +133,7 @@ exports[`Answers matches snapshot 1`] = `
     </div>
     Linux
     <div
-      class="sc-fzplWN eEMepo"
+      class="sc-fzplWN fmXXMs"
       data-testid="component-additional-info"
     />
   </div>
