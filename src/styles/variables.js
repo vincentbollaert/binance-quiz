@@ -39,7 +39,7 @@ export const FONT_SIZE_XLG = '1.8rem'
 
 // transition
 export const TRANSITION = '0.1s ease-out'
-export const TRANSITION_SLOW = '0.2s ease-in'
+export const TRANSITION_SLOW = '0.2s cubic-bezier(0.26, 0.07, 1, 1)'
 
 
 // media queries

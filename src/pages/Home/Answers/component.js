@@ -52,6 +52,7 @@ const Answer = styled.div`
     color ${TRANSITION},
     opacity ${props.isTimeout ? '0s' : TRANSITION_SLOW};
   `};
+  ${props => props.isTimeout && 'transition-delay: 0.1s'};
 
   &:hover {
     ${props => !props.isQuestionFinished && `
