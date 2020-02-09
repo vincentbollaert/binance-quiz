@@ -1,8 +1,8 @@
 import React from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import styled, { createGlobalStyle } from 'styled-components'
+import styled, { createGlobalStyle, keyframes } from 'styled-components'
 
-import { media, UNIT_LG, RAISIN_BLACK } from '../styles'
+import { media, UNIT_LG, RAISIN_BLACK, ASH_GRAY, LIGHT_GRAY } from '../styles'
 import reset from '../styles/reset'
 import logoImage from '../assets/logo.png'
 import logoSvg from '../assets/svg/glossary-quiz-logo.svg'
@@ -26,12 +26,29 @@ const AppContainer = styled.div`
 `
 const Header = styled.div`
   grid-area: header;
+  position: relative;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 0 ${UNIT_LG};
   background-color: ${RAISIN_BLACK};
 `
 const Logo = styled.img``
+
+const transition = keyframes`
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(359deg); }
+`
+
+const Link = styled.a`
+  font-size: 14px;
+  color: ${ASH_GRAY};
+
+  &:hover {
+    color: ${LIGHT_GRAY};
+    animation: ${transition} 2s linear infinite;
+  };
+`
 const Bg = styled(Svg)`
   position: fixed;
   width: 200rem;
@@ -74,6 +91,7 @@ const Application = () => {
         <Bg svg={logoSvg} />
         <Header>
           <Logo src={logoImage} />
+          <Link href="https://github.com/vincentbollaert/binance-quiz">github</Link>
         </Header>
         <PageWrap>
           <Route path="/" component={Home} />
