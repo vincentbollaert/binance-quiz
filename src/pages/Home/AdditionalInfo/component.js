@@ -1,7 +1,7 @@
 import React from 'react'
 import { bool, shape, number, string } from 'prop-types'
 import styled from 'styled-components'
-import { media, UNIT_LG, FONT_SIZE_MD, SUNSET_ORANGE, UNIT_SM, JET } from '../../../styles'
+import { media, UNIT_LG, FONT_SIZE_MD, SUNSET_ORANGE, UNIT_SM } from '../../../styles'
 import { CN_ADDITIONAL_INFO, STYLE_ADDITIONAL_INFO_BOX_SHADOW } from '../shared'
 import { SHAPE_QUIZ_QUESTION } from '../shapePropTypes'
 
@@ -17,7 +17,7 @@ const Wrap = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  background-color: ${JET};
+  background-color: inherit;
   box-shadow: ${STYLE_ADDITIONAL_INFO_BOX_SHADOW};
   color: ${props => props.accentColor || 'inherit'};
 

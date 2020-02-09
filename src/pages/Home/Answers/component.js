@@ -19,7 +19,7 @@ import {
   TRANSITION_SLOW,
 } from '../../../styles'
 import { SHAPE_QUIZ_QUESTION, SHAPE_QUESTION, SHAPE_SELECTED_ANSWER } from '../shapePropTypes'
-import { CN_ANSWER, CN_ADDITIONAL_INFO, STYLE_ADDITIONAL_INFO_BOX_SHADOW_HOVER } from '../shared'
+import { CN_ANSWER, CN_ADDITIONAL_INFO, STYLE_ADDITIONAL_INFO_BOX_SHADOW_HOVER, STYLE_ADDITIONAL_INFO_BOX_SHADOW } from '../shared'
 import Radio from '../../../components/Radio/component'
 import Tooltip from '../../../components/Tooltip/component'
 import Accordion from '../../../components/Accordion/component'
@@ -60,20 +60,23 @@ const Answer = styled.div`
       box-shadow: ${STYLE_BOX_SHADOW};
       color: ${LIGHT_GRAY};
     `};
-    .${CN_ADDITIONAL_INFO} {
-      background-color: ${JET_LIGHTER};
-    };
   };
 
   ${props => props.isQuestionFinished && `
     opacity: ${props.accentColor ? 1 : '0.4'};
     cursor: default;
     color: ${props.accentColor || 'inherit'};
+
+    &:hover {
+      .${CN_ADDITIONAL_INFO} {
+        box-shadow: ${props.isSelectedAnswerOption ? STYLE_ADDITIONAL_INFO_BOX_SHADOW_HOVER : STYLE_ADDITIONAL_INFO_BOX_SHADOW};
+      };
+    };
+
     ${props.isSelectedAnswerOption && `
       background-color:  ${JET_LIGHTER};
 
       .${CN_ADDITIONAL_INFO} {
-        background-color:  ${JET_LIGHTER};
         box-shadow: ${STYLE_ADDITIONAL_INFO_BOX_SHADOW_HOVER};
       };
     `};
