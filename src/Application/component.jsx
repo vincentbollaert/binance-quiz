@@ -91,7 +91,7 @@ const Application = () => {
         <Bg svg={logoSvg} />
         <Header>
           <Logo src={logoImage} />
-          <Link href="https://github.com/vincentbollaert/binance-quiz">github</Link>
+          <Link href="https://github.com/vincentbollaert/binance-quiz" target="_blank">github</Link>
         </Header>
         <PageWrap>
           <Route path="/" component={Home} />
