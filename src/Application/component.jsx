@@ -5,6 +5,7 @@ import styled, { createGlobalStyle, keyframes } from 'styled-components'
 import { media, UNIT_LG, RAISIN_BLACK, ASH_GRAY, LIGHT_GRAY } from '../styles'
 import reset from '../styles/reset'
 import logoImage from '../assets/logo.png'
+import logoImageSm from '../assets/logo-sm.png'
 import logoSvg from '../assets/svg/glossary-quiz-logo.svg'
 import Svg from '../components/Svg/component'
 import { STYLE_HEADER_HEIGHT, STYLE_HEADER_HEIGHT_SM, STYLE_FOOTER_HEIGHT, STYLE_FOOTER_HEIGHT_SM } from './shared'
@@ -32,7 +33,14 @@ const Header = styled.div`
   padding: 0 ${UNIT_LG};
   background-color: ${RAISIN_BLACK};
 `
-const Logo = styled.img``
+const BinanceLink = styled.a``
+const Logo = styled.img`
+  display: ${props => props.isSm ? 'none' : 'block'};
+
+  ${media.sm`
+    display: ${props => props.isSm ? 'block' : 'none'};
+  `};
+`
 
 const transition = keyframes`
   from { transform: rotate(0deg); }
@@ -91,7 +99,10 @@ const Application = () => {
       <AppContainer>
         <Bg svg={logoSvg} />
         <Header>
-          <Logo src={logoImage} />
+          <BinanceLink href="https://www.binance.vision" target="_blank">
+            <Logo src={logoImage} />
+            <Logo isSm src={logoImageSm} />
+          </BinanceLink>
           <Link href="https://github.com/vincentbollaert/binance-quiz" target="_blank">github</Link>
         </Header>
         <PageWrap>
