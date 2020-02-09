@@ -1,4 +1,4 @@
-# Binance React test - Vincent Bollaert
+# Binance quiz - Vincent Bollaert
 
 Link: **https://binance-quiz-vincent.now.sh**
 
