@@ -14,6 +14,7 @@ import {
   UNIT_XLG,
   JET_LIGHTER,
   TRANSITION,
+  TRANSITION_SLOW,
 } from '../../../styles'
 import { SHAPE_QUIZ_QUESTION, SHAPE_QUESTION, SHAPE_SELECTED_ANSWER } from '../shapePropTypes'
 import { CN_ANSWER } from '../shared'
@@ -42,7 +43,7 @@ const Answer = styled.div`
   align-items: center;
   position: relative;
   cursor: pointer;
-  transition: padding-top ${TRANSITION}, padding-bottom ${TRANSITION};
+  transition: padding-top ${TRANSITION}, padding-bottom ${TRANSITION}, opacity ${TRANSITION_SLOW};
 
   &:hover {
     ${props => !props.isQuestionFinished && `
