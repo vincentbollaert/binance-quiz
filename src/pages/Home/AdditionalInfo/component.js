@@ -29,7 +29,6 @@ const Wrap = styled.div`
 `
 const TimeoutText = styled.div`
   color: ${SUNSET_ORANGE};
-  font-weight: bold;
 `
 const Link = styled.a`
   color: ${SUNSET_ORANGE};

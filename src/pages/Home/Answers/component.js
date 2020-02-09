@@ -16,7 +16,7 @@ import {
   UNIT_XLG,
   JET_LIGHTER,
   TRANSITION,
-  TRANSITION_SLOW,
+  SONIC_SILVER,
 } from '../../../styles'
 import { SHAPE_QUIZ_QUESTION, SHAPE_QUESTION, SHAPE_SELECTED_ANSWER } from '../shapePropTypes'
 import { CN_ANSWER, CN_ADDITIONAL_INFO, STYLE_ADDITIONAL_INFO_BOX_SHADOW_HOVER, STYLE_ADDITIONAL_INFO_BOX_SHADOW } from '../shared'
@@ -46,7 +46,7 @@ const Answer = styled.div`
   position: relative;
   color: ${ASH_GRAY};
   cursor: pointer;
-  transition: padding-top ${TRANSITION}, padding-bottom ${TRANSITION}, color ${TRANSITION}, opacity ${TRANSITION_SLOW};
+  transition: padding-top ${TRANSITION}, padding-bottom ${TRANSITION}, color ${TRANSITION};
 
   &:hover {
     ${props => !props.isQuestionFinished && `
@@ -57,9 +57,8 @@ const Answer = styled.div`
   };
 
   ${props => props.isQuestionFinished && `
-    opacity: ${props.accentColor ? 1 : '0.4'};
     cursor: default;
-    color: ${props.accentColor || 'inherit'};
+    color: ${props.accentColor || SONIC_SILVER};
 
     &:hover {
       .${CN_ADDITIONAL_INFO} {

@@ -1,7 +1,7 @@
 import React from 'react'
-import { bool, string, number } from 'prop-types'
+import { bool, string } from 'prop-types'
 import styled from 'styled-components'
-import { UNIT_LG, SELECTIVE_YELLOW, TRANSITION, GRANITE_GRAY } from '../../styles'
+import { UNIT_LG, SELECTIVE_YELLOW, TRANSITION, GRANITE_GRAY, OUTER_SPACE } from '../../styles'
 import { CN_ANSWER } from '../../pages/Home/shared'
 
 export const STYLE_RADIO_SIZE_PX = 24
@@ -61,7 +61,7 @@ export const RadioStyled = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid ${GRANITE_GRAY};
+  border: 2px solid ${props => props.isUnselected ? OUTER_SPACE : GRANITE_GRAY};
   width: 100%;
   height: 100%;
   border-radius: 50%;
@@ -91,7 +91,7 @@ const Radio = ({ isQuestionFinished, accentColor, id, className }) => (
         readOnly
       />
       <RadioLabel htmlFor={id} />
-      <RadioStyled className={CN_RADIO} />
+      <RadioStyled isUnselected={isQuestionFinished && accentColor === undefined} className={CN_RADIO} />
     </RadioWrap>
   </Wrap>
 )
