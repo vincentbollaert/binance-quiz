@@ -27,7 +27,7 @@ const Accordion = ({ isShow, content, className }) => {
 
   return (
     !isShow ? null : (
-      <>
+      <div data-testid="component-accordion">
         <AccordionToggle
           isOpen={isOpen}
           svg={chevronDown}
@@ -38,7 +38,7 @@ const Accordion = ({ isShow, content, className }) => {
         <Body isOpen={isOpen}>
           {content}
         </Body>
-      </>
+      </div>
     )
   )
 }

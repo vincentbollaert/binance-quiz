@@ -6,7 +6,7 @@ import loaderSvg from '../../../assets/svg/loader.svg'
 import Svg from '../../Svg/component'
 
 const LoaderStyledButton = styled(Svg)`
-  display: ${props => props.isBusy ? 'inline-flex' : 'none'};
+  display: 'inline-flex';
   margin: 0 auto;
 
   svg {
@@ -26,7 +26,7 @@ const LoaderStyledButton = styled(Svg)`
 `
 
 const ButtonLoader = ({ asyncStatus: { isBusy } }) => (
-  <LoaderStyledButton isBusy={isBusy} svg={loaderSvg} size={2} />
+  !isBusy ? null : <LoaderStyledButton svg={loaderSvg} size={2} />
 )
 
 ButtonLoader.propTypes = {

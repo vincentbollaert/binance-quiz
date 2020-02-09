@@ -36,7 +36,7 @@ const Wrap = styled.div`
 
 const LineLoader = ({ asyncStatus: { isBusy }, className }) => {
   return (
-    isBusy ? <Wrap className={className} /> : null
+    isBusy ? <Wrap className={className} data-testid="component-line-loader" /> : null
   )
 }
 

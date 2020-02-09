@@ -1,5 +1,5 @@
 import React from 'react'
-import { string, shape } from 'prop-types'
+import { shape } from 'prop-types'
 import styled from 'styled-components'
 import { media, UNIT_MD, FONT_SIZE_MD, SUNSET_ORANGE } from '../../styles'
 import { PROP_ASYNC_STATUS } from '../../constants'
@@ -36,9 +36,9 @@ const SvgStyled = styled(Svg)`
   fill: rgba(255, 255, 255, 0.9);
 `
 
-const Error = ({ asyncStatus: { isError, errorMessage }, className }) => (
+const Error = ({ asyncStatus: { isError, errorMessage } }) => (
   !isError ? null :
-  <Wrap className={className}>
+  <Wrap>
     <SvgStyled svg={errorApiSvg} static />
     {errorMessage}
   </Wrap>
@@ -46,11 +46,6 @@ const Error = ({ asyncStatus: { isError, errorMessage }, className }) => (
 
 Error.propTypes = {
   asyncStatus: shape(PROP_ASYNC_STATUS).isRequired,
-  className: string,
-}
-
-Error.defaultProps = {
-  className: undefined,
 }
 
 export default Error

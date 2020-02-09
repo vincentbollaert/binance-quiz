@@ -21,6 +21,7 @@ const Svg = ({ svg, width, size, className, onClick }) => (
     className={className}
     onClick={onClick}
     dangerouslySetInnerHTML={{ __html: svg }}
+    data-testid="component-svg"
   />
 )
 
