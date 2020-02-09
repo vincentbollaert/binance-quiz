@@ -80,7 +80,7 @@ export const RadioStyled = styled.div`
 `
 
 const Radio = ({ isQuestionFinished, accentColor, id, className }) => (
-  <Wrap className={className}>
+  <Wrap className={className} data-testid="component-radio">
     <RadioWrap accentColor={accentColor} isDisabled={isQuestionFinished}>
       <RadioField
         accentColor={accentColor}

@@ -3,6 +3,7 @@
 exports[`Radio matches snapshot 1`] = `
 <div
   class="sc-AxjAm jCPDH"
+  data-testid="component-radio"
 >
   <div
     class="sc-AxirZ hgttxX"
