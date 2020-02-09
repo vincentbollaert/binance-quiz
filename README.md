@@ -1,6 +1,6 @@
 # Binance React test - Vincent Bollaert
 
-Link: **[https://binance-quiz-vincent.now.sh]**
+Link: **https://binance-quiz-vincent.now.sh**
 
 ### Running the app
 ```sh
