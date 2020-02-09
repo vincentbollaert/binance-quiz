@@ -1,5 +1,5 @@
 export const CN_ANSWER = 'answer'
-export const TIMER_LENGTH = 20
+export const TIMER_LENGTH = 25
 export const STYLE_RESULTS_WIDTH = 21.4
 export const STYLE_QUIZ_WIDTH = 86
 export const STYLE_QUIZ_WIDTH_IS_COMPLETE = STYLE_QUIZ_WIDTH - STYLE_RESULTS_WIDTH
