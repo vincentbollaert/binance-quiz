@@ -8,6 +8,7 @@ import Svg from '../Svg/component'
 
 const Wrap = styled.div`
   position: relative;
+  margin-left: auto;
 `
 const AccordionToggle = styled(Svg)`
   position: ${props => props.isOpen ? 'absolute' : 'static'};;
