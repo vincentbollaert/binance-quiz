@@ -46,13 +46,7 @@ const Answer = styled.div`
   position: relative;
   color: ${ASH_GRAY};
   cursor: pointer;
-  transition: ${props => `
-    padding-top ${TRANSITION},
-    padding-bottom ${TRANSITION},
-    color ${TRANSITION},
-    opacity ${props.isTimeout ? '0s' : TRANSITION_SLOW};
-  `};
-  ${props => props.isTimeout && 'transition-delay: 0.1s'};
+  transition: padding-top ${TRANSITION}, padding-bottom ${TRANSITION}, color ${TRANSITION}, opacity ${TRANSITION_SLOW};
 
   &:hover {
     ${props => !props.isQuestionFinished && `
@@ -134,7 +128,6 @@ const Answers = ({
             isQuestionFinished={isQuestionFinished}
             isQuizComplete={isQuizComplete}
             isSelectedAnswerOption={isSelectedAnswerOption}
-            isTimeout={isTimeout}
             accentColor={accentColor}
             data-testid="component-answer"
             onClick={() => !isQuestionFinished && onSelectAnswer({
