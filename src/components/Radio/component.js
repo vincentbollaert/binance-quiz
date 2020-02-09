@@ -82,7 +82,14 @@ export const RadioStyled = styled.div`
 const Radio = ({ isQuestionFinished, accentColor, id, className }) => (
   <Wrap className={className}>
     <RadioWrap accentColor={accentColor} isDisabled={isQuestionFinished}>
-      <RadioField accentColor={accentColor} checked={accentColor !== false} type="radio" id={id} name={id} readOnly />
+      <RadioField
+        accentColor={accentColor}
+        checked={accentColor !== undefined}
+        type="radio"
+        id={id}
+        name={id}
+        readOnly
+      />
       <RadioLabel htmlFor={id} />
       <RadioStyled className={CN_RADIO} />
     </RadioWrap>
