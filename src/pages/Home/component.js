@@ -41,7 +41,7 @@ const QuizWrap = styled.div`
   ${media.lg`
     transition: none;
     width: ${props => props.isQuizComplete ? `${STYLE_QUIZ_WIDTH_IS_COMPLETE}rem` : `${STYLE_QUIZ_WIDTH}rem`};
-  `}
+  `};
 `
 const Questions = styled.div`
   position: relative;

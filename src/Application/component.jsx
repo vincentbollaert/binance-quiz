@@ -52,6 +52,7 @@ const PageWrap = styled.div`
   position: relative;
   grid-area: body;
   margin: auto;
+  width: 100%;
   max-width: 114rem;
 
   ${media.xsm`
@@ -59,6 +60,9 @@ const PageWrap = styled.div`
   `};
   ${media.sm`
     padding: 3.2rem;
+  `};
+  ${media.lg`
+    width: auto;
   `};
 `
 
