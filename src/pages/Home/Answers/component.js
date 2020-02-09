@@ -6,6 +6,8 @@ import {
   media,
   UNIT_XXLG,
   UNIT_LG,
+  LIGHT_GRAY,
+  ASH_GRAY,
   SELECTIVE_YELLOW,
   MEDIUM_AQUAMARINE,
   SUNSET_ORANGE,
@@ -42,13 +44,15 @@ const Answer = styled.div`
   flex-wrap: wrap;
   align-items: center;
   position: relative;
+  color: ${ASH_GRAY};
   cursor: pointer;
-  transition: padding-top ${TRANSITION}, padding-bottom ${TRANSITION}, opacity ${TRANSITION_SLOW};
+  transition: padding-top ${TRANSITION}, padding-bottom ${TRANSITION}, opacity ${TRANSITION_SLOW}, color ${TRANSITION};
 
   &:hover {
     ${props => !props.isQuestionFinished && `
       background-color: ${JET_LIGHTER};
       box-shadow: ${STYLE_BOX_SHADOW};
+      color: ${LIGHT_GRAY};
     `};
   };
 
