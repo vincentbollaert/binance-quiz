@@ -2,15 +2,16 @@ import React, { Component } from 'react'
 import { bool, func, shape } from 'prop-types'
 import styled from 'styled-components'
 import { TIMER_LENGTH } from '../shared'
+import { TRANSITION_SLOW } from '../../../styles'
 import { PROP_ASYNC_STATUS } from '../../../constants'
 
-const Wrap = styled.div`
+const ProgressBar = styled.div`
   position: absolute;
   top: 0;
   width: ${props => props.progress}%;
   height: 4px;
-  background-color: ${props => `rgba(255, 92, 92, ${props.progress / 100})`};
-  transition: width 0.1s ease, background-color 0.1s ease;
+  background-color: #613e3e;
+  transition: width ${TRANSITION_SLOW};
 `
 
 class Timer extends Component {
@@ -60,8 +61,9 @@ class Timer extends Component {
     const { isQuizComplete } = this.props
     const { timeRemaining } = this.state
     return (
-      isQuizComplete ? null
-        : <Wrap progress={((TIMER_LENGTH - timeRemaining) / TIMER_LENGTH) * 100} data-testid="component-timer" />
+      isQuizComplete ? null : (
+        <ProgressBar progress={((TIMER_LENGTH - timeRemaining) / TIMER_LENGTH) * 100} data-testid="component-timer" />
+      )
     )
   }
 }
