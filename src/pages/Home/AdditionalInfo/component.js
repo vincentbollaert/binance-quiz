@@ -50,27 +50,24 @@ const AdditionalInfo = ({
   isTimeout,
   isCorrect,
   isQuizComplete,
-  isSelectedAnswerOption,
+  accentColor,
   answer,
   correctAnswer,
-  questionMatchingAnswer,
+  questionMatchingAnswer: { slug, excerpt },
   dummyRandomNumber,
 }) => {
-  const GLOSSARY_URL = `https://www.binance.vision/glossary/${questionMatchingAnswer.slug}`
-  const isSelectedAnswerQuizIncomplete = isSelectedAnswerOption && !isQuizComplete
+  const GLOSSARY_URL = `https://www.binance.vision/glossary/${slug}`
 
   return (
-    <Wrap accentColor={isSelectedAnswerQuizIncomplete ? SELECTIVE_YELLOW : MEDIUM_AQUAMARINE} isTimeout={isTimeout}>
+    <Wrap accentColor={accentColor} isTimeout={isTimeout}>
       {isTimeout && <TimeoutText>No time remaining</TimeoutText>}
-      {isQuizComplete && (
+      {accentColor !== undefined && (
         <>
-          {isSelectedAnswerOption && !isCorrect && (
-            <Link href={GLOSSARY_URL} target="_blank">{questionMatchingAnswer.excerpt}</Link>
-          )}
-          {answer === correctAnswer && `${dummyRandomNumber}% of users got this right`}
+          {isQuizComplete && answer !== correctAnswer && !isCorrect && <Link href={GLOSSARY_URL} target="_blank">{excerpt}</Link>}
+          {isQuizComplete && answer === correctAnswer && `${dummyRandomNumber}% of users got this right`}
+          {!isQuizComplete && `${dummyRandomNumber}% chose this option`}
         </>
       )}
-      {isSelectedAnswerQuizIncomplete && `${dummyRandomNumber}% of users chose this option`}
     </Wrap>
   )
 }
@@ -79,7 +76,7 @@ AdditionalInfo.propTypes = {
   isTimeout: bool,
   isCorrect: bool.isRequired,
   isQuizComplete: bool.isRequired,
-  isSelectedAnswerOption: bool.isRequired,
+  accentColor: string,
   answer: string.isRequired,
   correctAnswer: string.isRequired,
   questionMatchingAnswer: shape(SHAPE_QUIZ_QUESTION).isRequired,
@@ -88,6 +85,7 @@ AdditionalInfo.propTypes = {
 
 AdditionalInfo.defaultProps = {
   isTimeout: false,
+  accentColor: undefined,
 }
 
 export default AdditionalInfo

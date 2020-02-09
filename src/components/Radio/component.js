@@ -1,5 +1,5 @@
 import React from 'react'
-import { bool, string, number, oneOfType } from 'prop-types'
+import { bool, string, number } from 'prop-types'
 import styled from 'styled-components'
 import { UNIT_LG, SELECTIVE_YELLOW, TRANSITION, GRANITE_GRAY } from '../../styles'
 import { CN_ANSWER } from '../../pages/Home/shared'
@@ -91,12 +91,13 @@ const Radio = ({ isQuestionFinished, accentColor, id, className }) => (
 
 Radio.propTypes = {
   isQuestionFinished: bool.isRequired,
-  accentColor: oneOfType([string, bool]).isRequired,
+  accentColor: string,
   id: number.isRequired,
   className: string,
 }
 
 Radio.defaultProps = {
+  accentColor: undefined,
   className: '',
 }
 

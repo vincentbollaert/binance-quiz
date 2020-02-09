@@ -78,6 +78,7 @@ const Answers = ({
   const { selectedAnswer, isTimeout } = (selectedAnswers.find(({ id: answerId }) => answerId === id) || {})
   const isCorrectSelected = selectedAnswer === title
   const isQuestionFinished = selectedAnswer !== undefined || isTimeout
+  // const isQuizComplete = true
 
   return (
     <Wrap>
@@ -88,8 +89,8 @@ const Answers = ({
         const isCorrectAnswer = answer === title
         const isIncorrectSelected = isSelectedAnswerOption && !isCorrectSelected
         const accentColor =
-          (!isQuizComplete && isSelectedAnswerOption ? SELECTIVE_YELLOW : false) ||
-          (isQuizComplete && isCorrectAnswer ? MEDIUM_AQUAMARINE : isIncorrectSelected ? SUNSET_ORANGE : false)
+          (!isQuizComplete && isSelectedAnswerOption ? SELECTIVE_YELLOW : undefined) ||
+          (isQuizComplete && isCorrectAnswer ? MEDIUM_AQUAMARINE : isIncorrectSelected ? SUNSET_ORANGE : undefined)
 
         return (
           <Answer
@@ -112,10 +113,11 @@ const Answers = ({
             />
             {answer}
             <AdditionalInfo
+              isQuestionFinished={isQuestionFinished}
+              isQuizComplete={isQuizComplete}
               isTimeout={isTimeout}
               isCorrect={isCorrectSelected}
-              isQuizComplete={isQuizComplete}
-              isSelectedAnswerOption={isSelectedAnswerOption}
+              accentColor={accentColor}
               answer={answer}
               correctAnswer={title}
               questionMatchingAnswer={questionMatchingAnswer}
