@@ -6,7 +6,7 @@ exports[`Answers matches snapshot 1`] = `
   data-testid="component-answers"
 >
   <div
-    class="sc-fzokOt fMsyCk answer"
+    class="sc-fzokOt hLEolP answer"
     data-testid="component-answer"
   >
     <div
@@ -34,12 +34,12 @@ exports[`Answers matches snapshot 1`] = `
     </div>
     Maker
     <div
-      class="sc-fzplWN fmXXMs"
+      class="sc-fzplWN iOtXsI additional-info"
       data-testid="component-additional-info"
     />
   </div>
   <div
-    class="sc-fzokOt fMsyCk answer"
+    class="sc-fzokOt hLEolP answer"
     data-testid="component-answer"
   >
     <div
@@ -67,12 +67,12 @@ exports[`Answers matches snapshot 1`] = `
     </div>
     Bitcoin Dominance
     <div
-      class="sc-fzplWN fmXXMs"
+      class="sc-fzplWN iOtXsI additional-info"
       data-testid="component-additional-info"
     />
   </div>
   <div
-    class="sc-fzokOt fMsyCk answer"
+    class="sc-fzokOt hLEolP answer"
     data-testid="component-answer"
   >
     <div
@@ -100,12 +100,12 @@ exports[`Answers matches snapshot 1`] = `
     </div>
     Encryption
     <div
-      class="sc-fzplWN fmXXMs"
+      class="sc-fzplWN iOtXsI additional-info"
       data-testid="component-additional-info"
     />
   </div>
   <div
-    class="sc-fzokOt fMsyCk answer"
+    class="sc-fzokOt hLEolP answer"
     data-testid="component-answer"
   >
     <div
@@ -133,7 +133,7 @@ exports[`Answers matches snapshot 1`] = `
     </div>
     Linux
     <div
-      class="sc-fzplWN fmXXMs"
+      class="sc-fzplWN iOtXsI additional-info"
       data-testid="component-additional-info"
     />
   </div>
