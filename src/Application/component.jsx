@@ -7,13 +7,12 @@ import reset from '../styles/reset'
 import logoImage from '../assets/logo.png'
 import logoSvg from '../assets/svg/glossary-quiz-logo.svg'
 import Svg from '../components/Svg/component'
-import { STYLE_HEADER_HEIGHT, STYLE_HEADER_HEIGHT_SM } from './shared'
+import { STYLE_HEADER_HEIGHT, STYLE_HEADER_HEIGHT_SM, STYLE_FOOTER_HEIGHT, STYLE_FOOTER_HEIGHT_SM } from './shared'
 import Home from '../pages/Home/component'
 
 const GlobalStyle = createGlobalStyle`
   ${reset};
 `
-const STYLE_FOOTER_HEIGHT = '20rem'
 
 const AppContainer = styled.div`
   min-height: 100vh;
@@ -21,7 +20,7 @@ const AppContainer = styled.div`
   grid-template: "header" ${STYLE_HEADER_HEIGHT} "body" auto "footer" ${STYLE_FOOTER_HEIGHT};
 
   ${media.md`
-    grid-template: "header" ${STYLE_HEADER_HEIGHT_SM} "body" auto "footer" ${STYLE_FOOTER_HEIGHT};
+    grid-template: "header" ${STYLE_HEADER_HEIGHT_SM} "body" auto "footer" ${STYLE_FOOTER_HEIGHT_SM};
   `};
 `
 const Header = styled.div`
@@ -69,10 +68,12 @@ const PageWrap = styled.div`
   position: relative;
   grid-area: body;
   margin: auto;
+  margin-top: ${UNIT_LG};
   width: 100%;
   max-width: 114rem;
 
   ${media.sm`
+    margin-top: auto;
     padding: ${UNIT_LG};
   `};
   ${media.md`
