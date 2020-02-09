@@ -16,9 +16,9 @@ import { SHAPE_QUIZ_QUESTION } from '../shapePropTypes'
 const Wrap = styled.div`
   display: ${props => props.isTimeout ? 'block' : 'none'};
   position: absolute;
-  right: ${UNIT_LG};
   right: 3.4rem;
   margin-left: auto;
+  ${props => props.isShowLink && 'margin-right: -0.4rem'}; // ellipsis added spacing
   padding: ${UNIT_SM};
   padding-right: 0;
   max-width: 28rem;
@@ -57,13 +57,14 @@ const AdditionalInfo = ({
   dummyRandomNumber,
 }) => {
   const GLOSSARY_URL = `https://www.binance.vision/glossary/${slug}`
+  const isShowLink = isQuizComplete && answer !== correctAnswer && !isCorrect
 
   return (
-    <Wrap accentColor={accentColor} isTimeout={isTimeout}>
+    <Wrap isShowLink={isShowLink} accentColor={accentColor} isTimeout={isTimeout}>
       {isTimeout && <TimeoutText>No time remaining</TimeoutText>}
       {accentColor !== undefined && (
         <>
-          {isQuizComplete && answer !== correctAnswer && !isCorrect && <Link href={GLOSSARY_URL} target="_blank">{excerpt}</Link>}
+          {isShowLink && <Link href={GLOSSARY_URL} target="_blank">{excerpt}</Link>}
           {isQuizComplete && answer === correctAnswer && `${dummyRandomNumber}% of users got this right`}
           {!isQuizComplete && `${dummyRandomNumber}% chose this option`}
         </>
