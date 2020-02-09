@@ -38,7 +38,7 @@ const SvgStyled = styled(Svg)`
 
 const Error = ({ asyncStatus: { isError, errorMessage } }) => (
   !isError ? null :
-  <Wrap>
+  <Wrap data-testid="component-error">
     <SvgStyled svg={errorApiSvg} static />
     {errorMessage}
   </Wrap>

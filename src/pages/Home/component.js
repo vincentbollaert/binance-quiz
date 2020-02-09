@@ -155,7 +155,12 @@ const Home = () => {
             const { id, excerpt } = question
 
             return (
-              <Question key={id} isQuizComplete={isQuizComplete} isActiveQuestion={id === activeQuestion.id}>
+              <Question
+                key={id}
+                isQuizComplete={isQuizComplete}
+                isActiveQuestion={id === activeQuestion.id}
+                data-testid="component-question"
+              >
                 <Description>{excerpt}</Description>
                 <Answers
                   isQuizComplete={isQuizComplete}

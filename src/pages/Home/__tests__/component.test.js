@@ -23,5 +23,13 @@ describe('home', () => {
 
     expect(axiosMock.get).toHaveBeenCalledTimes(1)
     expect(loadingNode).toBeFalsy()
+    expect(test.queryByTestId('component-error')).toBeFalsy()
+    expect(test.queryByTestId('component-next-button')).toBeTruthy()
+    expect(test.queryByTestId('component-results')).toBeFalsy()
+    expect(test.queryByTestId('component-timer')).toBeTruthy()
+
+    expect(test.queryAllByTestId('component-question')).toHaveLength(10)
+    expect(test.queryAllByTestId('component-answers')).toHaveLength(10)
+    expect(test.queryAllByTestId('component-answer')).toHaveLength(40)
   })
 })

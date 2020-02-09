@@ -62,7 +62,7 @@ const Results = ({ isQuizComplete, totalTime, selectedAnswers, onResetQuiz, asyn
 
   return (
     isQuizComplete ? (
-      <Wrap isShow={isQuizComplete}>
+      <Wrap isShow={isQuizComplete} data-testid="component-results">
         <Header>Quiz complete</Header>
         <Row>
           <Term>Total time</Term>

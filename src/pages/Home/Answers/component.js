@@ -93,9 +93,8 @@ const Answers = ({
   const isCorrectSelected = selectedAnswer === title
   const isQuestionFinished = selectedAnswer !== undefined || isTimeout
   // const isQuizComplete = true
-
   return (
-    <Wrap>
+    <Wrap data-testid="component-answers">
       {answers.map(answer => {
         const isSelectedAnswerOption = answer === selectedAnswer
         const questionMatchingAnswer = allQuestions.find(question => question.title === answer)
@@ -114,6 +113,7 @@ const Answers = ({
             isQuizComplete={isQuizComplete}
             isSelectedAnswerOption={isSelectedAnswerOption}
             accentColor={accentColor}
+            data-testid="component-answer"
             onClick={() => !isQuestionFinished && onSelectAnswer({
               id,
               selectedAnswer: answer,

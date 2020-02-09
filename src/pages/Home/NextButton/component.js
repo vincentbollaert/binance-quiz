@@ -72,6 +72,7 @@ const NextButton = ({
       isShow={!isQuizComplete}
       isQuestionFinished={isActiveQuestionFinished}
       onClick={() => onNextClick({ activeQuestionId: id, isFinalQuestion })}
+      data-testid="component-next-button"
     >
       {isFinalQuestion ? 'Finish' : (
         <InnerWrap>

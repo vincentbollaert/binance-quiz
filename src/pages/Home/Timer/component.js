@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { TIMER_LENGTH } from '../shared'
 import { PROP_ASYNC_STATUS } from '../../../constants'
 
-const Progress = styled.div`
+const Wrap = styled.div`
   position: absolute;
   top: 0;
   width: ${props => props.progress}%;
@@ -60,7 +60,8 @@ class Timer extends Component {
     const { isQuizComplete } = this.props
     const { timeRemaining } = this.state
     return (
-      isQuizComplete ? null : <Progress progress={((TIMER_LENGTH - timeRemaining) / TIMER_LENGTH) * 100} />
+      isQuizComplete ? null
+        : <Wrap progress={((TIMER_LENGTH - timeRemaining) / TIMER_LENGTH) * 100} data-testid="component-timer" />
     )
   }
 }
