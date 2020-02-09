@@ -22,6 +22,11 @@ import Tooltip from '../../../components/Tooltip/component'
 import Accordion from '../../../components/Accordion/component'
 import AdditionalInfo from '../AdditionalInfo/component'
 
+const STYLE_BOX_SHADOW_COLOR = '#414141'
+const STYLE_BIX_SHADOW_TOP = `inset 0 1px 0 0 ${STYLE_BOX_SHADOW_COLOR}`
+const STYLE_BOX_SHADOW_BOTTOM = `inset 0 -1px 0 0 ${STYLE_BOX_SHADOW_COLOR}`
+const STYLE_BOX_SHADOW = `${STYLE_BIX_SHADOW_TOP}, ${STYLE_BOX_SHADOW_BOTTOM}`
+
 const Wrap = styled.div`
   font-size: ${FONT_SIZE_MD};
 
@@ -37,15 +42,13 @@ const Answer = styled.div`
   align-items: center;
   position: relative;
   cursor: pointer;
-  border-bottom: 1px solid #5d5d5d66;
   transition: padding-top ${TRANSITION}, padding-bottom ${TRANSITION};
 
   &:hover {
-    ${props => !props.isQuestionFinished && `background-color: ${JET_LIGHTER}`};
-  };
-
-  &:last-child {
-    border-bottom: none;
+    ${props => !props.isQuestionFinished && `
+      background-color: ${JET_LIGHTER};
+      box-shadow: ${STYLE_BOX_SHADOW};
+    `};
   };
 
   ${props => props.isQuestionFinished && `
@@ -53,7 +56,10 @@ const Answer = styled.div`
     cursor: default;
     color: ${props.accentColor || 'inherit'};
     background-color: ${props.isSelectedAnswerOption ? JET_LIGHTER : 'transparent'};
-    border-bottom-color: ${!props.isQuizComplete && props.accentColor ? props.accentColor : '#5d5d5d66'};
+    ${props.isQuizComplete && props.isSelectedAnswerOption && `box-shadow: ${STYLE_BOX_SHADOW}`};
+    ${!props.isQuizComplete && props.isSelectedAnswerOption && `
+      box-shadow: ${STYLE_BIX_SHADOW_TOP}, inset 0 -1px 0 0 ${props.accentColor}
+    `};
   `};
 
   ${media.sm`
