@@ -2,7 +2,7 @@
 
 exports[`NextButton matches snapshot 1`] = `
 <button
-  class="sc-AxjAm crptTO"
+  class="sc-AxjAm kAmgRg"
   data-testid="component-next-button"
 >
   <div
