@@ -47,6 +47,7 @@ const Answer = styled.div`
   color: ${ASH_GRAY};
   cursor: pointer;
   transition: padding-top ${TRANSITION}, padding-bottom ${TRANSITION}, color ${TRANSITION};
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
   &:hover {
     ${props => !props.isQuestionFinished && `

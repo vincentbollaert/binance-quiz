@@ -21,6 +21,7 @@ const Wrap = styled.button`
   font-weight: bold;
   pointer-events: none;
   color: #7e7e7e;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
   ${props => props.isQuestionFinished && `
     pointer-events: all;
