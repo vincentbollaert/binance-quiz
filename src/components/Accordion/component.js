@@ -19,7 +19,7 @@ const AccordionToggle = styled(Svg)`
   fill: ${props => props.isOpen ? ISABELLINE : GRANITE_GRAY};
   cursor: pointer;
 
-  &:hover {
+  &:active {
     fill: ${ISABELLINE};
   };
 `
