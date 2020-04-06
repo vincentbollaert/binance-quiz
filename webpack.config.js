@@ -31,6 +31,12 @@ const config = {
     'react/lib/ReactContext': true,
   },
 
+  devServer: {
+    inline: true,
+    port: 8080,
+    historyApiFallback: true,
+  },
+
   resolve: {
     extensions: ['.js', '.jsx'],
   },

@@ -1,6 +1,7 @@
 import React from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import styled, { createGlobalStyle, keyframes } from 'styled-components'
+import 'normalize.css'
 
 import { media, UNIT_LG, RAISIN_BLACK, ASH_GRAY, LIGHT_GRAY } from '../styles'
 import reset from '../styles/reset'
@@ -106,7 +107,8 @@ const Application = () => {
           <Link href="https://github.com/vincentbollaert/binance-quiz" target="_blank">github</Link>
         </Header>
         <PageWrap>
-          <Route path="/" component={Home} />
+          <Route exact path="/" component={Home} />
+          <Redirect to="/" />
         </PageWrap>
         <Footer />
       </AppContainer>
