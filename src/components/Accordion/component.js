@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { string, bool } from 'prop-types'
 import styled from 'styled-components'
 import chevronDown from '../../assets/svg/chevron-down.svg'
@@ -62,4 +62,4 @@ Accordion.defaultProps = {
   className: '',
 }
 
-export default Accordion
+export default memo(Accordion)

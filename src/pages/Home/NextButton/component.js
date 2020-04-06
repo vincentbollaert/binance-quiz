@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { bool, shape, arrayOf, func } from 'prop-types'
 import styled from 'styled-components'
 
@@ -97,4 +97,4 @@ NextButton.defaultProps = {
   activeQuestion: {},
 }
 
-export default NextButton
+export default memo(NextButton)

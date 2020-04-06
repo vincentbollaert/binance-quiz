@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import styled from 'styled-components'
 import { bool, number, func, shape, arrayOf } from 'prop-types'
 
@@ -86,4 +86,4 @@ Results.propTypes = {
   asyncStatus: shape(PROP_ASYNC_STATUS).isRequired,
 }
 
-export default Results
+export default memo(Results)

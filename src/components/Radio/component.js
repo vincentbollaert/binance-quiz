@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { bool, string } from 'prop-types'
 import styled from 'styled-components'
 import { UNIT_LG, SELECTIVE_YELLOW, TRANSITION, GRANITE_GRAY, OUTER_SPACE } from '../../styles'
@@ -109,4 +109,4 @@ Radio.defaultProps = {
   className: '',
 }
 
-export default Radio
+export default memo(Radio)

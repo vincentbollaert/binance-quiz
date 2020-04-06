@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { string, bool, number, oneOfType } from 'prop-types'
 import styled from 'styled-components'
 import { UNIT_LG, UNIT_MD, MEDIUM_AQUAMARINE, FONT_SIZE_SM } from '../../styles'
@@ -84,4 +84,4 @@ TooltipWrap.defaultProps = {
   className: undefined,
 }
 
-export default TooltipWrap
+export default memo(TooltipWrap)
