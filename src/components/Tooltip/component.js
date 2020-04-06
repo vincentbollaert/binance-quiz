@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { string, bool, number, oneOfType } from 'prop-types'
 import styled from 'styled-components'
 import { UNIT_LG, UNIT_MD, MEDIUM_AQUAMARINE, FONT_SIZE_SM } from '../../styles'
+import useToggle from '../../hooks/useBooleanToggle'
 
 const Wrap = styled.div`
   position: absolute;
@@ -58,11 +59,11 @@ const Tooltip = styled.div`
 `
 
 const TooltipWrap = ({ isShow, label, tooltip, className }) => {
-  const [isVisible, setIsVisible] = useState(false)
+  const [isVisible, setIsVisible] = useToggle(false)
 
   return (
     !isShow ? null : (
-      <Wrap className={className} onClick={() => setIsVisible(!isVisible)} data-testid="component-tooltip">
+      <Wrap className={className} onClick={setIsVisible} data-testid="component-tooltip">
         <Label>{label}</Label>
         <Tooltip isVisible={isVisible}>
           {tooltip}

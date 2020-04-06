@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { string, bool } from 'prop-types'
 import styled from 'styled-components'
 import chevronDown from '../../assets/svg/chevron-down.svg'
 import { UNIT_XSM, UNIT_LG_INT, UNIT_SM, ISABELLINE, GRANITE_GRAY } from '../../styles'
+import useToggle from '../../hooks/useBooleanToggle'
+
 import { STYLE_RADIO_SIZE_PX } from '../Radio/component'
 import Svg from '../Svg/component'
 
@@ -30,7 +32,7 @@ const Body = styled.div`
 `
 
 const Accordion = ({ isShow, content, className }) => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, toggleOpen] = useToggle(false)
 
   return (
     !isShow ? null : (
@@ -39,7 +41,7 @@ const Accordion = ({ isShow, content, className }) => {
           isOpen={isOpen}
           svg={chevronDown}
           size={2.4}
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={toggleOpen}
           className={className}
         />
         <Body isOpen={isOpen}>
