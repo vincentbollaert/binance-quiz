@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { bool, shape, number, string } from 'prop-types'
 import styled from 'styled-components'
 import { media, UNIT_LG, FONT_SIZE_MD, SUNSET_ORANGE, UNIT_SM } from '../../../styles'
@@ -87,4 +87,4 @@ AdditionalInfo.defaultProps = {
   accentColor: undefined,
 }
 
-export default AdditionalInfo
+export default memo(AdditionalInfo)

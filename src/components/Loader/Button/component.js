@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import styled from 'styled-components'
 import { shape } from 'prop-types'
 import { PROP_ASYNC_STATUS } from '../../../constants'
@@ -33,4 +33,4 @@ ButtonLoader.propTypes = {
   asyncStatus: shape(PROP_ASYNC_STATUS).isRequired,
 }
 
-export default ButtonLoader
+export default memo(ButtonLoader)

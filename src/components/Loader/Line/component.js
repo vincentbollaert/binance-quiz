@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { string, shape } from 'prop-types'
 import styled, { keyframes } from 'styled-components'
 import { PROP_ASYNC_STATUS } from '../../../constants'
 import { SELECTIVE_YELLOW } from '../../../styles'
 
 const transition = keyframes`
-  from { left: -20rem; width: 30%; }
+  from { left: -20rem; width: 0%; }
   50%  { width: 30%; }
   70%  { width: 70%; }
   80%  { left: 50%; }
@@ -49,4 +49,4 @@ LineLoader.defaultProps = {
   className: '',
 }
 
-export default LineLoader
+export default memo(LineLoader)

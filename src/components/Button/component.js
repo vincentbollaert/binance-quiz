@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { string, func, node, shape } from 'prop-types'
 import styled from 'styled-components'
 import { UNIT_XLG, UNIT_LG, FONT_SIZE_LG, TRANSITION, SELECTIVE_YELLOW, RAISIN_BLACK } from '../../styles'
@@ -50,4 +50,4 @@ Button.defaultProps = {
   className: '',
 }
 
-export default Button
+export default memo(Button)

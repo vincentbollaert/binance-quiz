@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { shape } from 'prop-types'
 import styled from 'styled-components'
 import { media, UNIT_MD, FONT_SIZE_MD, SUNSET_ORANGE } from '../../styles'
@@ -48,4 +48,4 @@ Error.propTypes = {
   asyncStatus: shape(PROP_ASYNC_STATUS).isRequired,
 }
 
-export default Error
+export default memo(Error)

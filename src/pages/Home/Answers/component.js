@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import styled from 'styled-components'
 import { bool, arrayOf, shape, func } from 'prop-types'
 
@@ -178,4 +178,4 @@ Answers.propTypes = {
   onGetTimeToChoose: func.isRequired,
 }
 
-export default Answers
+export default memo(Answers)

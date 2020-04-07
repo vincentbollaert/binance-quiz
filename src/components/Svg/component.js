@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { string, number, func } from 'prop-types'
 import styled from 'styled-components'
 
@@ -40,4 +40,4 @@ Svg.defaultProps = {
   className: undefined,
 }
 
-export default Svg
+export default memo(Svg)
