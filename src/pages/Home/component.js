@@ -93,7 +93,7 @@ const Home = () => {
   const { isQuizComplete, questions, activeQuestion, asyncStatus } = state
   const timerRef = useRef()
   const timerMethods = {
-    onSetTimer({ isReset, isRestart }) {
+    onSetTimer({ isReset, isRestart } = {}) {
       timerRef.current.onSetTimer({ isReset, isRestart })
     },
     onGetTimeToChoose() {
