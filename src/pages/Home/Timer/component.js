@@ -15,6 +15,7 @@ const ProgressBar = styled.div`
   transition: width ${TRANSITION_SLOW};
 `
 
+// handle timeout and time remaining inside Timer to prevent re-renders in parent
 const Timer = forwardRef(({ setTimeFinished }, ref) => {
   const { isQuizComplete, asyncStatus } = useContext(QuizContext)
   const [timeRemaining, setTimeRemaining] = useState(TIMER_LENGTH)

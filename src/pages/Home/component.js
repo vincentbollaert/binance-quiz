@@ -91,7 +91,15 @@ const Home = () => {
   const state = useContext(QuizContext)
   const dispatch = useContext(QuizContextDispatch)
   const { isQuizComplete, questions, activeQuestion, asyncStatus } = state
-  const childRef = useRef()
+  const timerRef = useRef()
+  const timerMethods = {
+    onSetTimer({ isReset, isRestart }) {
+      timerRef.current.onSetTimer({ isReset, isRestart })
+    },
+    onGetTimeToChoose() {
+      timerRef.current.onGetTimeToChoose()
+    },
+  }
 
   useEffect(() => { getData() }, [])
 
@@ -101,7 +109,7 @@ const Home = () => {
 
     if (data.length !== undefined) {
       dispatch(getDataSucceeded({ payload: data }))
-      onSetTimer({ isRestart: true })
+      timerMethods.onSetTimer({ isRestart: true })
     } else {
       dispatch(getDataFailed({ payload: data.status.error.code }))
     }
@@ -109,25 +117,19 @@ const Home = () => {
 
   function onSelectAnswer(params) {
     dispatch(selectAnswer({ ...params, isCorrect: params.selectedAnswer === params.correctAnswer }))
-    onSetTimer()
+    timerMethods.onSetTimer()
   }
 
   function onNextClick({ activeQuestionId, isFinalQuestion }) {
     dispatch(showNextQuestion({ activeQuestionId }))
     if (isFinalQuestion) {
       dispatch(completeQuiz())
-      onSetTimer({ isReset: true })
+      timerMethods.onSetTimer({ isReset: true })
     } else {
-      onSetTimer({ isRestart: true })
+      timerMethods.onSetTimer({ isRestart: true })
     }
   }
 
-  function onSetTimer({ isReset, isRestart } = {}) {
-    childRef.current.onSetTimer({ isReset, isRestart })
-  }
-  function onGetTimeToChoose() {
-    return childRef.current ? childRef.current.onGetTimeToChoose() : TIMER_LENGTH
-  }
   function onTimeFinished() {
     onSelectAnswer({
       id: activeQuestion.id,
@@ -144,7 +146,7 @@ const Home = () => {
       <Error asyncStatus={asyncStatus} />
       <QuizWrap isQuizComplete={isQuizComplete}>
         <Questions>
-          <Timer ref={childRef} setTimeFinished={onTimeFinished} />
+          <Timer ref={timerRef} setTimeFinished={onTimeFinished} />
           {questions.map((question) => {
             const { id, excerpt } = question
 
@@ -159,7 +161,7 @@ const Home = () => {
                 <Answers
                   activeQuestion={question}
                   onSelectAnswer={onSelectAnswer}
-                  onGetTimeToChoose={onGetTimeToChoose}
+                  onGetTimeToChoose={timerMethods.onGetTimeToChoose}
                 />
               </Question>
             )
