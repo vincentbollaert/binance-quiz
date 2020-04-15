@@ -14,8 +14,8 @@
   },
   "homepage": "https://github.com/vincentbollaert/binance-test-react#readme",
   "scripts": {
-    "develop": "webpack-dev-server --progress --watch",
-    "build": "webpack --config webpack.prod.config.js",
+    "develop": "webpack-dev-server --config-register @babel/register --config webpack.dev.js --progress --watch",
+    "build": "webpack --config-register @babel/register --config webpack.prod.js",
     "test": "jest",
     "test:watch": "jest --watch"
   },
@@ -43,6 +43,7 @@
     "@babel/plugin-transform-react-inline-elements": "^7.8.3",
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-react": "^7.8.3",
+    "@babel/register": "^7.9.0",
     "@intervolga/optimize-cssnano-plugin": "^1.0.6",
     "@testing-library/jest-dom": "^5.1.1",
     "@testing-library/react": "^9.4.0",
@@ -52,6 +53,7 @@
     "babel-plugin-dynamic-import-node": "^2.3.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
+    "compression-webpack-plugin": "^3.1.0",
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^3.4.2",
     "eslint": "^6.8.0",
@@ -74,6 +76,7 @@
     "webpack-cli": "3.3.10",
     "webpack-dev-middleware": "^3.5.2",
     "webpack-dev-server": "^3.1.1",
-    "webpack-hot-middleware": "^2.20.0"
+    "webpack-hot-middleware": "^2.20.0",
+    "webpack-merge": "^4.2.2"
   }
 }
