@@ -151,6 +151,7 @@ const Home = () => {
             const { id, excerpt } = question
 
             return (
+              (!isQuizComplete && id !== activeQuestion.id) ? null :
               <Question
                 key={id}
                 isQuizComplete={isQuizComplete}
