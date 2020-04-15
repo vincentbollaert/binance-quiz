@@ -24,7 +24,7 @@ import {
 } from './reducer'
 import Error from '../../components/Error/component'
 import { LineLoader } from '../../components/Loader'
-import { QuizContext, QuizContextMethods } from '../../context/QuizContext'
+import { QuizContext, QuizContextDispatch } from '../../context/QuizContext'
 
 import { TIMER_LENGTH, STYLE_QUIZ_WIDTH, STYLE_RESULTS_WIDTH, STYLE_QUIZ_WIDTH_IS_COMPLETE } from './shared'
 import Timer from './Timer/component'
@@ -89,7 +89,7 @@ const Description = styled.div`
 
 const Home = () => {
   const state = useContext(QuizContext)
-  const dispatch = useContext(QuizContextMethods)
+  const dispatch = useContext(QuizContextDispatch)
   const { isQuizComplete, questions, activeQuestion, asyncStatus } = state
   const childRef = useRef()
 
@@ -139,7 +139,7 @@ const Home = () => {
   }
 
   return (
-    <div>
+    <>
       <LineLoader asyncStatus={asyncStatus} />
       <Error asyncStatus={asyncStatus} />
       <QuizWrap isQuizComplete={isQuizComplete}>
@@ -173,7 +173,7 @@ const Home = () => {
         />
         <Results onResetQuiz={getData} />
       </QuizWrap>
-    </div>
+    </>
   )
 }
 
