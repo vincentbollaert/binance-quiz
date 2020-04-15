@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useRef, useContext } from 'react'
+import React, { useEffect, useReducer, useContext, useRef } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 
@@ -141,7 +141,6 @@ const Home = () => {
       isTimeout: true,
     })
   }
-  console.log(test)
 
   return (
     <div>
