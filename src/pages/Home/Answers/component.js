@@ -39,9 +39,9 @@ const STYLE_BOX_SHADOW = `${STYLE_BOX_SHADOW_TOP}, ${STYLE_BOX_SHADOW_BOTTOM}`
 const Wrap = styled.div`
   font-size: ${FONT_SIZE_MD};
 
-  ${media.sm`
+  ${media.sm} {
     font-size: ${FONT_SIZE_LG};
-  `};
+  };
 `
 
 const Answer = styled.div`
@@ -86,21 +86,21 @@ const Answer = styled.div`
     `};
   `};
 
-  ${media.sm`
+  ${media.sm} {
     padding: ${UNIT_XLG};
     padding-left: ${UNIT_XXLG};
-  `};
+  };
 `
 
 const TooltipStyled = styled(Tooltip)`
-  ${media.sm`
+  ${media.sm} {
     display: none;
-  `};
+  };
 `
 const AccordionStyled = styled(Accordion)`
-  ${media.sm`
+  ${media.sm} {
     display: none;
-  `};
+  };
 `
 
 const Answers = ({ activeQuestion, onSelectAnswer, onGetTimeToChoose }) => {

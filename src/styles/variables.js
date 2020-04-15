@@ -43,20 +43,13 @@ export const FONT_SIZE_XLG = '1.8rem'
 export const TRANSITION = '0.1s ease-out'
 export const TRANSITION_SLOW = '0.2s cubic-bezier(0.26, 0.07, 1, 1)'
 
-
 // media queries
-export const sizes = {
-  sm: 540,
-  md: 940,
-  lg: 1140,
+const customMediaQuery = (minWidth) =>
+  `@media (min-width: ${minWidth}px)`
+
+export const media = {
+  custom: customMediaQuery,
+  sm: customMediaQuery(540),
+  md: customMediaQuery(940),
+  lg: customMediaQuery(1140),
 }
-
-export const media = Object.keys(sizes).reduce((acc, label) => {
-  acc[label] = (...args) => css`
-    @media (min-width: ${sizes[label]}px) {
-      ${css(...args)}
-    }
-  `
-
-  return acc
-}, {})

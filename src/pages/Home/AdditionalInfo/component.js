@@ -21,11 +21,11 @@ const Wrap = styled.div`
   box-shadow: ${STYLE_ADDITIONAL_INFO_BOX_SHADOW};
   color: ${props => props.accentColor || 'inherit'};
 
-  ${media.sm`
+  ${media.sm} {
     right: 3.4rem;
     display: block;
     font-size: ${FONT_SIZE_MD};
-  `};
+  };
 `
 const TimeoutText = styled.div`
   color: ${SUNSET_ORANGE};

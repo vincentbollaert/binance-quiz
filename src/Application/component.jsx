@@ -23,9 +23,9 @@ const AppContainer = styled.div`
   display: grid;
   grid-template: "header" ${STYLE_HEADER_HEIGHT} "body" auto "footer" ${STYLE_FOOTER_HEIGHT};
 
-  ${media.md`
+  ${media.md} {
     grid-template: "header" ${STYLE_HEADER_HEIGHT_SM} "body" auto "footer" ${STYLE_FOOTER_HEIGHT_SM};
-  `};
+  };
 `
 const Header = styled.div`
   grid-area: header;
@@ -40,9 +40,9 @@ const BinanceLink = styled.a``
 const Logo = styled.img`
   display: ${props => props.isSm ? 'none' : 'block'};
 
-  ${media.sm`
+  ${media.sm} {
     display: ${props => props.isSm ? 'block' : 'none'};
-  `};
+  };
 `
 
 const transition = keyframes`
@@ -83,16 +83,16 @@ const PageWrap = styled.div`
   width: 100%;
   max-width: 114rem;
 
-  ${media.sm`
+  ${media.sm} {
     margin-top: auto;
     padding: ${UNIT_LG};
-  `};
-  ${media.md`
+  };
+  ${media.md} {
     padding: 3.2rem;
-  `};
-  ${media.lg`
+  };
+  ${media.lg} {
     width: auto;
-  `};
+  };
 `
 
 const Application = () => {

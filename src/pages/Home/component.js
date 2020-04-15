@@ -39,16 +39,16 @@ const QuizWrap = styled.div`
   flex-direction: ${props => props.isQuizComplete ? 'column-reverse' : 'column'};
   transition: width ${TRANSITION};
 
-  ${media.md`
+  ${media.md} {
     flex-direction: row;
     margin-left: 0;
     width: ${props => props.isQuizComplete ? `calc(100% - ${STYLE_RESULTS_WIDTH}rem)` : '100%'};
-  `};
+  };
 
-  ${media.lg`
+  ${media.lg} {
     transition: none;
     width: ${props => props.isQuizComplete ? `${STYLE_QUIZ_WIDTH_IS_COMPLETE}rem` : `${STYLE_QUIZ_WIDTH}rem`};
-  `};
+  };
 `
 const Questions = styled.div`
   position: relative;
@@ -64,11 +64,11 @@ const Question = styled.div`
   background-color: ${JET};
   transition: padding ${TRANSITION};
 
-  ${media.sm`
+  ${media.sm} {
     padding-top: ${UNIT_XXLG};
     padding-bottom: ${UNIT_LG};
     min-height: 45rem;
-  `};
+  };
 
   &:last-child {
     margin-bottom: 0;
@@ -80,11 +80,11 @@ const Description = styled.div`
   line-height: 1.4;
   font-size: ${FONT_SIZE_LG};
 
-  ${media.sm`
+  ${media.sm} {
     margin-bottom: ${UNIT_XXLG};
     padding: 0 ${UNIT_XXLG};
     font-size: ${FONT_SIZE_XLG};
-  `};
+  };
 `
 
 const Home = () => {
