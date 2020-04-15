@@ -16,21 +16,21 @@ const Wrap = styled.div`
   background: ${RAISIN_BLACK};
   line-height: 1.4;
 
-  ${media.sm`
+  ${media.sm} {
     margin-top: 0;
-  `};
+  };
 
-  ${media.md`
+  ${media.md} {
     position: fixed;
     right: 0;
     margin: 0;
-  `};
+  };
 
-  ${media.lg`
+  ${media.lg} {
     right: auto;
     left: 50%;
     margin-left: ${STYLE_QUIZ_WIDTH_IS_COMPLETE / 2}rem;
-  `};
+  };
 `
 const Header = styled.div`
   margin-bottom: ${UNIT_LG};
