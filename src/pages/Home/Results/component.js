@@ -1,10 +1,9 @@
-import React, { memo } from 'react'
+import React, { memo, useContext } from 'react'
 import styled from 'styled-components'
-import { bool, number, func, shape, arrayOf } from 'prop-types'
+import { func } from 'prop-types'
 
 import { media, UNIT_XXLG, UNIT_LG, UNIT_XSM, FONT_SIZE_LG, FONT_SIZE_MD, RAISIN_BLACK } from '../../../styles'
-import { SHAPE_SELECTED_ANSWER } from '../shapePropTypes'
-import { PROP_ASYNC_STATUS } from '../../../constants'
+import { QuizContext } from '../../../context/QuizContext'
 import { STYLE_RESULTS_WIDTH, STYLE_QUIZ_WIDTH_IS_COMPLETE } from '../shared'
 import Button from '../../../components/Button/component'
 
@@ -56,7 +55,8 @@ const Description = styled.div`
   color: #acacad;
 `
 
-const Results = ({ isQuizComplete, totalTime, selectedAnswers, onResetQuiz, asyncStatus }) => {
+const Results = ({ onResetQuiz }) => {
+  const { isQuizComplete, totalTime, selectedAnswers, asyncStatus } = useContext(QuizContext)
   const totalAnswers = selectedAnswers.length
   const totalCorrectAnswers = selectedAnswers.filter(answer => answer.isCorrect).length
   return (
@@ -79,11 +79,7 @@ const Results = ({ isQuizComplete, totalTime, selectedAnswers, onResetQuiz, asyn
 }
 
 Results.propTypes = {
-  isQuizComplete: bool.isRequired,
-  totalTime: number.isRequired,
-  selectedAnswers: arrayOf(shape(SHAPE_SELECTED_ANSWER)).isRequired,
   onResetQuiz: func.isRequired,
-  asyncStatus: shape(PROP_ASYNC_STATUS).isRequired,
 }
 
 export default memo(Results)

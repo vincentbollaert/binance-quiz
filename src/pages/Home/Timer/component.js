@@ -1,9 +1,10 @@
-import React, { useEffect, useState, forwardRef, useImperativeHandle, useRef } from 'react'
-import { bool, func, shape } from 'prop-types'
+import React, { useEffect, useState, forwardRef, useImperativeHandle, useRef, useContext } from 'react'
+import { func } from 'prop-types'
 import styled from 'styled-components'
-import { TIMER_LENGTH } from '../shared'
+import { QuizContext } from '../../../context/QuizContext'
 import { TRANSITION_SLOW } from '../../../styles'
-import { PROP_ASYNC_STATUS } from '../../../constants'
+
+import { TIMER_LENGTH } from '../shared'
 
 const ProgressBar = styled.div`
   position: absolute;
@@ -14,7 +15,8 @@ const ProgressBar = styled.div`
   transition: width ${TRANSITION_SLOW};
 `
 
-const Timer = forwardRef(({ isQuizComplete, asyncStatus, setTimeFinished }, ref) => {
+const Timer = forwardRef(({ setTimeFinished }, ref) => {
+  const { isQuizComplete, asyncStatus } = useContext(QuizContext)
   const [timeRemaining, setTimeRemaining] = useState(TIMER_LENGTH)
   const timeoutIdRef = useRef(null)
   const timeRemainingRef = useRef(null)
@@ -66,9 +68,7 @@ const Timer = forwardRef(({ isQuizComplete, asyncStatus, setTimeFinished }, ref)
 })
 
 Timer.propTypes = {
-  isQuizComplete: bool.isRequired,
   setTimeFinished: func.isRequired,
-  asyncStatus: shape(PROP_ASYNC_STATUS).isRequired,
 }
 
 export default Timer

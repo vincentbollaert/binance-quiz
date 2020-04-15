@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useContext, useRef } from 'react'
+import React, { useEffect, useContext, useRef } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 
@@ -14,12 +14,17 @@ import {
   JET,
 } from '../../styles'
 import { API_BINANCE_PROXIED } from '../../api'
-import reducer, {
-  init, getDataRequested, getDataSucceeded, getDataFailed, selectAnswer, completeQuiz, showNextQuestion,
+import {
+  getDataRequested,
+  getDataSucceeded,
+  getDataFailed,
+  selectAnswer,
+  completeQuiz,
+  showNextQuestion,
 } from './reducer'
 import Error from '../../components/Error/component'
 import { LineLoader } from '../../components/Loader'
-import { QuizContext } from '../../context/QuizContext'
+import { QuizContext, QuizContextMethods } from '../../context/QuizContext'
 
 import { TIMER_LENGTH, STYLE_QUIZ_WIDTH, STYLE_RESULTS_WIDTH, STYLE_QUIZ_WIDTH_IS_COMPLETE } from './shared'
 import Timer from './Timer/component'
@@ -83,19 +88,10 @@ const Description = styled.div`
 `
 
 const Home = () => {
-  const [state, dispatch] = useReducer(reducer, undefined, init)
-
-  const {
-    isQuizComplete,
-    questions,
-    allQuestions,
-    activeQuestion,
-    selectedAnswers,
-    totalTime,
-    asyncStatus,
-  } = state
+  const state = useContext(QuizContext)
+  const dispatch = useContext(QuizContextMethods)
+  const { isQuizComplete, questions, activeQuestion, asyncStatus } = state
   const childRef = useRef()
-  const test = useContext(QuizContext)
 
   useEffect(() => { getData() }, [])
 
@@ -148,12 +144,7 @@ const Home = () => {
       <Error asyncStatus={asyncStatus} />
       <QuizWrap isQuizComplete={isQuizComplete}>
         <Questions>
-          <Timer
-            isQuizComplete={isQuizComplete}
-            ref={childRef}
-            setTimeFinished={onTimeFinished}
-            asyncStatus={asyncStatus}
-          />
+          <Timer ref={childRef} setTimeFinished={onTimeFinished} />
           {questions.map((question) => {
             const { id, excerpt } = question
 
@@ -166,10 +157,7 @@ const Home = () => {
               >
                 <Description>{excerpt}</Description>
                 <Answers
-                  isQuizComplete={isQuizComplete}
-                  selectedAnswers={selectedAnswers}
                   activeQuestion={question}
-                  allQuestions={allQuestions}
                   onSelectAnswer={onSelectAnswer}
                   onGetTimeToChoose={onGetTimeToChoose}
                 />
@@ -178,21 +166,12 @@ const Home = () => {
           })}
         </Questions>
         <NextButton
-          isQuizComplete={isQuizComplete}
-          activeQuestion={activeQuestion}
-          selectedAnswers={selectedAnswers}
           onNextClick={() => onNextClick({
             activeQuestionId: activeQuestion.id,
             isFinalQuestion: activeQuestion.isFinalQuestion,
           })}
         />
-        <Results
-          isQuizComplete={isQuizComplete}
-          totalTime={totalTime}
-          selectedAnswers={selectedAnswers}
-          onResetQuiz={getData}
-          asyncStatus={asyncStatus}
-        />
+        <Results onResetQuiz={getData} />
       </QuizWrap>
     </div>
   )
