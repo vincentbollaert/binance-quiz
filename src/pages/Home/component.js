@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useRef } from 'react'
+import React, { useEffect, useReducer, useRef, useContext } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 
@@ -19,6 +19,8 @@ import reducer, {
 } from './reducer'
 import Error from '../../components/Error/component'
 import { LineLoader } from '../../components/Loader'
+import { QuizContext } from '../../context/QuizContext'
+
 import { TIMER_LENGTH, STYLE_QUIZ_WIDTH, STYLE_RESULTS_WIDTH, STYLE_QUIZ_WIDTH_IS_COMPLETE } from './shared'
 import Timer from './Timer/component'
 import Answers from './Answers/component'
@@ -93,6 +95,7 @@ const Home = () => {
     asyncStatus,
   } = state
   const childRef = useRef()
+  const test = useContext(QuizContext)
 
   useEffect(() => { getData() }, [])
 
@@ -138,6 +141,7 @@ const Home = () => {
       isTimeout: true,
     })
   }
+  console.log(test)
 
   return (
     <div>
