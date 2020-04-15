@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
-import { bool, func, shape } from 'prop-types'
+import React, { useEffect, useState, forwardRef, useImperativeHandle, useRef, useContext } from 'react'
+import { func } from 'prop-types'
 import styled from 'styled-components'
-import { TIMER_LENGTH } from '../shared'
+import { QuizContext } from '../../../context/QuizContext'
 import { TRANSITION_SLOW } from '../../../styles'
-import { PROP_ASYNC_STATUS } from '../../../constants'
+
+import { TIMER_LENGTH } from '../shared'
 
 const ProgressBar = styled.div`
   position: absolute;
@@ -14,64 +15,61 @@ const ProgressBar = styled.div`
   transition: width ${TRANSITION_SLOW};
 `
 
-class Timer extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      timeRemaining: TIMER_LENGTH,
-    }
-    this.timeoutId = undefined
-  }
+// handle timeout and time remaining inside Timer to prevent re-renders in parent
+const Timer = forwardRef(({ setTimeFinished }, ref) => {
+  const { isQuizComplete, asyncStatus } = useContext(QuizContext)
+  const [timeRemaining, setTimeRemaining] = useState(TIMER_LENGTH)
+  const timeoutIdRef = useRef(null)
+  const timeRemainingRef = useRef(null)
+  timeRemainingRef.current = timeRemaining
 
-  componentDidMount() {
-    this.timeoutId = setInterval(() => this.onUpdateTimer(), 1000)
-  }
+  useEffect(() => {
+    timeoutIdRef.current = setInterval(() => onUpdateTimer(), 1000)
+  }, [])
 
-  onUpdateTimer = () => {
-    const { asyncStatus: { isSuccessful } } = this.props
+  function onUpdateTimer() {
+    const { isSuccessful } = asyncStatus
     if (!isSuccessful) return false
 
-    this.setState(prevState => ({ timeRemaining: prevState.timeRemaining - 1 }))
+    setTimeRemaining(time => time - 1)
 
-    if (this.state.timeRemaining === 0) {
-      clearTimeout(this.timeoutId)
-      this.props.setTimeFinished()
-    }
-    return this.state.timeRemaining
-  }
-
-  onSetTimer = ({ isReset, isRestart }) => {
-    clearTimeout(this.timeoutId)
-
-    if (isReset) {
-      this.setState({ timeRemaining: TIMER_LENGTH })
-    }
-
-    if (isRestart) {
-      this.setState({ timeRemaining: TIMER_LENGTH })
-      this.timeoutId = setInterval(() => this.onUpdateTimer(), 1000)
+    if (timeRemainingRef.current === 0) {
+      clearTimeout(timeoutIdRef.current)
+      setTimeFinished()
     }
   }
 
-  onGetTimeToChoose = () => {
-    return TIMER_LENGTH - this.state.timeRemaining
-  }
+  useImperativeHandle(ref, () => ({
+    onSetTimer({ isReset, isRestart }) {
+      clearTimeout(timeoutIdRef.current)
 
-  render() {
-    const { isQuizComplete } = this.props
-    const { timeRemaining } = this.state
-    return (
-      isQuizComplete ? null : (
-        <ProgressBar progress={((TIMER_LENGTH - timeRemaining) / TIMER_LENGTH) * 100} data-testid="component-timer" />
-      )
+      if (isReset) {
+        setTimeRemaining(TIMER_LENGTH)
+      }
+
+      if (isRestart) {
+        setTimeRemaining(TIMER_LENGTH)
+        timeoutIdRef.current = setInterval(() => onUpdateTimer(), 1000)
+      }
+    },
+    onGetTimeToChoose() {
+      return TIMER_LENGTH - timeRemaining
+    }
+  }))
+
+  return (
+    isQuizComplete ? null : (
+      <ProgressBar
+        ref={ref}
+        progress={((TIMER_LENGTH - timeRemaining) / TIMER_LENGTH) * 100}
+        data-testid="component-timer"
+      />
     )
-  }
-}
+  )
+})
 
 Timer.propTypes = {
-  isQuizComplete: bool.isRequired,
   setTimeFinished: func.isRequired,
-  asyncStatus: shape(PROP_ASYNC_STATUS).isRequired,
 }
 
 export default Timer

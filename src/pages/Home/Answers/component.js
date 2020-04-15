@@ -1,6 +1,6 @@
-import React, { memo } from 'react'
+import React, { memo, useContext } from 'react'
 import styled from 'styled-components'
-import { bool, arrayOf, shape, func } from 'prop-types'
+import { func, shape } from 'prop-types'
 
 import {
   media,
@@ -18,12 +18,18 @@ import {
   TRANSITION,
   SONIC_SILVER,
 } from '../../../styles'
-import { SHAPE_QUIZ_QUESTION, SHAPE_QUESTION, SHAPE_SELECTED_ANSWER } from '../shapePropTypes'
-import { CN_ANSWER, CN_ADDITIONAL_INFO, STYLE_ADDITIONAL_INFO_BOX_SHADOW_HOVER, STYLE_ADDITIONAL_INFO_BOX_SHADOW } from '../shared'
+import {
+  CN_ANSWER,
+  CN_ADDITIONAL_INFO,
+  STYLE_ADDITIONAL_INFO_BOX_SHADOW_HOVER,
+  STYLE_ADDITIONAL_INFO_BOX_SHADOW,
+} from '../shared'
 import Radio from '../../../components/Radio/component'
 import Tooltip from '../../../components/Tooltip/component'
 import Accordion from '../../../components/Accordion/component'
 import AdditionalInfo from '../AdditionalInfo/component'
+import { QuizContext } from '../../../context/QuizContext'
+import { SHAPE_QUIZ_QUESTION } from '../shapePropTypes'
 
 const STYLE_BOX_SHADOW_COLOR = '#414141'
 const STYLE_BOX_SHADOW_TOP = `inset 0 1px 0 0 ${STYLE_BOX_SHADOW_COLOR}`
@@ -97,18 +103,13 @@ const AccordionStyled = styled(Accordion)`
   `};
 `
 
-const Answers = ({
-  isQuizComplete,
-  selectedAnswers,
-  activeQuestion,
-  allQuestions,
-  onSelectAnswer,
-  onGetTimeToChoose,
-}) => {
+const Answers = ({ activeQuestion, onSelectAnswer, onGetTimeToChoose }) => {
+  const { isQuizComplete, selectedAnswers, allQuestions } = useContext(QuizContext)
   const { id, title, answers } = activeQuestion
   const { selectedAnswer, isTimeout } = (selectedAnswers.find(({ id: answerId }) => answerId === id) || {})
   const isCorrectSelected = selectedAnswer === title
   const isQuestionFinished = selectedAnswer !== undefined || isTimeout
+  
   return (
     <Wrap data-testid="component-answers">
       {answers.map(answer => {
@@ -170,10 +171,7 @@ const Answers = ({
 }
 
 Answers.propTypes = {
-  isQuizComplete: bool.isRequired,
-  selectedAnswers: arrayOf(shape(SHAPE_SELECTED_ANSWER)).isRequired,
   activeQuestion: shape(SHAPE_QUIZ_QUESTION).isRequired,
-  allQuestions: arrayOf(shape(SHAPE_QUESTION)).isRequired,
   onSelectAnswer: func.isRequired,
   onGetTimeToChoose: func.isRequired,
 }

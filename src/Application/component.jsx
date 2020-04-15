@@ -12,6 +12,8 @@ import Svg from '../components/Svg/component'
 import { STYLE_HEADER_HEIGHT, STYLE_HEADER_HEIGHT_SM, STYLE_FOOTER_HEIGHT, STYLE_FOOTER_HEIGHT_SM } from './shared'
 import Home from '../pages/Home/component'
 
+import { QuizProvider } from '../context/QuizContext'
+
 const GlobalStyle = createGlobalStyle`
   ${reset};
 `
@@ -107,7 +109,9 @@ const Application = () => {
           <Link href="https://github.com/vincentbollaert/binance-quiz" target="_blank">github</Link>
         </Header>
         <PageWrap>
-          <Route exact path="/" component={Home} />
+          <QuizProvider>
+            <Route exact path="/" component={Home} />
+          </QuizProvider>
           <Redirect to="/" />
         </PageWrap>
         <Footer />

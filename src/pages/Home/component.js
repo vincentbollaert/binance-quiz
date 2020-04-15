@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useRef } from 'react'
+import React, { useEffect, useContext, useRef } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 
@@ -14,11 +14,18 @@ import {
   JET,
 } from '../../styles'
 import { API_BINANCE_PROXIED } from '../../api'
-import reducer, {
-  init, getDataRequested, getDataSucceeded, getDataFailed, selectAnswer, completeQuiz, showNextQuestion,
+import {
+  getDataRequested,
+  getDataSucceeded,
+  getDataFailed,
+  selectAnswer,
+  completeQuiz,
+  showNextQuestion,
 } from './reducer'
 import Error from '../../components/Error/component'
 import { LineLoader } from '../../components/Loader'
+import { QuizContext, QuizContextDispatch } from '../../context/QuizContext'
+
 import { TIMER_LENGTH, STYLE_QUIZ_WIDTH, STYLE_RESULTS_WIDTH, STYLE_QUIZ_WIDTH_IS_COMPLETE } from './shared'
 import Timer from './Timer/component'
 import Answers from './Answers/component'
@@ -81,18 +88,18 @@ const Description = styled.div`
 `
 
 const Home = () => {
-  const [state, dispatch] = useReducer(reducer, undefined, init)
-
-  const {
-    isQuizComplete,
-    questions,
-    allQuestions,
-    activeQuestion,
-    selectedAnswers,
-    totalTime,
-    asyncStatus,
-  } = state
-  const childRef = useRef()
+  const state = useContext(QuizContext)
+  const dispatch = useContext(QuizContextDispatch)
+  const { isQuizComplete, questions, activeQuestion, asyncStatus } = state
+  const timerRef = useRef()
+  const timerMethods = {
+    onSetTimer({ isReset, isRestart } = {}) {
+      timerRef.current.onSetTimer({ isReset, isRestart })
+    },
+    onGetTimeToChoose() {
+      timerRef.current.onGetTimeToChoose()
+    },
+  }
 
   useEffect(() => { getData() }, [])
 
@@ -102,7 +109,7 @@ const Home = () => {
 
     if (data.length !== undefined) {
       dispatch(getDataSucceeded({ payload: data }))
-      onSetTimer({ isRestart: true })
+      timerMethods.onSetTimer({ isRestart: true })
     } else {
       dispatch(getDataFailed({ payload: data.status.error.code }))
     }
@@ -110,25 +117,19 @@ const Home = () => {
 
   function onSelectAnswer(params) {
     dispatch(selectAnswer({ ...params, isCorrect: params.selectedAnswer === params.correctAnswer }))
-    onSetTimer()
+    timerMethods.onSetTimer()
   }
 
   function onNextClick({ activeQuestionId, isFinalQuestion }) {
     dispatch(showNextQuestion({ activeQuestionId }))
     if (isFinalQuestion) {
       dispatch(completeQuiz())
-      onSetTimer({ isReset: true })
+      timerMethods.onSetTimer({ isReset: true })
     } else {
-      onSetTimer({ isRestart: true })
+      timerMethods.onSetTimer({ isRestart: true })
     }
   }
 
-  function onSetTimer({ isReset, isRestart } = {}) {
-    childRef.current.onSetTimer({ isReset, isRestart })
-  }
-  function onGetTimeToChoose() {
-    return childRef.current ? childRef.current.onGetTimeToChoose() : TIMER_LENGTH
-  }
   function onTimeFinished() {
     onSelectAnswer({
       id: activeQuestion.id,
@@ -140,21 +141,17 @@ const Home = () => {
   }
 
   return (
-    <div>
+    <>
       <LineLoader asyncStatus={asyncStatus} />
       <Error asyncStatus={asyncStatus} />
       <QuizWrap isQuizComplete={isQuizComplete}>
         <Questions>
-          <Timer
-            isQuizComplete={isQuizComplete}
-            ref={childRef}
-            setTimeFinished={onTimeFinished}
-            asyncStatus={asyncStatus}
-          />
+          <Timer ref={timerRef} setTimeFinished={onTimeFinished} />
           {questions.map((question) => {
             const { id, excerpt } = question
 
             return (
+              (!isQuizComplete && id !== activeQuestion.id) ? null :
               <Question
                 key={id}
                 isQuizComplete={isQuizComplete}
@@ -163,35 +160,23 @@ const Home = () => {
               >
                 <Description>{excerpt}</Description>
                 <Answers
-                  isQuizComplete={isQuizComplete}
-                  selectedAnswers={selectedAnswers}
                   activeQuestion={question}
-                  allQuestions={allQuestions}
                   onSelectAnswer={onSelectAnswer}
-                  onGetTimeToChoose={onGetTimeToChoose}
+                  onGetTimeToChoose={timerMethods.onGetTimeToChoose}
                 />
               </Question>
             )
           })}
         </Questions>
         <NextButton
-          isQuizComplete={isQuizComplete}
-          activeQuestion={activeQuestion}
-          selectedAnswers={selectedAnswers}
           onNextClick={() => onNextClick({
             activeQuestionId: activeQuestion.id,
             isFinalQuestion: activeQuestion.isFinalQuestion,
           })}
         />
-        <Results
-          isQuizComplete={isQuizComplete}
-          totalTime={totalTime}
-          selectedAnswers={selectedAnswers}
-          onResetQuiz={getData}
-          asyncStatus={asyncStatus}
-        />
+        <Results onResetQuiz={getData} />
       </QuizWrap>
-    </div>
+    </>
   )
 }
 

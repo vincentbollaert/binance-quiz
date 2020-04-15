@@ -1,9 +1,9 @@
-import React, { memo } from 'react'
-import { bool, shape, arrayOf, func } from 'prop-types'
+import React, { memo, useContext } from 'react'
+import { func } from 'prop-types'
 import styled from 'styled-components'
 
 import { FONT_SIZE_LG, FONT_SIZE_XLG, SELECTIVE_YELLOW, CHARLESTON_GREEN_DARKER } from '../../../styles'
-import { SHAPE_QUIZ_QUESTION, SHAPE_SELECTED_ANSWER } from '../shapePropTypes'
+import { QuizContext } from '../../../context/QuizContext'
 
 const Wrap = styled.button`
   display: ${props => props.isShow ? 'flex' : 'none'};
@@ -61,13 +61,10 @@ const NextQuestion = styled.div`
   bottom: 0px;
 `
 
-const NextButton = ({
-  isQuizComplete,
-  activeQuestion: { id, isFinalQuestion },
-  selectedAnswers,
-  onNextClick,
-}) => {
+const NextButton = ({ onNextClick }) => {
+  const { isQuizComplete, activeQuestion: { id, isFinalQuestion }, selectedAnswers } = useContext(QuizContext)
   const isActiveQuestionFinished = selectedAnswers.length && selectedAnswers[selectedAnswers.length - 1].id === id
+
   return (
     <Wrap
       isShow={!isQuizComplete}
@@ -87,9 +84,6 @@ const NextButton = ({
 }
 
 NextButton.propTypes = {
-  isQuizComplete: bool.isRequired,
-  activeQuestion: shape(SHAPE_QUIZ_QUESTION),
-  selectedAnswers: arrayOf(shape(SHAPE_SELECTED_ANSWER)).isRequired,
   onNextClick: func.isRequired,
 }
 
