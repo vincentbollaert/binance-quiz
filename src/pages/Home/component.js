@@ -97,7 +97,7 @@ const Home = () => {
       timerRef.current.onSetTimer({ isReset, isRestart })
     },
     onGetTimeToChoose() {
-      timerRef.current.onGetTimeToChoose()
+      return timerRef.current.onGetTimeToChoose()
     },
   }
 
